@@ -22,17 +22,6 @@ from kivy.uix.screenmanager import ScreenManager, Screen,RiseInTransition
 from jnius import autoclass
 import pyglet
 import platform
-from kivy.uix.screenmanager import SlideTransition
-
-
-# ------------------ faire les transition de gauche a droite au lieu de droite a gauche ------------------ #
-from kivy.uix.screenmanager import SlideTransition
-
-class LeftToRightTransition(SlideTransition):
-    direction = 'left'
-
-class RightToLeftTransition(SlideTransition):
-    direction = 'right'
 
 
 
@@ -104,7 +93,6 @@ class UiScreen(Screen):
     def __init__(self, **kwargs):
         
         super(UiScreen, self).__init__(**kwargs)
-        self.transition = transition = RightToLeftTransition()
         pages = UI(ui_screen=self)
         self.add_widget(pages)
 
