@@ -332,7 +332,7 @@ class Screen_Classique(Screen_sous_menu) :
 
 class Screen_Automatique(Screen_sous_menu) :
     def __init__(self,**kwargs):
-        super().__init__(**kwargs,"Automatique")
+        super().__init__(**kwargs,text_titre="Automatique")
         
 
 
