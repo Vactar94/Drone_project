@@ -69,6 +69,9 @@ Window.OS = det_sys()
 
 
 class The_app(App):
+    """
+    la main_app a partire duquelle tout se lance
+    """
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -87,6 +90,7 @@ class The_app(App):
         
         return sm
 
+# faire en sorte que un page layout soit un screen pour faire en sorte de passer d'une page a l'autre de avec fluidité
 class UiScreen(Screen):
     
     def __init__(self, **kwargs):
@@ -107,7 +111,7 @@ class UiScreen(Screen):
     def go_to_automatique(self,value):
         self.manager.current = "automatique"
 
-
+# -- les mains pages de l'app -- #
 class UI(PageLayout):
     def __init__(self,ui_screen, **kwargs):
         self.ui_screen = ui_screen  # Stocker une référence à UiScreen
@@ -161,6 +165,9 @@ class Accueil(RelativeLayout) :
 
 
     def mannette_conectivity(self,value):
+        """
+        pas sur de le garder ptet que c'est pas a moi de le faire en tt ca le bouton existe
+        """
         if Window.OS == "A" :
             if check_controller_connectivity() :
                 print("ya une mannette")
@@ -179,7 +186,7 @@ class Accueil(RelativeLayout) :
         
 
 
-
+# ------------------------ page du menue ------------------------ # 
 class Menue(RelativeLayout):
     def __init__(self,ui_screen, **kwargs):
         super().__init__(**kwargs)
@@ -284,7 +291,7 @@ class Menue(RelativeLayout):
     def go_to_automatique(self,value):
         self.ui_screen.go_to_automatique(value)
 
-
+# ------ layout de des sous menue ------ #
 class Screen_sous_menu(Screen) :
         
     def __init__(self, text_titre="", **kwargs):
@@ -314,7 +321,7 @@ class Screen_sous_menu(Screen) :
     def go_to_menue(self,value) :
         self.manager.current = "ui"
 
-
+# ------ utilisation ce ceci ------ #
 class Screen_Controles(Screen_sous_menu) :
     def __init__(self,**kwargs):
         super().__init__(**kwargs,text_titre="Controles")
