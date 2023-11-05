@@ -25,7 +25,6 @@ import platform
 
 
 
-
 def det_sys():
     """determine dans quelle OS on est return la première lettre de l'os :
         W : Windows
@@ -286,19 +285,20 @@ class Menue(RelativeLayout):
         self.ui_screen.go_to_automatique(value)
 
 
-class Screen_Controles(Screen) :
-    def __init__(self,**kwargs):
+class Screen_sous_menu(Screen) :
+        
+    def __init__(self, text_titre="", **kwargs):
         super().__init__(**kwargs)
         self.size = Window.size
         print(self.size)
         self.redu_box = RelativeLayout(size=self.size)
-        titre = Label(text="Controles :",color=(0, 0, 0),pos_hint={"center_x":0.5,"center_y":0.85})
+        titre = Label(text=text_titre, color=(0, 0, 0), pos_hint={"center_x":0.5,"center_y":0.85})
         with self.redu_box.canvas.before:
             Color(0, 0, 0)
             Rectangle(pos=(0,0),size=self.size)
             Color(1, 1, 1)
             RoundedRectangle(pos=(self.size[0]*(0.01),self.size[1]*(0.01)),size=(self.size[0]*0.43,self.size[1]*0.98),radius=[50,50])
-        menue_button = Button(text="",font_size=11,color=(0 ,0 ,0),size_hint=(None,None),size=(80,80),pos_hint={"center_x":0.1,"center_y":0.9},background_color=(0, 0, 0, 0))
+        menue_button = Button(text="", font_size=11, color=(0 ,0 ,0), size_hint=(None,None), size=(80,80), pos_hint={"center_x":0.1,"center_y":0.9}, background_color=(0, 0, 0, 0))
         with menue_button.canvas.before:
             Color(0, 0, 0)
             menue_button.bg_rect = Image(source="image/bouton-retour bg.png",size=menue_button.size,pos=menue_button.pos)
@@ -310,58 +310,30 @@ class Screen_Controles(Screen) :
     def update_bg(self,element,value):
         element.bg_rect.pos = element.pos
         element.bg_rect.size = element.size
-    
+
     def go_to_menue(self,value) :
         self.manager.current = "ui"
 
 
-class Screen_Antipersonelle(Screen) :
+class Screen_Controles(Screen_sous_menu) :
     def __init__(self,**kwargs):
-            super().__init__(**kwargs)
-            with self.canvas.before:
-                Color(36/255, 181/255, 11/255)
-                Rectangle(pos=(0,Window.size[1]-self.size[1]),size=self.size)
-                Color(1, 1, 1)
-                Rectangle(pos=(0,self.size[1]//2),size=(self.size[0],self.size[1]//2))
-            menue_button = Button(text="Antipersonelle\nretour au menue")
-            menue_button.bind(on_release=self.go_to_menue)
+        super().__init__(**kwargs,text_titre="Controles")
+        
 
-            self.add_widget(menue_button)
-
-    def go_to_menue(self,value) :
-        self.manager.current = "ui"
-
-class Screen_Classique(Screen) :
+class Screen_Antipersonelle(Screen_sous_menu) :
     def __init__(self,**kwargs):
-        super().__init__(**kwargs)
-        with self.canvas.before:
-            Color(36/255, 181/255, 11/255)
-            Rectangle(pos=(0,Window.size[1]-self.size[1]),size=self.size)
-            Color(1, 1, 1)
-            Rectangle(pos=(0,self.size[1]//2),size=(self.size[0],self.size[1]//2))
-        menue_button = Button(text="Classique\nretour au menue")
-        menue_button.bind(on_release=self.go_to_menue)
+            super().__init__(**kwargs,text_titre="Antipersonnelle")
 
-        self.add_widget(menue_button)
 
-    def go_to_menue(self,value) :
-        self.manager.current = "ui"
-
-class Screen_Automatique(Screen) :
+class Screen_Classique(Screen_sous_menu) :
     def __init__(self,**kwargs):
-        super().__init__(**kwargs)
-        with self.canvas.before:
-            Color(36/255, 181/255, 11/255)
-            Rectangle(pos=(0,Window.size[1]-self.size[1]),size=self.size)
-            Color(1, 1, 1)
-            Rectangle(pos=(0,self.size[1]//2),size=(self.size[0],self.size[1]//2))
-        menue_button = Button(text="Automatique\nretour au menue")
-        menue_button.bind(on_release=self.go_to_menue)
+        super().__init__(**kwargs,text_titre="Classique")
+        
 
-        self.add_widget(menue_button)
-
-    def go_to_menue(self,value) :
-        self.manager.current = "ui"
+class Screen_Automatique(Screen_sous_menu) :
+    def __init__(self,**kwargs):
+        super().__init__(**kwargs,"Automatique")
+        
 
 
 if __name__ == "__main__" :
