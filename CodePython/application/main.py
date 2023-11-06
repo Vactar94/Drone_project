@@ -146,14 +146,11 @@ class Accueil(RelativeLayout) :
 
 
 
-        
 
     def update_bg(self,element,value):
         element.bg_rect.pos = element.pos
         element.bg_rect.size = element.size
          
-
-
 
     def mannette_conectivity(self,value):
         """
@@ -175,7 +172,6 @@ class Accueil(RelativeLayout) :
         print(f"button_appuiller({self.n} eme fois) ")
 
         
-
 
 # ------------------------ page du menue ------------------------ # 
 class Menue(RelativeLayout):
@@ -230,12 +226,6 @@ class layout_bouton_menue(RelativeLayout):
     
     def go_to(self,value):
         self.ui_screen.go_to(value,self.name)
-
-    
-
-        
-        
-        
 
 
 # ------ layout de des sous menue ------ #
