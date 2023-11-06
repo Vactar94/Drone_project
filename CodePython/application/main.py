@@ -78,7 +78,7 @@ class The_app(App):
     def build(self):
         sm = ScreenManager(transition=RiseInTransition())
         ui_screen = UiScreen(name='ui')
-        controle_screen = Screen_Controles(name='controle')
+        controle_screen = Screen_Controles(name='controles')
         antipersonelle_screen = Screen_Antipersonelle(name="antipersonelle")
         classique_screen = Screen_Classique(name="classique")
         automatique_screen = Screen_Automatique(name="automatique")
@@ -99,17 +99,8 @@ class UiScreen(Screen):
         pages = UI(ui_screen=self)
         self.add_widget(pages)
 
-    def go_to_control(self,value):
-        self.manager.current = "controle"
-
-    def go_to_antipersonelle(self,value):
-        self.manager.current = "antipersonelle"
-
-    def go_to_classique(self,value):
-        self.manager.current = "classique"
-
-    def go_to_automatique(self,value):
-        self.manager.current = "automatique"
+    def go_to(self,value,name_of_the_target_screen:str):
+        self.manager.current = name_of_the_target_screen
 
 # -- les mains pages de l'app -- #
 class UI(PageLayout):
@@ -199,105 +190,60 @@ class Menue(RelativeLayout):
             Color(0/255, 200/255, 255/255)
             RoundedRectangle(pos=(self.size[1]*0.025,self.size[1]*0.025),size=(self.size[0]*0.95,self.size[1]*0.95),radius=[30,30])
 
-        #---------------- Bouton des contoles de la manette ----------------#
-        box_button_controles = RelativeLayout(size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(2/9),self.size[1]*(2/9)))
-        with box_button_controles.canvas.before :
-            Color(0, 0, 0)
-            RoundedRectangle(pos=(0,0),size=box_button_controles.size,radius=[30,30])
-            Color(0/255, 200/255, 255/255)
-            RoundedRectangle(pos=(box_button_controles.size[1]*0.025,box_button_controles.size[1]*0.025),size=(box_button_controles.size[0]*0.95,box_button_controles.size[1]*0.95),radius=[30,30])
-        titre_button_controles = Label(text="\nContrôles",pos_hint={"center_x": 0.5, "center_y": 0.0},color=(0, 0, 0))
-        button_controles = Button(size=(box_button_controles.size[0]*0.90,box_button_controles.size[1]*0.90),size_hint=(None, None),background_color=(0, 0, 0, 0),pos = (box_button_controles.size[1]*0.05,box_button_controles.size[1]*0.05))
-        with button_controles.canvas.before:
-            Color(0, 0, 0)
-            button_controles.bg_rect = Image(source="image/bg_button_controle.png",pos=button_controles.pos,size=button_controles.size)
-        button_controles.bind(on_release=self.go_to_control,pos=self.update_bg, size=self.update_bg)
-        box_button_controles.add_widget(titre_button_controles)
-        box_button_controles.add_widget(button_controles)
-
-        #---------------- Bouton du mode antipersonelle ----------------#
-        box_button_antipersonelle = RelativeLayout(size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(2/9),self.size[1]*(5/9)))
-        with box_button_antipersonelle.canvas.before :
-            Color(0, 0, 0)
-            RoundedRectangle(pos=(0,0),size=box_button_antipersonelle.size,radius=[30,30])
-            Color(0/255, 200/255, 255/255)
-            RoundedRectangle(pos=(box_button_antipersonelle.size[1]*0.025,box_button_antipersonelle.size[1]*0.025),size=(box_button_antipersonelle.size[0]*0.95,box_button_antipersonelle.size[1]*0.95),radius=[30,30])
-        titre_button_antipersonelle = Label(text="\nMode Antipersonelle",pos_hint={"center_x": 0.5, "center_y": 0.0},color=(0, 0, 0))
-        
-        button_antipersonelle = Button(size=(box_button_antipersonelle.size[0]*0.90,box_button_antipersonelle.size[1]*0.90),size_hint=(None, None),background_color=(0, 0, 0, 0),pos = (box_button_antipersonelle.size[1]*0.05,box_button_antipersonelle.size[1]*0.05))
-        with button_antipersonelle.canvas.before:
-            Color(0, 0, 0)
-            button_antipersonelle.bg_rect = Image(source="image/bg_antipersonelle.png",pos=button_antipersonelle.pos,size=button_antipersonelle.size)
-        button_antipersonelle.bind(on_release=self.go_to_antipersonelle,pos=self.update_bg, size=self.update_bg)
-        box_button_antipersonelle.add_widget(titre_button_antipersonelle)
-        box_button_antipersonelle.add_widget(button_antipersonelle)
-
-        #---------------- Bouton du mode automatique ----------------#
-        box_button_automatique = RelativeLayout(size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(1/25),self.size[1]*(5/9)))
-        with box_button_automatique.canvas.before :
-            Color(0, 0, 0)
-            RoundedRectangle(pos=(0,0),size=box_button_automatique.size,radius=[30,30])
-            Color(0/255, 200/255, 255/255)
-            RoundedRectangle(pos=(box_button_automatique.size[1]*0.025,box_button_automatique.size[1]*0.025),size=(box_button_automatique.size[0]*0.95,box_button_automatique.size[1]*0.95),radius=[30,30])
-        titre_button_automatique = Label(text="\nMode Automatique",pos_hint={"center_x": 0.5, "center_y": 0.0},color=(0, 0, 0))
-        
-        button_button_automatique = Button(size=(box_button_automatique.size[0]*0.90,box_button_automatique.size[1]*0.90),size_hint=(None, None),background_color=(0, 0, 0, 0),pos = (box_button_automatique.size[1]*0.05,box_button_automatique.size[1]*0.05))
-        with button_button_automatique.canvas.before:
-            Color(0, 0, 0)
-            button_button_automatique.bg_rect = Image(source="image/icone_drone_bg.png",pos=button_button_automatique.pos,size=button_button_automatique.size)
-        button_button_automatique.bind(on_release=self.go_to_automatique,pos=self.update_bg, size=self.update_bg)
-        box_button_automatique.add_widget(titre_button_automatique)
-        box_button_automatique.add_widget(button_button_automatique)
-
-        #---------------- Bouton du mode classique ----------------#
-        box_button_classique = RelativeLayout(size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(1/25),self.size[1]*(2/9)))
-        with box_button_classique.canvas.before :
-            Color(0, 0, 0)
-            RoundedRectangle(pos=(0,0),size=box_button_classique.size,radius=[30,30])
-            Color(0/255, 200/255, 255/255)
-            RoundedRectangle(pos=(box_button_classique.size[1]*0.025,box_button_classique.size[1]*0.025),size=(box_button_classique.size[0]*0.95,box_button_classique.size[1]*0.95),radius=[30,30])
-        titre_button_classique = Label(text="\nMode Classique",pos_hint={"center_x": 0.5, "center_y": 0.0},color=(0, 0, 0))
-        
-        button_button_classique = Button(size=(box_button_classique.size[0]*0.90,box_button_classique.size[1]*0.90),size_hint=(None, None),background_color=(0, 0, 0, 0),pos = (box_button_classique.size[1]*0.05,box_button_classique.size[1]*0.05))
-        with button_button_classique.canvas.before:
-            Color(0, 0, 0)
-            button_button_classique.bg_rect = Image(source="image/icone_smatrphone_bg.png",pos=button_button_classique.pos,size=button_button_classique.size)
-        button_button_classique.bind(on_release=self.go_to_classique,pos=self.update_bg, size=self.update_bg)
-        box_button_classique.add_widget(titre_button_classique)
-        box_button_classique.add_widget(button_button_classique)
-
-
         titre_page = Label(text="Selectionnez votre mode : ",pos_hint={"center_x":0.5,"center_y":0.85},color=(0, 0, 0))
+
+        box_button_classique = layout_bouton_menue(name="classique",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(1/25),self.size[1]*(2/9)))
+        box_button_automatique = layout_bouton_menue(name="automatique",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(1/25),self.size[1]*(5/9)))
+        box_button_controles = layout_bouton_menue(name="controles",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(2/9),self.size[1]*(2/9)))
+        box_button_antipersonelle = layout_bouton_menue(name="antipersonelle",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(2/9),self.size[1]*(5/9)))
+
 
         self.add_widget(titre_page)
         self.add_widget(box_button_classique)
         self.add_widget(box_button_automatique)
         self.add_widget(box_button_controles)
         self.add_widget(box_button_antipersonelle)
+
+class layout_bouton_menue(RelativeLayout):
+
+    def __init__(self,name:str='',ui_screen=None, **kw):
+        self.ui_screen = ui_screen
+        self.name = name
+        super().__init__(**kw)
+        with self.canvas.before :
+            Color(0, 0, 0)
+            RoundedRectangle(pos=(0,0),size=self.size,radius=[30,30])
+            Color(0/255, 200/255, 255/255)
+            RoundedRectangle(pos=(self.size[1]*0.025,self.size[1]*0.025),size=(self.size[0]*0.95,self.size[1]*0.95),radius=[30,30])
+        titre = Label(text=f"\n{name}",pos_hint={"center_x": 0.5, "center_y": 0.0},color=(0, 0, 0))
+        button = Button(size=(self.size[0]*0.90,self.size[1]*0.90),size_hint=(None, None),background_color=(0, 0, 0, 0),pos = (self.size[1]*0.05,self.size[1]*0.05))
+        with button.canvas.before:
+            Color(0, 0, 0)
+            button.bg_rect = Image(source=f"image/icone_button_{name}_bg.png",pos=button.pos,size=button.size)
+        button.bind(on_release=self.go_to,pos=self.update_bg, size=self.update_bg)
+        self.add_widget(titre)
+        self.add_widget(button)
     
     def update_bg(self,element,value):
         element.bg_rect.pos = element.pos
         element.bg_rect.size = element.size
+    
+    def go_to(self,value):
+        self.ui_screen.go_to(value,self.name)
 
-    def go_to_control(self,value):
-        self.ui_screen.go_to_control(value)
+    
 
-    def go_to_antipersonelle(self,value):
-        self.ui_screen.go_to_antipersonelle(value)
+        
+        
+        
 
-    def go_to_classique(self,value):
-        self.ui_screen.go_to_classique(value)
-
-    def go_to_automatique(self,value):
-        self.ui_screen.go_to_automatique(value)
 
 # ------ layout de des sous menue ------ #
 class Screen_sous_menu(Screen) :
         
-    def __init__(self, text_titre="", **kwargs):
+    def __init__(self, text_titre:str="", icone:Image=None ,**kwargs):
         super().__init__(**kwargs)
         self.size = Window.size
-        print(self.size)
         self.redu_box = RelativeLayout(size=self.size)
         titre = Label(text=text_titre, color=(0, 0, 0), pos_hint={"center_x":0.5,"center_y":0.85})
         with self.redu_box.canvas.before:
@@ -310,6 +256,14 @@ class Screen_sous_menu(Screen) :
             Color(0, 0, 0)
             menue_button.bg_rect = Image(source="image/bouton-retour bg.png",size=menue_button.size,pos=menue_button.pos)
         menue_button.bind(on_release=self.go_to_menue,size=self.update_bg,pos=self.update_bg)
+        
+        if icone != None :
+            icone.pos_hint = {"center_x":0.87,"center_y":0.9}
+            icone.size_hint = (None, None)
+            icone.size = [50,50]
+            self.redu_box.add_widget(icone)
+        else : print(f"{titre.text} n'a pas d'icone")
+
         self.redu_box.add_widget(menue_button)
         self.redu_box.add_widget(titre)
         self.add_widget(self.redu_box)
@@ -324,24 +278,27 @@ class Screen_sous_menu(Screen) :
 # ------ utilisation ce ceci ------ #
 class Screen_Controles(Screen_sous_menu) :
     def __init__(self,**kwargs):
-        super().__init__(**kwargs,text_titre="Controles")
+        icone = Image(source="image/icone_button_controles_bg.png")
+        super().__init__(**kwargs,text_titre="Controles",icone=icone)
         
 
 class Screen_Antipersonelle(Screen_sous_menu) :
     def __init__(self,**kwargs):
-            super().__init__(**kwargs,text_titre="Antipersonnelle")
+        icone = Image(source="image/icone_button_antipersonelle_bg.png")
+        super().__init__(**kwargs,text_titre="Antipersonnelle",icone=icone)
 
 
 class Screen_Classique(Screen_sous_menu) :
     def __init__(self,**kwargs):
-        super().__init__(**kwargs,text_titre="Classique")
+        icone = Image(source="image/icone_button_classique_bg.png")
+        super().__init__(**kwargs,text_titre="Classique",icone=icone)
         
 
 class Screen_Automatique(Screen_sous_menu) :
     def __init__(self,**kwargs):
-        super().__init__(**kwargs,text_titre="Automatique")
+        icone = Image(source="image/icone_button_automatique_bg.png")
+        super().__init__(**kwargs,text_titre="Automatique",icone=icone)
         
-
 
 if __name__ == "__main__" :
     The_app().run()
