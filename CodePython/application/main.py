@@ -23,7 +23,11 @@ from jnius import autoclass
 import pyglet
 import platform
 
+class Better_Screen(Screen) :
 
+    def update_bg(self,element,value):
+        element.bg_rect.pos = element.pos
+        element.bg_rect.size = element.size
 
 def det_sys():
     """determine dans quelle OS on est return la première lettre de l'os :
@@ -82,8 +86,10 @@ class The_app(App):
         antipersonelle_screen = Screen_Antipersonelle(name="antipersonelle")
         classique_screen = Screen_Classique(name="classique")
         automatique_screen = Screen_Automatique(name="automatique")
+        screen_affiche = screen_proj(name="affiche")
         sm.add_widget(ui_screen)
         sm.add_widget(classique_screen)
+        sm.add_widget(screen_affiche)
         sm.add_widget(controle_screen)
         sm.add_widget(antipersonelle_screen)
         sm.add_widget(automatique_screen)
@@ -107,7 +113,7 @@ class UI(PageLayout):
     def __init__(self,ui_screen, **kwargs):
         self.ui_screen = ui_screen  # Stocker une référence à UiScreen
         super(UI, self).__init__(**kwargs)
-        self.page1 = Accueil()
+        self.page1 = Accueil(ui_screen=ui_screen)
         self.page2 = Menue(ui_screen=ui_screen)
 
         self.add_widget(self.page1)
@@ -116,7 +122,8 @@ class UI(PageLayout):
     # ------------------ page d'accueil ------------------ #
 class Accueil(RelativeLayout) :
     n=0
-    def __init__(self,**kwargs):
+    def __init__(self,ui_screen,**kwargs):
+        self.ui_screen = ui_screen
         super().__init__(**kwargs)
         self.size = Window.size
         with self.canvas.before:
@@ -128,6 +135,7 @@ class Accueil(RelativeLayout) :
             Rectangle(pos=(self.size[0]//13 ,0),size=(self.size[0]//100,self.size[1]))
         
         desctiption = Label(text="desctiption \nde \nl'app \net \ndu \nprojet",pos_hint={"center_x":0.5,"center_y":0.6},color=(0,0,0))
+        desctiption.bind(on_ref_press=self.go_to_affiche)
         credit = Label(text="Crédit :   \nOscar : application \nAdrien : controle du drone ",pos_hint={"center_x":0.6,"center_y":0.2})
         titre = Label(text='[b]Drone Automatik[/b]',size_hint_y=None,color=(1, 1, 1),height=200,pos_hint={"center_x":0.6,"center_y":0.85},font_size=25,markup=True)
         
@@ -143,6 +151,9 @@ class Accueil(RelativeLayout) :
         self.add_widget(credit)
         self.add_widget(titre)
         self.add_widget(desctiption)
+    
+    def go_to_affiche(self,value):
+        self.ui_screen.go_to("affiche")
 
 
 
@@ -227,9 +238,28 @@ class layout_bouton_menue(RelativeLayout):
     def go_to(self,value):
         self.ui_screen.go_to(value,self.name)
 
+class screen_proj(Better_Screen):
 
+    def __init__(self, **kw):
+        super().__init__(**kw)
+        img_bg= Image(source="image/affiche_project_drone.jpg")
+        menue_button = Button(text="", font_size=11, color=(0 ,0 ,0), size_hint=(None,None), size=(80,80), pos_hint={"center_x":0.1,"center_y":0.9}, background_color=(0, 0, 0, 0))
+        with menue_button.canvas.before:
+            Color(0, 0, 0)
+            menue_button.bg_rect = Image(source="image/bouton-retour bg.png",size=menue_button.size,pos=menue_button.pos)
+        menue_button.bind(on_release=self.go_to_menue,size=self.update_bg,pos=self.update_bg)
+        self.add_widget(img_bg)
+        self.add_widget(menue_button)
+
+
+    def go_to_menue(self,value) :
+        self.manager.current = "ui"
+
+
+
+        
 # ------ layout de des sous menue ------ #
-class Screen_sous_menu(Screen) :
+class Screen_sous_menu(Better_Screen) :
         
     def __init__(self, text_titre:str="", icone:Image=None ,**kwargs):
         super().__init__(**kwargs)
@@ -258,9 +288,6 @@ class Screen_sous_menu(Screen) :
         self.redu_box.add_widget(titre)
         self.add_widget(self.redu_box)
 
-    def update_bg(self,element,value):
-        element.bg_rect.pos = element.pos
-        element.bg_rect.size = element.size
 
     def go_to_menue(self,value) :
         self.manager.current = "ui"
