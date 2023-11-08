@@ -23,11 +23,6 @@ from jnius import autoclass
 import pyglet
 import platform
 
-class Better_Screen(Screen) :
-
-    def update_bg(self,element,value):
-        element.bg_rect.pos = element.pos
-        element.bg_rect.size = element.size
 
 def det_sys():
     """determine dans quelle OS on est return la première lettre de l'os :
@@ -50,27 +45,15 @@ def det_sys():
     elif platform.system() == "Linux" and "android" in platform.platform().lower(): return "A"
     else :                                                                          return "Z"
 
-
-def check_controller_connectivity():
-    if Window.OS == "A" :
-        InputDevice = autoclass('android.view.InputDevice')
-        input_devices = InputDevice.getDeviceIds()
-        for device_id in input_devices:
-            device = InputDevice.getDevice(device_id)
-            if device.getSources() & InputDevice.SOURCE_GAMEPAD:
-                return True
-        return False
-    elif Window.OS == "W" :
-        pyglet.options["audio"] = ("pulse", "openal", "silent")
-        pyglet.options["debug_media"] = True
-        return len(pyglet.input.get_joysticks())
-
-
-
 Window.size = [360, 620]
 Window.OS = det_sys()
 
 
+class Better_Screen(Screen) :
+
+    def update_bg(self,element,value):
+        element.bg_rect.pos = element.pos
+        element.bg_rect.size = element.size
 
 class The_app(App):
     """
@@ -134,7 +117,7 @@ class Accueil(RelativeLayout) :
             Color(0,0,0)
             Rectangle(pos=(self.size[0]//13 ,0),size=(self.size[0]//100,self.size[1]))
         
-        desctiption = Button(text="desctiption \nde \nl'app \net \ndu \nprojet",pos_hint={"center_x":0.5,"center_y":0.6},color=(0,0,0),background_color=(0,0,0,0))
+        desctiption = Button(text="desctiption \nde \nl'app \net \ndu \nprojet",pos_hint={"center_x":0.5,"center_y":0.6},color=(0,0,0),background_color=(0,0,0,0),size_hint=(None,None))
         desctiption.bind(on_release=self.go_to_affiche)
         credit = Label(text="Crédit :   \nOscar : application \nAdrien : controle du drone ",pos_hint={"center_x":0.6,"center_y":0.2})
         titre = Label(text='[b]Drone Automatik[/b]',size_hint_y=None,color=(1, 1, 1),height=200,pos_hint={"center_x":0.6,"center_y":0.85},font_size=25,markup=True)
@@ -167,21 +150,9 @@ class Accueil(RelativeLayout) :
         """
         pas sur de le garder ptet que c'est pas a moi de le faire en tt ca le bouton existe
         """
-        if Window.OS == "A" :
-            if check_controller_connectivity() :
-                print("ya une mannette")
-            else :
-                print("ya pas de mannette")
-        elif Window.OS == "W" :
-            if check_controller_connectivity() == 0 :
-                print("il y n'y a pas de mannette conecter")
-            elif  check_controller_connectivity() == 1 : 
-                print("il y a une mannette ce connecter")
-            else :
-                print(f"il y a {check_controller_connectivity()} mannettes de conecter ")
-        self.n+=1
-        print(f"button_appuiller({self.n} eme fois) ")
+        # programe de toi
 
+        pass
         
 
 # ------------------------ page du menue ------------------------ # 
