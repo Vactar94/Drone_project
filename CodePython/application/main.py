@@ -55,6 +55,23 @@ class Better_Screen(Screen) :
         element.bg_rect.pos = element.pos
         element.bg_rect.size = element.size
 
+class RoundedImage(Widget):
+    def __init__(self, image_source, radius, **kwargs):
+        super(RoundedImage, self).__init__(**kwargs)
+
+        self.image = Image(source=image_source, allow_stretch=True, keep_ratio=False)
+        self.add_widget(self.image)
+
+        self.radius = radius
+
+    def on_size(self, instance, value):
+        self.image.size = self.size
+        self.image.pos = self.pos
+
+    def on_pos(self, instance, value):
+        self.image.pos = value
+
+
 class The_app(App):
     """
     la main_app a partire duquelle tout se lance
@@ -69,7 +86,7 @@ class The_app(App):
         antipersonelle_screen = Screen_Antipersonelle(name="antipersonelle")
         classique_screen = Screen_Classique(name="classique")
         automatique_screen = Screen_Automatique(name="automatique")
-        screen_affiche = screen_proj(name="affiche")
+        screen_affiche = Screen_proj(name="affiche")
         sm.add_widget(ui_screen)
         sm.add_widget(classique_screen)
         sm.add_widget(screen_affiche)
@@ -138,9 +155,6 @@ class Accueil(RelativeLayout) :
     def go_to_affiche(self,value):
         self.ui_screen.go_to(value,"affiche")
 
-
-
-
     def update_bg(self,element,value):
         element.bg_rect.pos = element.pos
         element.bg_rect.size = element.size
@@ -170,10 +184,10 @@ class Menue(RelativeLayout):
 
         titre_page = Label(text="Selectionnez votre mode : ",pos_hint={"center_x":0.5,"center_y":0.85},color=(0, 0, 0))
 
-        button_classique = layout_bouton_menue(name="classique",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(1/25),self.size[1]*(2/9)))
-        button_automatique = layout_bouton_menue(name="automatique",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(1/25),self.size[1]*(5/9)))
-        button_controles = layout_bouton_menue(name="controles",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(2/9),self.size[1]*(2/9)))
-        button_antipersonelle = layout_bouton_menue(name="antipersonelle",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(2/9),self.size[1]*(5/9)))
+        button_classique = Layout_bouton_menue(name="classique",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(1/25),self.size[1]*(2/9)))
+        button_automatique = Layout_bouton_menue(name="automatique",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(1/25),self.size[1]*(5/9)))
+        button_controles = Layout_bouton_menue(name="controles",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(2/9),self.size[1]*(2/9)))
+        button_antipersonelle = Layout_bouton_menue(name="antipersonelle",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(2/9),self.size[1]*(5/9)))
 
 
         self.add_widget(titre_page)
@@ -182,7 +196,7 @@ class Menue(RelativeLayout):
         self.add_widget(button_controles)
         self.add_widget(button_antipersonelle)
 
-class layout_bouton_menue(RelativeLayout):
+class Layout_bouton_menue(RelativeLayout):
 
     def __init__(self,name:str='',ui_screen=None, **kw):
         self.ui_screen = ui_screen
@@ -209,7 +223,7 @@ class layout_bouton_menue(RelativeLayout):
     def go_to(self,value):
         self.ui_screen.go_to(value,self.name)
 
-class screen_proj(Better_Screen):
+class Screen_proj(Better_Screen):
 
     def __init__(self, **kw):
         super().__init__(**kw)
