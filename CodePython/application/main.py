@@ -74,19 +74,25 @@ class RoundedImage(Widget):
 
 class The_app(App):
     """
-    la main_app a partire duquelle tout se lance
+    la main_app a partir du quel l'app se lance
     """
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     def build(self):
         sm = ScreenManager(transition=RiseInTransition())
+
+        #création des screens  
+
         ui_screen = UiScreen(name='ui')
         controle_screen = Screen_Controles(name='controles')
         antipersonelle_screen = Screen_Antipersonelle(name="antipersonelle")
         classique_screen = Screen_Classique(name="classique")
         automatique_screen = Screen_Automatique(name="automatique")
         screen_affiche = Screen_proj(name="affiche")
+
+        # ajout des screens au screen manager
+
         sm.add_widget(ui_screen)
         sm.add_widget(classique_screen)
         sm.add_widget(screen_affiche)
@@ -133,6 +139,8 @@ class Accueil(RelativeLayout) :
             RoundedRectangle(pos=(self.size[1]*0.025,self.size[1]*0.025),size=(self.size[0]*0.95,self.size[1]*0.95),radius=[30,30])
             Color(0,0,0)
             Rectangle(pos=(self.size[0]//13 ,0),size=(self.size[0]//100,self.size[1]))
+            
+        RoundedImage(image_source="image/layout_bg_app.png",radius=[30,30],pos=(self.size[1]*0.025,self.size[1]*0.025),size=(self.size[0]*0.95,self.size[1]*0.95))
         
         desctiption = Button(text="desctiption \nde \nl'app \net \ndu \nprojet",pos_hint={"center_x":0.5,"center_y":0.6},color=(0,0,0),background_color=(0,0,0,0),size_hint=(None,None))
         desctiption.bind(on_release=self.go_to_affiche)
@@ -164,8 +172,7 @@ class Accueil(RelativeLayout) :
         """
         pas sur de le garder ptet que c'est pas a moi de le faire en tt ca le bouton existe
         """
-        # programe de toi
-
+        # programe de Adrien
         pass
         
 
