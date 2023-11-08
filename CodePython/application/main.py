@@ -134,8 +134,8 @@ class Accueil(RelativeLayout) :
             Color(0,0,0)
             Rectangle(pos=(self.size[0]//13 ,0),size=(self.size[0]//100,self.size[1]))
         
-        desctiption = Label(text="desctiption \nde \nl'app \net \ndu \nprojet",pos_hint={"center_x":0.5,"center_y":0.6},color=(0,0,0))
-        desctiption.bind(on_ref_press=self.go_to_affiche)
+        desctiption = Button(text="desctiption \nde \nl'app \net \ndu \nprojet",pos_hint={"center_x":0.5,"center_y":0.6},color=(0,0,0),background_color=(0,0,0,0))
+        desctiption.bind(on_release=self.go_to_affiche)
         credit = Label(text="Crédit :   \nOscar : application \nAdrien : controle du drone ",pos_hint={"center_x":0.6,"center_y":0.2})
         titre = Label(text='[b]Drone Automatik[/b]',size_hint_y=None,color=(1, 1, 1),height=200,pos_hint={"center_x":0.6,"center_y":0.85},font_size=25,markup=True)
         
@@ -153,7 +153,7 @@ class Accueil(RelativeLayout) :
         self.add_widget(desctiption)
     
     def go_to_affiche(self,value):
-        self.ui_screen.go_to("affiche")
+        self.ui_screen.go_to(value,"affiche")
 
 
 
