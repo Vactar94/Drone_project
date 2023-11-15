@@ -30,6 +30,32 @@ from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.boxlayout import BoxLayout
 from kivy.animation import Animation
+from kivy.graphics import Ellipse, Color
+
+class RoundedImage(BoxLayout):
+    def __init__(self, source,radius, **kwargs):
+        self.orientation="vertical"
+        super(RoundedImage, self).__init__(**kwargs)
+        
+        self.image = AsyncImage(source=source,size=self.size,allow_stretch=True, keep_ratio=False)
+        self.add_widget(self.image)
+
+        """with self.canvas.before:
+            # Créez un masque de coin arrondi pour l'image
+            Color(1, 1, 1, 1)
+            self.rect = RoundedRectangle(size=[self.size[0]/2,self.size[1]], pos=self.pos,radius=[radius,radius])
+            self.bind(size=self._update_rect, pos=self._update_rect)"""
+
+    def _update_rect(self, instance, value):
+        # Mettez à jour la position et la taille du masque de coin arrondi
+        self.rect.pos = self.pos
+
+        self.rect.size = self.size
+
+
+
+
+Window.size = [360, 620]
 
 class MyScreenManager(ScreenManager):
     def __init__(self, **kwargs):
@@ -49,10 +75,15 @@ class MyScreenManager(ScreenManager):
 
 class FirstScreen(Screen):
     def __init__(self, **kw):
+        self.size = Window.size
         super().__init__(**kw)
-        b = Button(text="go to screen 2")
+        b = Button(text="go to screen 2",size_hint=(None,None),pos_hint={"center_x":0.5,"center_y":0.5})
         b.bind(on_release=self.go_to_screen_2)
+        bg = RelativeLayout(size_hint=(None,None),size=self.size)
+        rounded_image = RoundedImage(source='image/layout_bg_app_tras_bg.png',size_hint=(None,None),size=self.size,radius=50)
+        bg.add_widget(rounded_image)
         self.add_widget(b)
+        self.add_widget(bg)
     
     def go_to_screen_2(self,value):
         self.manager.current= "second"
@@ -60,8 +91,10 @@ class FirstScreen(Screen):
 
 class SecondScreen(Screen):
     def __init__(self, **kw):
+        self.size = Window.size
+        
         super().__init__(**kw)
-        b = Button(text="go to screen 1")
+        b = Button(text="go to screen 1",size_hint=(None,None),pos_hint={"center_x":0.5,"center_y":0.5})
         b.bind(on_release=self.go_to_screen_1)
         self.add_widget(b)
 
