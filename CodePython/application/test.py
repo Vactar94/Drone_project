@@ -37,14 +37,14 @@ class RoundedImage(BoxLayout):
         self.orientation="vertical"
         super(RoundedImage, self).__init__(**kwargs)
         
-        self.image = AsyncImage(source=source,size=self.size,allow_stretch=True, keep_ratio=False)
+        self.image = AsyncImage(source=source,size=[self.size[0]/2-radius,self.size[1]], keep_ratio=False,pos_hint={"center_x":0.25,"center_y":0.0})
         self.add_widget(self.image)
 
-        """with self.canvas.before:
+        with self.canvas.before:
             # Créez un masque de coin arrondi pour l'image
             Color(1, 1, 1, 1)
-            self.rect = RoundedRectangle(size=[self.size[0]/2,self.size[1]], pos=self.pos,radius=[radius,radius])
-            self.bind(size=self._update_rect, pos=self._update_rect)"""
+            self.rect = RoundedRectangle(size=[self.size[0]/2-radius,self.size[1]], pos=self.pos,radius=[radius,radius])
+            self.bind(size=self._update_rect, pos=self._update_rect)
 
     def _update_rect(self, instance, value):
         # Mettez à jour la position et la taille du masque de coin arrondi
