@@ -57,9 +57,10 @@ class Better_Screen(Screen) :
 
 class RoundedImage(Widget):
     def __init__(self, image_source, radius, **kwargs):
+        self.image = Image(source=image_source, allow_stretch=True, keep_ratio=False)
         super(RoundedImage, self).__init__(**kwargs)
 
-        self.image = Image(source=image_source, allow_stretch=True, keep_ratio=False)
+        
         self.add_widget(self.image)
 
         self.radius = radius
