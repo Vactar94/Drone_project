@@ -20,9 +20,27 @@ from kivy.lang import Builder
 from kivy.uix.image import Image,AsyncImage
 from kivy.uix.screenmanager import ScreenManager, Screen,RiseInTransition
 from jnius import autoclass
-import pyglet
+
+from pyglet.input import get_devices, Device
+from plyer import network
 import platform
 
+def is_controller_connected():
+    devices = get_devices()
+    for device in devices:
+        if isinstance(device, Device):
+            if 'Xbox Wireless Controller' in device.name.lower():
+                return True
+    return False
+
+def is_drones_connected():
+    devices = get_devices()
+    if network.status == 'connected':
+        wifi_name = network.available_ssids()
+        if "TELLO-dronensi" in wifi_name:
+              return True
+        else: return False
+    else : return False
 
 def det_sys():
     """determine dans quelle OS on est return la première lettre de l'os :
@@ -171,7 +189,7 @@ class Accueil(RelativeLayout) :
         self.add_widget(desctiption)
     
     def drone_conectivity(self,value):
-        print("appelle de la fonction drosne_conectivity")
+        print(is_drones_connected())
         
 
     def go_to_affiche(self,value):
@@ -187,7 +205,7 @@ class Accueil(RelativeLayout) :
         pas sur de le garder ptet que c'est pas a moi de le faire en tt ca le bouton existe
         """
         # programe de Adrien
-        pass
+        print(is_controller_connected())
         
 
 # ------------------------ page du menue ------------------------ # 
