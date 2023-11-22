@@ -20,9 +20,8 @@ from kivy.lang import Builder
 from kivy.uix.image import Image,AsyncImage
 from kivy.uix.screenmanager import ScreenManager, Screen,RiseInTransition
 from jnius import autoclass
-
+from plyer import wifi
 from pyglet.input import get_devices, Device
-from plyer import network
 import platform
 
 def is_controller_connected():
@@ -34,13 +33,15 @@ def is_controller_connected():
     return False
 
 def is_drones_connected():
-    devices = get_devices()
-    if network.status == 'connected':
-        wifi_name = network.available_ssids()
+    print("pute")
+    if wifi == 'connected':
+        wifi_name = wifi.available_ssids()
         if "TELLO-dronensi" in wifi_name:
               return True
-        else: return False
-    else : return False
+        else:
+            return False
+    else : 
+        return False
 
 def det_sys():
     """determine dans quelle OS on est return la première lettre de l'os :
@@ -189,7 +190,8 @@ class Accueil(RelativeLayout) :
         self.add_widget(desctiption)
     
     def drone_conectivity(self,value):
-        print(is_drones_connected())
+        #print(is_drones_connected())
+        pass
         
 
     def go_to_affiche(self,value):
