@@ -1,0 +1,3 @@
+title=Drone Antomatik
+author=Ogama
+orientation=portrait
