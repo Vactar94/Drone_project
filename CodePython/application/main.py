@@ -148,19 +148,32 @@ class Accueil(RelativeLayout) :
         credit = Label(text="Crédit :   \nOscar : application \nAdrien : controle du drone ",pos_hint={"center_x":0.6,"center_y":0.2})
         titre = Label(text='[b]Drone Automatik[/b]',size_hint_y=None,color=(1, 1, 1),height=200,pos_hint={"center_x":0.6,"center_y":0.85},font_size=25,markup=True)
         
-        #------------- bouton pour passer aux menus -------------#
-        button = Button(text="",size_hint=(None,None),size=(80,40),pos_hint={"center_x":0.11,"center_y":0.9},background_color=(0,0,0,0),background_normal="")
-        button.bind(pos=self.update_bg, size=self.update_bg)
-        with button.canvas.before:
+        #------------- bouton pour connecter mannette  -------------#
+        conectivity_contoler = Button(text="",size_hint=(None,None),size=(80,40),pos_hint={"center_x":0.11,"center_y":0.9},background_color=(0,0,0,0),background_normal="")
+        conectivity_contoler.bind(pos=self.update_bg, size=self.update_bg)
+        with conectivity_contoler.canvas.before:
             Color(0, 0, 0)
-            button.bg_rect = Image(source="image/bg_menue.png",pos=button.pos,size=button.size)
-        button.bind(on_release=self.mannette_conectivity)
+            conectivity_contoler.bg_rect = Image(source="image/bg_mannette_menue.png",pos=conectivity_contoler.pos,size=conectivity_contoler.size)
+        conectivity_contoler.bind(on_release=self.mannette_conectivity)
 
-        self.add_widget(button)
+
+        conectivity_drone = Button(text="",size_hint=(None,None),size=(80,40),pos_hint={"center_x":0.11,"center_y":0.1},background_color=(0,0,0,0),background_normal="")
+        conectivity_drone.bind(pos=self.update_bg, size=self.update_bg)
+        with conectivity_drone.canvas.before:
+            Color(0, 0, 0)
+            conectivity_drone.bg_rect = Image(source="image/bg_drone_menue.png",pos=conectivity_drone.pos,size=conectivity_drone.size)
+        conectivity_drone.bind(on_release=self.drone_conectivity)
+        
+        self.add_widget(conectivity_drone)
+        self.add_widget(conectivity_contoler)
         self.add_widget(credit)
         self.add_widget(titre)
         self.add_widget(desctiption)
     
+    def drone_conectivity(self,value):
+        print("appelle de la fonction drosne_conectivity")
+        
+
     def go_to_affiche(self,value):
         self.ui_screen.go_to(value,"affiche")
 
