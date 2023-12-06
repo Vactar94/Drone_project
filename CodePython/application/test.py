@@ -109,39 +109,5 @@ class TestApp(App):
         return sm
 
 if __name__ == '__main__':
-    ligne1 = {"num":1, "arrets":["lycee", "piscine", "gare"],"circulaire":True}
-    ligne2 = {"num":2, "arrets":["mairie", "parc","stade","piscine"],"circulaire":False}
-    ligne3 = {"num":3, "arrets":["mairie", "parc","stade","piscine","lycee", "gare"],"circulaire":False}
-    reseau = [ligne2, ligne1, ligne3]
-
     def direct(arrivee,depart,reseau) :
-        for ligne in reseau :
-            if arrivee in ligne["arrets"] and depart in ligne["arrets"] :
-                return True
-        return False
-
-
-    def lister_ligne(reseau:list):
-        d = {}
-        for ligne in reseau :
-            for station in ligne["arrets"] :
-                try  :
-                    d[station].append(ligne["num"])
-                except :
-                    d[station] = [ligne["num"]]
-        return d
-
-    def direct_bis(depart,arrivee,dict_r:dict) :
-        
-            for i in dict_r[depart]  :
-                for j in dict_r[arrivee] :
-                    if i == j : 
-                        return True 
-            return False
-
-    print("départ : piscine")
-    print("arrivée : parc")
-    print(f"reseau : {reseau}")
-    print(f"dict réseau : {lister_ligne(reseau)}")
-    print(direct("parc","piscine",reseau))
-    print(direct_bis("parc","piscine",lister_ligne(reseau)))
+    TestApp().run()
