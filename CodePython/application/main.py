@@ -148,9 +148,6 @@ class The_app(App):
     
 
 
-        
-
-
 class UiScreen(Better_Screen):
     
     def __init__(self, **kwargs):
@@ -161,6 +158,7 @@ class UiScreen(Better_Screen):
 
     def go_to(self,value,name_of_the_target_screen:str):
         self.manager.current = name_of_the_target_screen
+
 
 # -- les mains pages de l'app -- #
 class UI(PageLayout):
@@ -174,6 +172,7 @@ class UI(PageLayout):
 
         self.add_widget(self.page1)
         self.add_widget(self.page2)
+
 
     # ------------------ page d'accueil ------------------ #
 class Accueil(RelativeLayout) :
