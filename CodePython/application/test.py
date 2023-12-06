@@ -109,5 +109,4 @@ class TestApp(App):
         return sm
 
 if __name__ == '__main__':
-    def direct(arrivee,depart,reseau) :
     TestApp().run()
