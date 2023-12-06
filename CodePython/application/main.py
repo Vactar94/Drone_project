@@ -21,19 +21,29 @@ from kivy.uix.image import Image,AsyncImage
 from kivy.uix.screenmanager import ScreenManager, Screen,RiseInTransition
 from jnius import autoclass
 from plyer import wifi
-from pyglet.input import get_devices, Device
+from code_python.notification import Notification, crea_notif
 import platform
+from random import randint
+
+import bluetooth
+
+
+import bluetooth
+
 
 def is_controller_connected():
-    devices = get_devices()
-    for device in devices:
-        if isinstance(device, Device):
-            if 'Xbox Wireless Controller' in device.name.lower():
-                return True
+    device_address = '00:00:00:00:00:00'  # mettre l'adresse de la manette
+    device_name = 'Xbox Wireless Controller'
+    nearby_devices = bluetooth.discover_devices(duration=8, lookup_names=True, lookup_class=True, device_id=-1, device_name=None, device_class=None, device_transport=None, bluetoothctl=None)
+
+    for addr, name, _ in nearby_devices:
+        if addr == device_address and name == device_name:
+            return True
+
     return False
 
 def is_drones_connected():
-    print("pute")
+
     if wifi == 'connected':
         wifi_name = wifi.available_ssids()
         if "TELLO-dronensi" in wifi_name:
@@ -42,7 +52,7 @@ def is_drones_connected():
             return False
     else : 
         return False
-
+    
 def det_sys():
     """determine dans quelle OS on est return la première lettre de l'os :
         W : Windows
@@ -69,16 +79,28 @@ Window.OS = det_sys()
 
 
 class Better_Screen(Screen) :
+    
+    def __init__(self,notifications : dict = None, **kw):
+        super().__init__(**kw)
+
+        if notifications != None and type(notifications) != dict:
+            print("notification incorrecte il faut passer un dictonnaire enculer ")
+            print(notifications.text)
+            a = 1+"g"
+        else :
+            self.notifications = notifications
+
+
+            
 
     def update_bg(self,element,value):
         element.bg_rect.pos = element.pos
         element.bg_rect.size = element.size
 
 class RoundedImage(Widget):
-    def __init__(self, image_source, radius, **kwargs):
+    def __init__(self, image_source:str, radius:list[int,int], **kwargs):
         self.image = Image(source=image_source, allow_stretch=True, keep_ratio=False)
         super(RoundedImage, self).__init__(**kwargs)
-
         
         self.add_widget(self.image)
 
@@ -102,6 +124,8 @@ class The_app(App):
     def build(self):
         sm = ScreenManager(transition=RiseInTransition())
 
+        
+
         #création des screens  
 
         ui_screen = UiScreen(name='ui')
@@ -121,9 +145,13 @@ class The_app(App):
         sm.add_widget(automatique_screen)
         
         return sm
+    
 
-# faire en sorte que un page layout soit un screen pour faire en sorte de passer d'une page a l'autre de avec fluidité
-class UiScreen(Screen):
+
+        
+
+
+class UiScreen(Better_Screen):
     
     def __init__(self, **kwargs):
         
@@ -139,8 +167,10 @@ class UI(PageLayout):
     def __init__(self,ui_screen, **kwargs):
         self.ui_screen = ui_screen  # Stocker une référence à UiScreen
         super(UI, self).__init__(**kwargs)
-        self.page1 = Accueil(ui_screen=ui_screen)
-        self.page2 = Menue(ui_screen=ui_screen)
+        notifications = crea_notif([2,2])
+
+        self.page1 = Accueil(ui_screen=ui_screen,notif=notifications)
+        self.page2 = Menue(ui_screen=ui_screen, notif=notifications)
 
         self.add_widget(self.page1)
         self.add_widget(self.page2)
@@ -148,9 +178,10 @@ class UI(PageLayout):
     # ------------------ page d'accueil ------------------ #
 class Accueil(RelativeLayout) :
     n=0
-    def __init__(self,ui_screen,**kwargs):
+    def __init__(self,ui_screen,notif:dict,**kwargs):
         self.ui_screen = ui_screen
         super().__init__(**kwargs)
+        self.notifications = notif
         self.size = Window.size
         with self.canvas.before:
             Color(0, 0, 0)
@@ -182,16 +213,24 @@ class Accueil(RelativeLayout) :
             Color(0, 0, 0)
             conectivity_drone.bg_rect = Image(source="image/bg_drone_menue.png",pos=conectivity_drone.pos,size=conectivity_drone.size)
         conectivity_drone.bind(on_release=self.drone_conectivity)
-        
+
+
+
+
+
         self.add_widget(conectivity_drone)
         self.add_widget(conectivity_contoler)
         self.add_widget(credit)
         self.add_widget(titre)
         self.add_widget(desctiption)
-    
-    def drone_conectivity(self,value):
-        #print(is_drones_connected())
-        pass
+        
+
+
+    def drone_conectivity(self,button):
+        if is_drones_connected() : v = 1
+        else : v = 0
+        print(self.notifications["D"][v])
+        self.notifications["D"][v].anim.start(self.notifications["D"][v])
         
 
     def go_to_affiche(self,value):
@@ -206,13 +245,13 @@ class Accueil(RelativeLayout) :
         """
         pas sur de le garder ptet que c'est pas a moi de le faire en tt ca le bouton existe
         """
-        # programe de Adrien
-        print(is_controller_connected())
+        value = int(is_controller_connected())
+        self.notifications["M"][value].anim.start(self.notifications["M"][value])
         
 
 # ------------------------ page du menue ------------------------ # 
 class Menue(RelativeLayout):
-    def __init__(self,ui_screen, **kwargs):
+    def __init__(self,ui_screen,notif:dict=None, **kwargs):
         super().__init__(**kwargs)
         self.ui_screen = ui_screen
 
@@ -229,7 +268,14 @@ class Menue(RelativeLayout):
         button_automatique = Layout_bouton_menue(name="automatique",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(1/25),self.size[1]*(5/9)))
         button_controles = Layout_bouton_menue(name="controles",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(2/9),self.size[1]*(2/9)))
         button_antipersonelle = Layout_bouton_menue(name="antipersonelle",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(2/9),self.size[1]*(5/9)))
+        
+        #add notifications 
+        self.notif = notif
 
+        for k in self.notif.keys() :
+            print(k)
+            self.add_widget(self.notif[k][0])
+            self.add_widget(self.notif[k][1])
 
         self.add_widget(titre_page)
         self.add_widget(button_classique)
@@ -277,13 +323,10 @@ class Screen_proj(Better_Screen):
         self.add_widget(img_bg)
         self.add_widget(menue_button)
 
-
     def go_to_menue(self,value) :
         self.manager.current = "ui"
 
 
-
-        
 # ------ layout de des sous menue ------ #
 class Screen_sous_menu(Better_Screen) :
         
