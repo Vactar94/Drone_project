@@ -34,7 +34,7 @@ import bluetooth
 def is_controller_connected():
     device_address = '00:00:00:00:00:00'  # mettre l'adresse de la manette
     device_name = 'Xbox Wireless Controller'
-    nearby_devices = bluetooth.discover_devices(duration=8, lookup_names=True, lookup_class=True, device_id=-1, device_name=None, device_class=None, device_transport=None, bluetoothctl=None)
+    nearby_devices = bluetooth.discover_devices(duration=8, lookup_names=True, lookup_class=True, device_id=-1)
 
     for addr, name, _ in nearby_devices:
         if addr == device_address and name == device_name:
@@ -229,7 +229,6 @@ class Accueil(RelativeLayout) :
     def drone_conectivity(self,button):
         if is_drones_connected() : v = 1
         else : v = 0
-        print(self.notifications["D"][v])
         self.notifications["D"][v].anim.start(self.notifications["D"][v])
         
 
