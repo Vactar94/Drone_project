@@ -124,8 +124,6 @@ class The_app(App):
     def build(self):
         sm = ScreenManager(transition=RiseInTransition())
 
-        
-
         #création des screens  
 
         ui_screen = UiScreen(name='ui')
