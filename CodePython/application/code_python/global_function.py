@@ -18,7 +18,7 @@ def main():
 
 
 
-def is_controller_connected():
+def chec_controller_connected(is_controller_connected):
     device_address = '00:00:00:00:00:00'  # mettre l'adresse de la manette
     device_name = ['Xbox Wireless Controller','Controller','controller','Pro Controller', 'pro controller', 'Pro controller', 'pro Controller']
     nearby_devices = bluetooth.discover_devices(duration=8, lookup_names=True, lookup_class=True, device_id=-1)
@@ -26,9 +26,10 @@ def is_controller_connected():
 
     for addr, name, _ in nearby_devices:
         if  name in device_name:
+            is_controller_connected = True
             return True
 
-    return False
+    is_controller_connected = False
 
 def is_drones_connected():
 

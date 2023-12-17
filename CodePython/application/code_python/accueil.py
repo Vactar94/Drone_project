@@ -5,16 +5,17 @@ from kivy.core.window import Window
 from kivy.graphics import Color, Rectangle, RoundedRectangle
 from kivy.uix.image import Image
 import threading
+from code_python.notification import NOTIF_MANAGER
 
 from code_python.better_Kivy import RoundedImage
-from code_python.global_function import is_drones_connected, is_controller_connected
+from code_python.global_function import is_drones_connected, chec_controller_connected
 
 class Accueil(RelativeLayout) :
     n=0
-    def __init__(self,ui_screen,notif:dict,**kwargs):
+    def __init__(self,ui_screen,**kwargs):
+        self._is_controller_connected = None
         self.ui_screen = ui_screen
         super().__init__(**kwargs)
-        self.notifications = notif
         self.size = Window.size
         with self.canvas.before:
             Color(0, 0, 0)
@@ -56,13 +57,28 @@ class Accueil(RelativeLayout) :
         self.add_widget(credit)
         self.add_widget(titre)
         self.add_widget(desctiption)
+    
+    @property
+    def is_controller_connected(self) :
+        return self._is_controller_connected
+    
+    @is_controller_connected.setter
+    def is_controller_connected(self,value) :
+        self._is_controller_connected = value
+
+        if value :
+            NOTIF_MANAGER.Waiting_notifications["M"][1] = True
+        elif not value : 
+            NOTIF_MANAGER.Waiting_notifications["M"][0] = True
         
+
+
 
 
     def drone_conectivity(self,button):
         if is_drones_connected() : v = 1
         else : v = 0
-        self.notifications["D"][v].anim.start(self.notifications["D"][v])
+        NOTIF_MANAGER.Waiting_notifications["D"][v] = True
         
 
     def go_to_affiche(self,value):
@@ -73,15 +89,15 @@ class Accueil(RelativeLayout) :
         element.bg_rect.size = element.size
          
     def mannette_conectivity_statue(self, dt) :
-        self.conectivity_drone.disabled = False
-        value = int()
-        self.notifications["M"][value].anim.start(self.notifications["M"][value])
+        self.conectivity_contoler.disabled = False
+        v = int()
+        NOTIF_MANAGER.Waiting_notifications["D"][v] = True
 
     def mannette_conectivity(self,button:Button):
         """
         pas sur de le garder ptet que c'est pas a moi de le faire en tt ca le bouton existe
         """
-        self.conectivity_drone.disabled = True
+        self.conectivity_contoler.disabled = True
         
-        threading.Thread(target=is_controller_connected)
+        threading.Thread(target=chec_controller_connected,args=(self.is_controller_connected,))
         

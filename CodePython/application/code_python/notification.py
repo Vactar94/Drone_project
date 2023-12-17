@@ -27,9 +27,6 @@ Window.size = [360, 620]
 
 
 
-def switch_screen(number_layout,max_layout,notification) :
-    pass
-
 class Notification (BoxLayout) : 
 
     def __init__(self,text,duration:int=2,layout:list[int,int]=[1,1],**kwargs) -> None:
@@ -79,6 +76,8 @@ class Notification (BoxLayout) :
         self.pos_hint = {"center_y":0.85}
         self.pos[0] = self.neutral_x
 
+    def start_anim(self) :
+        self.anim.start(self)
 
 def crea_notif(layout:list[int,int]=[1, 1],duration:int=1) -> dict[str:list[Notification]] :
         """
@@ -91,7 +90,18 @@ def crea_notif(layout:list[int,int]=[1, 1],duration:int=1) -> dict[str:list[Noti
         return dict_notif
 
     
+class Notif_Manager() :
+    
+    _Waiting_notifications = {"M":{0:0,1:0},"D":{0:0,1:0}}#ici on créé un dirctionnaire avec en clefs le nom de la notif, et en valuers un dirctionnaire avec en celfs la valeurs de la notif et en valeurs si il faut envoyer la notif ou pas dans la prochiane frame (True or False)
+    @property
+    def Waiting_notifications(self) :
+        """{"lettre de la notif":{0(non):value(True/False), 1(oui):value(True/False)}}"""
+        return self._Waiting_notifications
+    
+    def put_notification(self, screen:Screen=None, waiting_frames:int=0) : 
+        pass
 
+NOTIF_MANAGER = Notif_Manager()
 
 
 if __name__ == "__main__" :
@@ -105,7 +115,7 @@ if __name__ == "__main__" :
             app_box.add_widget(notif_box)
 
             button = Button(text='Cliquez-moi !',size_hint=(None, None))
-            button.bind(on_press=lambda instance: notif_box.anim.start(notif_box))
+            button.bind(on_press=lambda instance: notif_box.start_anim())
             app_box.add_widget(button)
             
             return app_box

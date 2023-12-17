@@ -4,6 +4,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.clock import Clock
 import threading
+from djitellopy import Tello
 import time
 from queue import Queue
 
@@ -19,15 +20,15 @@ class MyApp(App):
         self.layout.add_widget(self.label)
 
         self.result_queue = Queue()  # Queue pour stocker le résultat de la fonction
-
+        self.task = None
         return self.layout
 
     def execute_function(self, instance):
         # Désactive le bouton pendant l'exécution de la fonction
-        self.button.disabled = True
+        instance.disabled = True
 
         # Lance la fonction dans un thread séparé
-        threading.Thread(target=self.long_running_function, args=(self.result_queue,)).start()
+        self.task = threading.Thread(target=self.long_running_function, args=(self.result_queue,)).start()
 
         # Planifie une mise à jour régulière pour vérifier si la fonction est terminée
         Clock.schedule_interval(self.check_function_status, 1.0)
@@ -56,6 +57,6 @@ class MyApp(App):
             Clock.unschedule(self.check_function_status)
 
 if __name__ == '__main__':
-    a = Queue(52)
-    a = "w"
-    print(a)
+    t = Tello()
+
+

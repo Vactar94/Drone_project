@@ -7,7 +7,7 @@ from code_python.better_Kivy import Layout_bouton_menue
 
 
 class Menue(RelativeLayout):
-    def __init__(self,ui_screen,notif:dict=None, **kwargs):
+    def __init__(self,ui_screen,notif:dict={}, **kwargs):
         super().__init__(**kwargs)
         self.ui_screen = ui_screen
 
@@ -27,6 +27,7 @@ class Menue(RelativeLayout):
         
         #add notifications 
         self.notif = notif
+
 
         for k in self.notif.keys() :
             print(k)
