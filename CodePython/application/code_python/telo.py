@@ -3,6 +3,7 @@ from kivy.uix.widget import Widget
 from kivy.graphics.texture import Texture
 from kivy.uix.image import Image
 from djitellopy import Tello
+from code_python.global_function import is_wifi_drones_connected
 import threading
 
 
@@ -33,12 +34,16 @@ class Drone_manager :
     
     @is_connected.setter
     def is_connected(self,value:bool) :
-        self._is_connected = value
+        self._is_connected = self.drone.is_connected = value
+
     
 
 
-    def connect(self) :
-        self.drone.connect(False)
+    def connect(self) -> bool :
+        if is_wifi_drones_connected() :
+            self.drone.connect(False)
+            return True
+        else : return False
 
 
 

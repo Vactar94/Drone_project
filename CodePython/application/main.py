@@ -14,7 +14,7 @@ from code_python.menue import Menue
 from code_python.accueil import Accueil
 from code_python.telo import DRONE
 from code_python.notification import NOTIF_MANAGER
-
+from kivy.config import Config
 
 
 Window.size = [360, 620]
@@ -55,7 +55,7 @@ class The_app(App):
         self.sm.add_widget(antipersonelle_screen)
         self.sm.add_widget(automatique_screen)
 
-        Clock.schedule_interval(self.update, 1.0 / 30.0)
+        Clock.schedule_interval(self.update, 1.0 / 60.0)
         
         return self.sm
     
@@ -99,14 +99,11 @@ class UiScreen(Better_Screen):
                 print(notif)
                 self.add_widget(notif)
     
-        
 
     def go_to(self,value,name_of_the_target_screen:str):
         self.manager.current = name_of_the_target_screen
     
     
-
-
 # -- les mains pages de l'app -- #
 class UI(PageLayout):
     def __init__(self,ui_screen,**kwargs):
@@ -118,8 +115,6 @@ class UI(PageLayout):
         
         self.add_widget(self.page1)
         self.add_widget(self.page2)
-
-
 
 
 
@@ -138,7 +133,6 @@ class Screen_proj(Better_Screen):
 
     def go_to_menue(self,value) :
         self.manager.current = "ui"
-
 
 
 # ------ Screen_sous_menue  ------ #
@@ -183,4 +177,5 @@ class Screen_Automatique(Screen_sous_menu) :
         
 
 if __name__ == "__main__" :
+    Config.set('kivy', 'window_icon', 'CodePython/application/image/logo_drone_aid.ico')
     The_app().run()

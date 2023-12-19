@@ -1,14 +1,16 @@
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
 from kivy.graphics import Color, Rectangle, RoundedRectangle
 from kivy.uix.image import Image
 import threading
 from code_python.notification import NOTIF_MANAGER
+from code_python.telo import DRONE
 
 from code_python.better_Kivy import RoundedImage
-from code_python.global_function import is_drones_connected, chec_controller_connected
+from code_python.global_function import is_wifi_drones_connected, chec_controller_connected
 
 class Accueil(RelativeLayout) :
     n=0
@@ -24,10 +26,8 @@ class Accueil(RelativeLayout) :
             RoundedRectangle(pos=(self.size[1]*0.025,self.size[1]*0.025),size=(self.size[0]*0.95,self.size[1]*0.95),radius=[30,30])
             Color(0,0,0)
             Rectangle(pos=(self.size[0]//13 ,0),size=(self.size[0]//100,self.size[1]))
-            
-        RoundedImage(image_source="image/layout_bg_app.png",radius=[30,30],pos=(self.size[1]*0.025,self.size[1]*0.025),size=(self.size[0]*0.95,self.size[1]*0.95))
-        
-        desctiption = Button(text="desctiption \nde \nl'app \net \ndu \nprojet",pos_hint={"center_x":0.5,"center_y":0.6},color=(0,0,0),background_color=(0,0,0,0),size_hint=(None,None))
+
+        desctiption = Button(text="Notre drone révolutionnaire,\n contrôlé par cet application, \n optimise la gestion des jeux en \nreconnaissant et déplaçant des \néquipements sportifs jusqu'à\n 1,5 kg. Sa navigation \nintelligente et sa stabilité\n exceptionnelle assurent \nun fonctionnement fluide\n et sécurisé. Avec des modes \nmanuels et automatiques, il\n offre une expérience sportive\n dynamique, centralisant \nle travail du personnel.",pos_hint={"center_x":0.6,"center_y":0.56},color=(0,0,0),background_color=(0,0,0,0),size_hint=(None,None))
         desctiption.bind(on_release=self.go_to_affiche)
         credit = Label(text="Crédit :   \nOscar : application \nAdrien : controle du drone ",pos_hint={"center_x":0.6,"center_y":0.2})
         titre = Label(text='[b]Drone Automatik[/b]',size_hint_y=None,color=(1, 1, 1),height=200,pos_hint={"center_x":0.6,"center_y":0.85},font_size=25,markup=True)
@@ -76,7 +76,7 @@ class Accueil(RelativeLayout) :
 
 
     def drone_conectivity(self,button):
-        if is_drones_connected() : v = 1
+        if DRONE.connect() : v = 1
         else : v = 0
         NOTIF_MANAGER.Waiting_notifications["D"][v] = True
         

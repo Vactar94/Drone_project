@@ -1,4 +1,4 @@
-from plyer import wifi
+import os
 import platform
 import bluetooth
 
@@ -31,17 +31,40 @@ def chec_controller_connected(is_controller_connected):
 
     is_controller_connected = False
 
-def is_drones_connected():
 
-    if wifi == 'connected':
-        wifi_name = wifi.available_ssids()
-        if "TELLO-dronensi" in wifi_name:
-              return True
-        else:
-            return False
-    else : 
-        return False
+
+# fonctions pour savoir si wifi est propre a envoyer des paquet au drone #
+def is_wifi_drones_connected():
+    """determine si l'ordinateur est connecté au résaux pour le drone"""
+    # Exécutez une commande pour obtenir la liste des réseaux Wi-Fi disponibles
+    result = get_connected_wifi_name_windows()
+    # Recherchez le nom du réseau "TELLO-dronensi" dans le résultat
     
+    list_name_drone = ["TELLO", "Drone", "DRONE", "Tello"]
+    for name_wifi_possible in list_name_drone :  
+        if name_wifi_possible in result :
+            return True
+    return False
+
+
+def get_connected_wifi_name_windows()->str:
+    """determination du nom du wifi pour pouvoir l'utiliser après."""
+    if det_sys() == "W":
+        try:
+            result = os.popen('netsh wlan show interfaces | findstr "SSID"').read()
+            # Analyse le résultat pour obtenir le nom du réseau
+            ssid_line = [line for line in result.split('\n') if 'SSID' in line]
+            if ssid_line:
+                ssid = ssid_line[0].split(":")[1].strip()
+                return ssid
+        except Exception as e:
+            print(f"Une erreur s'est produite : {e}")
+    elif det_sys() == "L" :
+        pass
+    elif det_sys() == "A" :
+        pass
+    return None
+
 def det_sys():
     """determine dans quelle OS on est return la première lettre de l'os :
         W : Windows
@@ -50,15 +73,13 @@ def det_sys():
         A : Android
         Z : OS non reconue
     """
-
     system = platform.system()  # Récupère le nom du système d'exploitation
-    release = platform.release()  # Récupère la version du système d'exploitation
-
-    print(f"Système d'exploitation : {system}")
-    print(f"Version : {release}")
-
     if system == "Windows":                                                         return "W"
     elif system == "Linux":                                                         return "L"
     elif system == "Darwin":                                                        return "M"
     elif platform.system() == "Linux" and "android" in platform.platform().lower(): return "A"
     else :                                                                          return "Z"
+
+if __name__ == "__main__" :
+    print(get_connected_wifi_name_windows())
+
