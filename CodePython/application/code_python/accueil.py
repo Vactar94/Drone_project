@@ -1,14 +1,13 @@
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.relativelayout import RelativeLayout
-from kivy.uix.boxlayout import BoxLayout
+
 from kivy.core.window import Window
 from kivy.graphics import Color, Rectangle, RoundedRectangle
 from kivy.uix.image import Image
 import threading
 from code_python.notification import NOTIF_MANAGER
 from code_python.telo import DRONE
-
 
 from code_python.better_Kivy import Updatable_Label, UPDATE_MANAGER
 from code_python.global_function import is_wifi_drones_connected, chec_controller_connected
