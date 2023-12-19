@@ -9,7 +9,8 @@ import threading
 from code_python.notification import NOTIF_MANAGER
 from code_python.telo import DRONE
 
-from code_python.better_Kivy import RoundedImage
+
+from code_python.better_Kivy import Updatable_Label, UPDATE_MANAGER
 from code_python.global_function import is_wifi_drones_connected, chec_controller_connected
 
 class Accueil(RelativeLayout) :
@@ -50,6 +51,14 @@ class Accueil(RelativeLayout) :
         self.conectivity_drone = conectivity_drone
 
 
+        #batterie_drone = DRONE.get_battery()
+        #if batterie_drone >= 0 :
+        #    text_batt = "Batterie du drone :"
+        #else :
+        #    text_batt = "Connectez le drone pour avoir la batterie "
+        
+        #batterie_drone_label = Updatable_Label(text=text_batt,frequence=1,updating_variable=DRONE.get_battery) pour une futur MAJ ^^
+        
 
 
         self.add_widget(conectivity_drone)

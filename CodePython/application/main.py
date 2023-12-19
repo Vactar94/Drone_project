@@ -6,19 +6,20 @@ from kivy.core.window import Window
 from kivy.graphics import Color
 from kivy.uix.image import Image
 from kivy.uix.screenmanager import ScreenManager,RiseInTransition
-from code_python.notification import Notification, crea_notif
+from kivy.config import Config
 from kivy.clock import Clock
-from code_python.global_function import det_sys
-from code_python.better_Kivy import Better_Screen, Screen_sous_menu
+from code_python.notification import crea_notif
+from code_python.better_Kivy import Better_Screen, Screen_sous_menu, UPDATE_MANAGER
 from code_python.menue import Menue
 from code_python.accueil import Accueil
+from code_python.global_function import SYSTEM
 from code_python.telo import DRONE
 from code_python.notification import NOTIF_MANAGER
-from kivy.config import Config
+
 
 
 Window.size = [360, 620]
-Window.OS = det_sys()
+Window.OS = SYSTEM
 
 
 
@@ -32,6 +33,7 @@ class The_app(App):
         self.sm = ScreenManager(transition=RiseInTransition())
         self.dm = DRONE
         self.task = None
+        self.seconde = 0
 
 
 
@@ -41,7 +43,7 @@ class The_app(App):
         notifs = crea_notif()
         ui_screen = UiScreen(name='ui', notifications=notifs.copy())
         controle_screen = Screen_Controles(name='controles', notifications=notifs.copy())
-        antipersonelle_screen = Screen_Antipersonelle(name="antipersonelle", notifications=notifs.copy())
+        rammassage_screen = Screen_Rammassage(name="rammassage", notifications=notifs.copy())
         classique_screen = Screen_Classique(name="classique", notifications=notifs.copy())
         automatique_screen = Screen_Automatique(name="automatique", notifications=notifs.copy())
         screen_affiche = Screen_proj(name="affiche", notifications=notifs.copy())
@@ -52,28 +54,36 @@ class The_app(App):
         self.sm.add_widget(classique_screen)
         self.sm.add_widget(screen_affiche)
         self.sm.add_widget(controle_screen)
-        self.sm.add_widget(antipersonelle_screen)
+        self.sm.add_widget(rammassage_screen)
         self.sm.add_widget(automatique_screen)
 
         Clock.schedule_interval(self.update, 1.0 / 60.0)
+        Clock.schedule_interval(self.check_long, 1.0 / 1.0)
         
         return self.sm
+    
+    def check_long(self, dt) :
+        self.seconde += 1
+        print(self.seconde)
+        UPDATE_MANAGER.update_all_1()
     
     def update(self,dt) :
         """main_loop avec toutes les updates"""
         self.update_notif()
         self.update_streem()
+        UPDATE_MANAGER.update_all_60()
+        #print(DRONE.is_connected)
+        
         
     
     def update_streem(self) :
         if self.sm.current_screen.streem_background :
             if self.dm.is_connected:
-                self.sm.current_screen.background = self.dm.get_image()
+                self.sm.current_screen.background = self.dm.get_image(self.sm.current_screen.background)
             else : self.connect_drone()
 
 
     def update_notif(self) :
-        print(self.sm.current_screen)
         W_N = NOTIF_MANAGER.Waiting_notifications 
         for k in W_N.keys() :
             for i in W_N[k].keys() : 
@@ -81,7 +91,7 @@ class The_app(App):
                     self.sm.current_screen.notifications[k][i].start_anim()
                     W_N[k][i] = False
             
-    def connect_drone(self) :
+    def connect_drone(self)->bool :
         return self.dm.connect()
 
 class UiScreen(Better_Screen):
@@ -96,7 +106,6 @@ class UiScreen(Better_Screen):
         #adding notif
         for k in self.notifications.keys() :
             for notif in self.notifications[k] :
-                print(notif)
                 self.add_widget(notif)
     
 
@@ -146,17 +155,21 @@ class Screen_Controles(Screen_sous_menu) :
 
         super().__init__(**kwargs, text_titre="Controles", icone=icone, background=background, streem_background=False)
         self.add_widget(self.redu_layout)
-        self.add_widget(self.background)
+        self.box_background.pos_hint = {"center_x": 0.9,"center_y": 0.5}
+        self.box_background.size_hint = (None, None)
+        self.box_background.size = (Window.size[0]*0.8, Window.size[1]*0.8)
+
+        self.add_widget(self.box_background)
         
         
         
 
-class Screen_Antipersonelle(Screen_sous_menu) :
+class Screen_Rammassage(Screen_sous_menu) :
     def __init__(self,**kwargs):
-        icone = Image(source="image/icone_button_antipersonelle_bg.png")
-        super().__init__(**kwargs, text_titre="Antipersonnelle", icone=icone, streem_background=True)
+        icone = Image(source="image/icone_button_rammassage_bg.png")
+        super().__init__(**kwargs, text_titre="Rammassage De Balles", icone=icone, streem_background=True)
         self.add_widget(self.redu_layout)
-        self.add_widget(self.background)
+        self.add_widget(self.box_background)
 
 
 
@@ -165,7 +178,7 @@ class Screen_Classique(Screen_sous_menu) :
         icone = Image(source="image/icone_button_classique_bg.png")
         super().__init__(**kwargs, text_titre="Classique", icone=icone, streem_background=True)
         self.add_widget(self.redu_layout)
-        self.add_widget(self.background)
+        self.add_widget(self.box_background)
         
 
 class Screen_Automatique(Screen_sous_menu) :
@@ -173,7 +186,7 @@ class Screen_Automatique(Screen_sous_menu) :
         icone = Image(source="image/icone_button_automatique_bg.png")
         super().__init__(**kwargs, text_titre="Automatique", icone=icone, streem_background=True)
         self.add_widget(self.redu_layout)
-        self.add_widget(self.background)
+        self.add_widget(self.box_background)
         
 
 if __name__ == "__main__" :

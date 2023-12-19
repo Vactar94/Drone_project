@@ -1,8 +1,10 @@
 from kivy.uix.label import Label
+from kivy.uix.widget import Widget
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.core.window import Window
 from kivy.graphics import Color, Rectangle, RoundedRectangle
 
+from code_python.telo import DRONE
 from code_python.better_Kivy import Layout_bouton_menue
 
 
@@ -23,14 +25,15 @@ class Menue(RelativeLayout):
         button_classique = Layout_bouton_menue(name="classique",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(1/25),self.size[1]*(2/9)))
         button_automatique = Layout_bouton_menue(name="automatique",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(1/25),self.size[1]*(5/9)))
         button_controles = Layout_bouton_menue(name="controles",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(2/9),self.size[1]*(2/9)))
-        button_antipersonelle = Layout_bouton_menue(name="antipersonelle",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(2/9),self.size[1]*(5/9)))
+        button_rammassage = Layout_bouton_menue(name="rammassage",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(2/9),self.size[1]*(5/9)))
         
         #add notifications 
         self.notif = notif
 
 
+
+
         for k in self.notif.keys() :
-            print(k)
             self.add_widget(self.notif[k][0])
             self.add_widget(self.notif[k][1])
 
@@ -38,4 +41,4 @@ class Menue(RelativeLayout):
         self.add_widget(button_classique)
         self.add_widget(button_automatique)
         self.add_widget(button_controles)
-        self.add_widget(button_antipersonelle)
+        self.add_widget(button_rammassage)

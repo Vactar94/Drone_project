@@ -39,12 +39,29 @@ class Drone_manager :
     
 
 
-    def connect(self) -> bool :
+    def connect(self)-> bool :
         if is_wifi_drones_connected() :
             self.drone.connect(False)
+            self.is_connected = True
             return True
         else : return False
 
+    def get_battery(self)-> int :
+        """Get current battery percentage Returns:
+    int: 0-100 or retrun -1 if the drone are not connected"""
+        if self.is_connected :
+            return self.drone.get_battery()
+        else :
+            return -1
+    
+    def get_temph(self) :
+        """Get average temperature Returns:
+    float: average temperature (°C)
+    -1 if the drone are not connected"""
+        if self.is_connected :
+            return self.drone.get_temperature()
+        else : 
+            return -1
 
 
     def start_streeming(self) :
@@ -52,7 +69,7 @@ class Drone_manager :
         if self.drone.is_connected :
             try :
                 self.drone.set_video_bitrate(0)
-                self.drone.stream_on()
+                self.drone.streamon()
                 return True
             except Exception as e:
                 print(e)
@@ -61,18 +78,24 @@ class Drone_manager :
 
 
     def get_image(self,image:Image) -> Image :
-       
-        frame = self.drone.get_frame_read().frame
-        # Convert the frame to a Kivy texture
-        texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='bgr')
-        texture.blit_buffer(frame.tobytes(), colorfmt='bgr', bufferfmt='ubyte')
+        
+            frame = self.drone.get_frame_read().frame
+            frame = cv2.flip(frame, 0)  # Retournement vertical
+            frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
 
-        image.texture = texture
-        image.canvas.ask_update()
-        return image
+            frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            
+            # Convert the frame to a Kivy texture
+            texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='bgr')
+            texture.blit_buffer(frame.tobytes(), colorfmt='rgb', bufferfmt='ubyte')
+            texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='rgb')
+            texture.blit_buffer(frame_rgb.tobytes(), colorfmt='rgb', bufferfmt='ubyte')
+
+            image.texture = texture
+            image.canvas.ask_update()
+            return image
 
     def stop_streeming(self):
-        # Release resources when the application is closed
         self.drone.streamoff()
 
     def stop(self):

@@ -10,6 +10,59 @@ from kivy.uix.image import Image
 from kivy.uix.screenmanager import Screen
 from code_python.telo import DRONE
 from code_python.notification import NOTIF_MANAGER
+from code_python.global_function import is_wifi_drones_connected
+
+
+
+
+
+
+class Updatable() :
+    def __init__(self,updating_variable, auto_add_to_Update_Manager:bool=True, frequence=1, **kwargs):
+        self.text = updating_variable
+        self.updating_variable = updating_variable    
+        self.frequence = frequence
+        if auto_add_to_Update_Manager :
+            UPDATE_MANAGER.register(self)
+    def update(self) :
+        self.text = self.updating_variable
+    
+class Updatable_Label(Label,Updatable) :
+    """updating_variable : variable que qui va varier 
+    frequence : float a la fréquence que vous voulez que on check si la variable est modif (pour l'instant 1/60 ou 1/1) par seconde^-1
+    auto_add_to_Update_Manager:bool=True c'est claire je pense ^^ """
+        
+    def __init__(self, updating_variable, **kwargs):
+        Label.__init__(self, **kwargs)
+        Updatable.__init__(self, updating_variable, **kwargs)
+
+
+class Updatable_Button(Button,Updatable) :
+    """updating_variable : variable que qui va varier 
+    frequence : float a la fréquence que vous voulez que on check si la variable est modif (pour l'instant 1/60 ou 1/1) par seconde^-1
+    Auto_add_to_Update_Manager:bool=True c'est claire je pense ^^ """
+      
+    def __init__(self, updating_variable, **kwargs):
+        Button.__init__(self, **kwargs)
+        Updatable.__init__(self, updating_variable, **kwargs)
+        
+
+
+class Update_Manager() :
+    """permet a update des variable contenue dans des object kivy (notament les labels et les buttons)"""
+    obj_update = []
+
+    def register(self, object:Updatable) :
+        """enregistre un object dans l'update manager, """
+        self.obj_update.append(object)
+    
+    def update_all_60(self) :
+        for obj in self.obj_update and obj.frequence == 1/60 :
+            obj.update()
+
+    def update_all_1(self) :
+        for obj in self.obj_update and obj.frequence == 1/1 :
+            obj.update()
 
 
 
@@ -40,9 +93,14 @@ class Better_Screen(Screen) :
     def on_pre_enter(self) :
 
         if self.streem_background :
-            if not DRONE.start_streeming() :
-                self.go_to_menue("pute")
+            if is_wifi_drones_connected() and not DRONE.is_connected :
+                DRONE.connect()
+            a = DRONE.start_streeming()
+            print(f"le streem a commencé : {a}")
+            if not a :
+                self.go_to_menue("ui")
                 NOTIF_MANAGER.Waiting_notifications["D"][0] = True
+            else : NOTIF_MANAGER.Waiting_notifications["D"][1] = True
 
     def on_pre_leave(self, *args):
 
@@ -76,9 +134,14 @@ class Screen_sous_menu(Better_Screen) :
         
         super().__init__(**kwargs)
         if background != None :
-            self.background = background
-        else : self.background = BoxLayout()
-        print(self.background)
+            self.box_background = background
+        else : 
+            self.box_background = BoxLayout(size=self.size)
+        
+        self.background = Image(size=self.box_background.size)
+        self.box_background.add_widget(self.background)
+
+
         self.size = Window.size
         self.redu_layout = RelativeLayout(size=self.size)
         titre = Label(text=text_titre, color=(0, 0, 0), pos_hint={"center_x":0.5,"center_y":0.85})
@@ -136,3 +199,6 @@ class Layout_bouton_menue(RelativeLayout):
     
     def go_to(self,value):
         self.ui_screen.go_to(value,self.name)
+
+
+UPDATE_MANAGER = Update_Manager()

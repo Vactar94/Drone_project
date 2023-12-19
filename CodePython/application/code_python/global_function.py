@@ -1,6 +1,9 @@
 import os
 import platform
 import bluetooth
+import psutil
+import subprocess
+from jnius import autoclass
 
 
 def discover_devices():
@@ -49,7 +52,7 @@ def is_wifi_drones_connected():
 
 def get_connected_wifi_name_windows()->str:
     """determination du nom du wifi pour pouvoir l'utiliser après."""
-    if det_sys() == "W":
+    if SYSTEM == "W":
         try:
             result = os.popen('netsh wlan show interfaces | findstr "SSID"').read()
             # Analyse le résultat pour obtenir le nom du réseau
@@ -59,9 +62,9 @@ def get_connected_wifi_name_windows()->str:
                 return ssid
         except Exception as e:
             print(f"Une erreur s'est produite : {e}")
-    elif det_sys() == "L" :
+    elif SYSTEM == "L" :
         pass
-    elif det_sys() == "A" :
+    elif SYSTEM == "A" :
         pass
     return None
 
@@ -79,6 +82,66 @@ def det_sys():
     elif system == "Darwin":                                                        return "M"
     elif platform.system() == "Linux" and "android" in platform.platform().lower(): return "A"
     else :                                                                          return "Z"
+
+
+def get_battery_ordinateur()-> int :
+    """getter pour la batterie du telephone/ordinateur
+    la batterie est en poursent mais si elle dépasse 100 c'est que elle est branché"""
+    if SYSTEM == 'W':
+        battery = psutil.sensors_battery()
+        if battery.power_plugged :
+            b = battery.percent + 100
+        else :
+            b = battery.percent
+        return b
+    elif SYSTEM == "L" :
+        return get_linux_batt()
+    elif SYSTEM == "A" :
+        return get_battery_info()
+
+
+
+def get_linux_batt()->int:
+
+    try:
+        # Utilise la commande upower pour obtenir des informations sur la batterie
+        result = subprocess.run(['upower', '-i', '/org/freedesktop/UPower/devices/battery_BAT0'], capture_output=True, text=True)
+
+        # Analyse la sortie pour obtenir les informations nécessaires
+        lines = result.stdout.split('\n')
+        for line in lines:
+            if 'percentage' in line:
+                percent = line.split(':')[1].strip()
+                print(f"Niveau de batterie : {percent}")
+            elif 'state' in line:
+                state = line.split(':')[1].strip()
+                print(f"État de la batterie : {state}")
+        
+        
+
+    except Exception as e:
+        print(f"Erreur : {e}")
+
+
+
+
+
+def get_battery_info()-> int:
+    Context = autoclass('android.content.Context')
+    BatteryManager = autoclass('android.os.BatteryManager')
+    activity = autoclass('org.kivy.android.PythonActivity').mActivity
+    battery_manager = activity.getSystemService(Context.BATTERY_SERVICE)
+    # Obtient le niveau de batterie actuel
+    level = battery_manager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+
+    # Obtient l'état actuel de la batterie (branchée ou débranchée)
+    plugged = battery_manager.getIntProperty(BatteryManager.BATTERY_PROPERTY_PLUGGED)
+    is_plugged = plugged != 0
+
+    if is_plugged : return level + 100
+    else :          return level
+
+SYSTEM = det_sys()
 
 if __name__ == "__main__" :
     print(get_connected_wifi_name_windows())
