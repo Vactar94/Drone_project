@@ -135,10 +135,12 @@ class Screen_sous_menu(Better_Screen) :
         super().__init__(**kwargs)
         if background != None :
             self.box_background = background
+
         else : 
             self.box_background = BoxLayout(size=self.size)
+            self.background = Image(size=self.box_background.size)
         
-        self.background = Image(size=self.box_background.size)
+        
         self.box_background.add_widget(self.background)
 
 

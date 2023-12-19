@@ -25,7 +25,7 @@ class Menue(RelativeLayout):
         button_classique = Layout_bouton_menue(name="classique",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(1/25),self.size[1]*(2/9)))
         button_automatique = Layout_bouton_menue(name="automatique",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(1/25),self.size[1]*(5/9)))
         button_controles = Layout_bouton_menue(name="controles",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(2/9),self.size[1]*(2/9)))
-        button_rammassage = Layout_bouton_menue(name="rammassage",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(2/9),self.size[1]*(5/9)))
+        button_parametre = Layout_bouton_menue(name="parametre",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(2/9),self.size[1]*(5/9)))
         
         #add notifications 
         self.notif = notif
@@ -41,4 +41,4 @@ class Menue(RelativeLayout):
         self.add_widget(button_classique)
         self.add_widget(button_automatique)
         self.add_widget(button_controles)
-        self.add_widget(button_rammassage)
+        self.add_widget(button_parametre)

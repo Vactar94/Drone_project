@@ -43,7 +43,7 @@ class The_app(App):
         notifs = crea_notif()
         ui_screen = UiScreen(name='ui', notifications=notifs.copy())
         controle_screen = Screen_Controles(name='controles', notifications=notifs.copy())
-        rammassage_screen = Screen_Rammassage(name="rammassage", notifications=notifs.copy())
+        parametre_screen = Screen_Parametre(name="parametre", notifications=notifs.copy())
         classique_screen = Screen_Classique(name="classique", notifications=notifs.copy())
         automatique_screen = Screen_Automatique(name="automatique", notifications=notifs.copy())
         screen_affiche = Screen_proj(name="affiche", notifications=notifs.copy())
@@ -54,7 +54,7 @@ class The_app(App):
         self.sm.add_widget(classique_screen)
         self.sm.add_widget(screen_affiche)
         self.sm.add_widget(controle_screen)
-        self.sm.add_widget(rammassage_screen)
+        self.sm.add_widget(parametre_screen)
         self.sm.add_widget(automatique_screen)
 
         Clock.schedule_interval(self.update, 1.0 / 60.0)
@@ -155,21 +155,21 @@ class Screen_Controles(Screen_sous_menu) :
 
         super().__init__(**kwargs, text_titre="Controles", icone=icone, background=background, streem_background=False)
         self.add_widget(self.redu_layout)
-        self.box_background.pos_hint = {"center_x": 0.9,"center_y": 0.5}
+        self.box_background.pos_hint = {"center_x": 0.8,"center_y": 0.5}
         self.box_background.size_hint = (None, None)
-        self.box_background.size = (Window.size[0]*0.8, Window.size[1]*0.8)
+        self.box_background.size = (Window.size[0]*0.7, Window.size[1]*0.7)
 
         self.add_widget(self.box_background)
         
         
         
 
-class Screen_Rammassage(Screen_sous_menu) :
+class Screen_Parametre(Screen_sous_menu) :
     def __init__(self,**kwargs):
-        icone = Image(source="image/icone_button_rammassage_bg.png")
-        super().__init__(**kwargs, text_titre="Rammassage De Balles", icone=icone, streem_background=True)
+        icone = Image(source="image/icone_button_parametre_bg.png")
+        super().__init__(**kwargs, text_titre="Parametres", icone=icone, streem_background=False)
         self.add_widget(self.redu_layout)
-        self.add_widget(self.box_background)
+
 
 
 

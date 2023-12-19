@@ -86,7 +86,7 @@ class Drone_manager :
             frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             
             # Convert the frame to a Kivy texture
-            texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='bgr')
+            texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='rgb')
             texture.blit_buffer(frame.tobytes(), colorfmt='rgb', bufferfmt='ubyte')
             texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='rgb')
             texture.blit_buffer(frame_rgb.tobytes(), colorfmt='rgb', bufferfmt='ubyte')
