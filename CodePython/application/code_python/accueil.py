@@ -7,7 +7,7 @@ from kivy.uix.image import Image
 import threading
 from code_python.notification import NOTIF_MANAGER
 from code_python.tello import DRONE
-from code_python.global_function import is_wifi_drones_connected, chec_controller_connected
+from code_python.global_function import is_wifi_drones_connected, is_controller_connected
 
 class Accueil(RelativeLayout) :
     n=0
@@ -104,5 +104,5 @@ class Accueil(RelativeLayout) :
         """
         self.conectivity_contoler.disabled = True
         
-        threading.Thread(target=chec_controller_connected,args=(self.is_controller_connected,))
+        threading.Thread(target=is_controller_connected,args=(self.is_controller_connected,))
         

@@ -19,20 +19,17 @@ def main():
     except bluetooth.btcommon.BluetoothError as e:
         print(f"Erreur Bluetooth : {e}")
 
-
-
-def chec_controller_connected(is_controller_connected):
-    device_address = '00:00:00:00:00:00'  # mettre l'adresse de la manette
-    device_name = ['Xbox Wireless Controller','Controller','controller','Pro Controller', 'pro controller', 'Pro controller', 'pro Controller']
-    nearby_devices = bluetooth.discover_devices(duration=8, lookup_names=True, lookup_class=True, device_id=-1)
-    
-
-    for addr, name, _ in nearby_devices:
-        if  name in device_name:
-            is_controller_connected = True
-            return True
-
-    is_controller_connected = False
+def is_controller_connected(value)->bool:
+    """return True si il y a un controler de connected"""
+    device_name = ["Xbox", "Controler"]
+    nearby_devices = bluetooth.discover_devices(duration=8, lookup_names=True, lookup_class=True)
+    for _, name, _ in nearby_devices:
+        for name_possible in device_name :
+            if name in name_possible:
+                value = True
+                return True
+    value = False
+    return False
 
 
 
@@ -144,5 +141,5 @@ def get_battery_info()-> int:
 SYSTEM = det_sys()
 
 if __name__ == "__main__" :
-    print(get_connected_wifi_name_windows())
+    print(is_controller_connected())
 
