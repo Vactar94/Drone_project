@@ -2,20 +2,10 @@ import kivy
 from kivy.app import App
 from kivy.uix.label import Label
 from kivy.clock import Clock
-from pyglet.input import get_devices, Device
 from plyer import wifi
 import bluetooth
 
 kivy.require('1.11.1')
-
-"""def is_controller_connected():
-    devices = get_devices()
-    for device in devices:
-        if isinstance(device, Device):
-            if 'Xbox Wireless Controller' in device.name.lower():
-                return True
-    return False"""
-
 
 def is_drones_connected():
     if wifi == 'connected':
@@ -28,24 +18,14 @@ def is_drones_connected():
         return False
 
 def is_controller_connected():
-    device_address = '00:00:00:00:00:00'  # mettre l'adresse de la manette
     device_name = 'Xbox Wireless Controller'
-    nearby_devices = bluetooth.discover_devices(duration=8, lookup_names=True, lookup_class=True, device_id=-1, device_name=None, device_class=None, device_transport=None, bluetoothctl=None)
+    nearby_devices = bluetooth.discover_devices(duration=8, lookup_names=True, lookup_class=True)
 
-    for addr, name, _ in nearby_devices:
-        if addr == device_address and name == device_name:
+    for _, name, _ in nearby_devices:
+        if name == device_name:
             return True
 
     return False
-
-
-def check_connexion():
-    device_address = '00:00:00:00:00:00'  # mettre l'adresse de la manette
-    device_name = 'Xbox Wireless Controller'
-    if is_controller_connected():
-        print(f"Connected to {device_name} ({device_address})")
-    else:
-        print(f"Not connected to {device_name} ({device_address})")
 
 
 class MyApp(App):
