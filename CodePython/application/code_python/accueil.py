@@ -70,7 +70,7 @@ class Accueil(RelativeLayout) :
     @is_controller_connected.setter
     def is_controller_connected(self,value) :
         self._is_controller_connected = value
-
+        print("is_controller_connected", value)
         if value :
             NOTIF_MANAGER.Waiting_notifications["M"][1] = True
         elif not value : 
@@ -102,7 +102,8 @@ class Accueil(RelativeLayout) :
         """
         pas sur de le garder ptet que c'est pas a moi de le faire en tt ca le bouton existe
         """
-        self.conectivity_contoler.disabled = True
+        print('manette_connectivy')
         
-        threading.Thread(target=is_controller_connected,args=(self.is_controller_connected,))
+        t = threading.Thread(target=is_controller_connected,args=(self,))
+        t.start()
         

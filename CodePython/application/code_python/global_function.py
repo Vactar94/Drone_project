@@ -26,9 +26,9 @@ def is_controller_connected(value)->bool:
     for _, name, _ in nearby_devices:
         for name_possible in device_name :
             if name in name_possible:
-                value = True
+                value.is_controller_connected = True
                 return True
-    value = False
+    value.is_controller_connected = False
     return False
 
 
