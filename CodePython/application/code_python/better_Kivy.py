@@ -176,7 +176,7 @@ class Screen_sous_menu(Better_Screen) :
 
 class Layout_bouton_menue(RelativeLayout):
 
-    def __init__(self,name:str='',ui_screen=None, **kw):
+    def __init__(self,surname="",name:str='',ui_screen=None, **kw):
         self.ui_screen = ui_screen
         self.name = name
         super().__init__(**kw)
@@ -185,8 +185,13 @@ class Layout_bouton_menue(RelativeLayout):
             RoundedRectangle(pos=(0,0),size=self.size,radius=[30,30])
             Color(0/255, 200/255, 255/255)
             RoundedRectangle(pos=(self.size[1]*0.025,self.size[1]*0.025),size=(self.size[0]*0.95,self.size[1]*0.95),radius=[30,30])
-        titre = Label(text=f"\n{name}",pos_hint={"center_x": 0.5, "center_y": 0.0},color=(0, 0, 0))
+        if surname == "":
+            titre = Label(text=f"\n{name}",pos_hint={"center_x": 0.5, "center_y": 0.0},color=(0, 0, 0))
+        else :
+            titre = Label(text=f"\n{surname}",pos_hint={"center_x": 0.5, "center_y": 0.0},color=(0, 0, 0))
+
         button = Button(size=(self.size[0]*0.90,self.size[1]*0.90),size_hint=(None, None),background_color=(0, 0, 0, 0),pos = (self.size[1]*0.05,self.size[1]*0.05))
+        
         with button.canvas.before:
             Color(0, 0, 0)
             button.bg_rect = Image(source=f"image/icone_button_{name}_bg.png",pos=button.pos,size=button.size)
