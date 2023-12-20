@@ -13,7 +13,7 @@ from code_python.better_Kivy import Better_Screen, Screen_sous_menu, UPDATE_MANA
 from code_python.menue import Menue
 from code_python.accueil import Accueil
 from code_python.global_function import SYSTEM
-from code_python.telo import DRONE
+from code_python.tello import DRONE
 from code_python.notification import NOTIF_MANAGER
 
 

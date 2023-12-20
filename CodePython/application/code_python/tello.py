@@ -1,11 +1,8 @@
 import cv2
-from kivy.uix.widget import Widget
 from kivy.graphics.texture import Texture
 from kivy.uix.image import Image
 from djitellopy import Tello
 from code_python.global_function import is_wifi_drones_connected
-import threading
-
 
 class Better_Telo (Tello):
     _is_connected = None

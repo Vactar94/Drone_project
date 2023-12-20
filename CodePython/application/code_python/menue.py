@@ -1,12 +1,8 @@
 from kivy.uix.label import Label
-from kivy.uix.widget import Widget
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.core.window import Window
 from kivy.graphics import Color, Rectangle, RoundedRectangle
-
-from code_python.telo import DRONE
 from code_python.better_Kivy import Layout_bouton_menue
-
 
 class Menue(RelativeLayout):
     def __init__(self,ui_screen,notif:dict={}, **kwargs):
@@ -29,8 +25,6 @@ class Menue(RelativeLayout):
         
         #add notifications 
         self.notif = notif
-
-
 
 
         for k in self.notif.keys() :

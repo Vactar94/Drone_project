@@ -7,7 +7,7 @@ from kivy.core.window import Window
 from kivy.graphics import Color, Rectangle, RoundedRectangle
 from kivy.uix.image import Image
 from kivy.uix.screenmanager import Screen
-from code_python.telo import DRONE
+from code_python.tello import DRONE
 from code_python.notification import NOTIF_MANAGER
 from code_python.global_function import is_wifi_drones_connected
 
