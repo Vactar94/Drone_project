@@ -5,9 +5,11 @@ from kivy.core.window import Window
 from kivy.graphics import Color, Rectangle, RoundedRectangle
 from kivy.uix.image import Image
 import threading
+
 from code_python.notification import NOTIF_MANAGER
 from code_python.tello import DRONE
-from code_python.global_function import is_wifi_drones_connected, is_controller_connected
+from code_python.global_function import is_controller_connected
+
 
 class Accueil(RelativeLayout) :
     n=0

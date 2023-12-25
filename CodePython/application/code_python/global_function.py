@@ -6,29 +6,33 @@ import subprocess
 from jnius import autoclass
 
 
-def discover_devices():
-    devices = bluetooth.discover_devices(lookup_names=True)
-    return devices
-
 def main():
     try:
-        devices = discover_devices()
+        devices = bluetooth.discover_devices(lookup_names=True)
         print("Appareils Bluetooth connectés :")
         for addr, name in devices:
             print(f"{name} ({addr})")
     except bluetooth.btcommon.BluetoothError as e:
         print(f"Erreur Bluetooth : {e}")
 
-def is_controller_connected(value)->bool:
+def is_controller_connected(value=None)->bool:
     """return True si il y a un controler de connected"""
-    device_name = ["Xbox", "Controler"]
-    nearby_devices = bluetooth.discover_devices(duration=8, lookup_names=True, lookup_class=True)
-    for _, name, _ in nearby_devices:
+    print("device_name")
+    device_name = ["Xbox", "Controler","Xbox Wireless Contoller"]
+    print("nearby_devices")
+
+    nearby_devices = bluetooth.discover_devices(duration=1, lookup_names=True)
+    print("bouvle for")
+    print(nearby_devices)
+    for _, name in nearby_devices:
+        print(name)
         for name_possible in device_name :
             if name in name_possible:
-                value.is_controller_connected = True
+                if value !=None :
+                    value.is_controller_connected = True
                 return True
-    value.is_controller_connected = False
+    if value !=None :
+        value.is_controller_connected = False
     return False
 
 
@@ -63,7 +67,7 @@ def get_connected_wifi_name_windows()->str:
         pass
     elif SYSTEM == "A" :
         pass
-    return None
+    return ""
 
 def det_sys():
     """determine dans quelle OS on est return la première lettre de l'os :
@@ -140,6 +144,28 @@ def get_battery_info()-> int:
 
 SYSTEM = det_sys()
 
+
+def get_connected_devices():
+    # Recherche des appareils Bluetooth
+    nearby_devices = bluetooth.discover_devices(lookup_names=True, device_id=-1, duration=8, lookup=True)
+
+    # Liste des appareils connectés
+    connected_devices = []
+
+    for addr, name in nearby_devices:
+        if bluetooth.lookup_name(addr, device_id=-1, lookup=True) is not None:
+            connected_devices.append({"address": addr, "name": name})
+
+    return connected_devices
+
 if __name__ == "__main__" :
-    print(is_controller_connected())
+
+    connected_devices = get_connected_devices()
+
+    if not connected_devices:
+        print("Aucun appareil Bluetooth connecté.")
+    else:
+        print("Appareils Bluetooth connectés:")
+        for device in connected_devices:
+            print(f"Adresse: {device['address']}, Nom: {device['name']}")
 

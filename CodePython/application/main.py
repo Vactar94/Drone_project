@@ -8,14 +8,15 @@ from kivy.uix.image import Image
 from kivy.uix.screenmanager import ScreenManager,RiseInTransition
 from kivy.config import Config
 from kivy.clock import Clock
+
 from code_python.notification import crea_notif
-from code_python.better_Kivy import Better_Screen, Screen_sous_menu, UPDATE_MANAGER
+from code_python.better_Kivy import Better_Screen, Screen_sous_menu, Screen_Stramable, UPDATE_MANAGER
 from code_python.menue import Menue
 from code_python.accueil import Accueil
 from code_python.global_function import SYSTEM
 from code_python.tello import DRONE
 from code_python.notification import NOTIF_MANAGER
-
+from code_python.screen_parametre import Screen_Parametre
 
 Window.size = [360, 620]
 Window.OS = SYSTEM
@@ -77,9 +78,9 @@ class The_app(App):
     
     def update_streem(self) :
         """update les images 30 fois par seconde et l'affiche sur le self.curent_screen.background qui est une image stocké dans box_background"""
-        if self.sm.current_screen.streem_background :
+        if self.sm.current_screen.streamable :
             if self.dm.is_connected:
-                self.sm.current_screen.background = self.dm.get_image(self.sm.current_screen.background)
+                self.sm.current_screen.image_streem = self.dm.get_image(self.sm.current_screen.image_streem)
             else : self.connect_drone()
 
 
@@ -146,41 +147,26 @@ class Screen_proj(Better_Screen):
 class Screen_Controles(Screen_sous_menu) :
     def __init__(self,**kwargs):
         icone = Image(source="image/icone_button_controles_bg.png")
-        img_background = Image(source="CodePython/application/image/tuto_manette.png",pos_hint={"center_x":0.5,"center_y":0.4})
-        background = BoxLayout()
+        img_tuto_mannette = Image(source="CodePython/application/image/tuto_manette.png",pos_hint={"center_x":0.5,"center_y":0.4})
+        box_tuto_manette = BoxLayout(pos_hint={"center_x": 0.5,"center_y": 0.5}, size_hint = (None, None), size = (Window.size[0]*0.7, Window.size[1]*0.7))
+        box_tuto_manette.add_widget(img_tuto_mannette)
+        super().__init__(**kwargs, text_titre="Controles", icone=icone, background=None)
 
-        background.add_widget(img_background)
-
-        super().__init__(**kwargs, text_titre="Controles", icone=icone, background=background, streem_background=False)
-        self.add_widget(self.redu_layout)
-        self.box_background.pos_hint = {"center_x": 0.8,"center_y": 0.5}
-        self.box_background.size_hint = (None, None)
-        self.box_background.size = (Window.size[0]*0.7, Window.size[1]*0.7)
-
-        self.add_widget(self.box_background)
+        self.add_widget(box_tuto_manette)
 
 
-class Screen_Parametre(Screen_sous_menu) :
-    def __init__(self,**kwargs):
-        icone = Image(source="image/icone_button_parametre_bg.png")
-        super().__init__(**kwargs, text_titre="Parametres", icone=icone, streem_background=False)
-        self.add_widget(self.redu_layout)
 
-
-class Screen_Classique(Screen_sous_menu) :
+class Screen_Classique(Screen_Stramable) :
     def __init__(self,**kwargs):
         icone = Image(source="image/icone_button_classique_bg.png")
-        super().__init__(**kwargs, text_titre="Classique", icone=icone, streem_background=True)
-        self.add_widget(self.redu_layout)
-        self.add_widget(self.box_background)
-        
+        super().__init__(**kwargs)
 
-class Screen_Automatique(Screen_sous_menu) :
+
+class Screen_Automatique(Screen_Stramable) :
     def __init__(self,**kwargs):
         icone = Image(source="image/icone_button_automatique_bg.png")
-        super().__init__(**kwargs, text_titre="Automatique", icone=icone, streem_background=True)
-        self.add_widget(self.redu_layout)
-        self.add_widget(self.box_background)
+        super().__init__(**kwargs)
+
         
 
 if __name__ == "__main__" :

@@ -7,13 +7,10 @@ from kivy.core.window import Window
 from kivy.graphics import Color, Rectangle, RoundedRectangle
 from kivy.uix.image import Image
 from kivy.uix.screenmanager import Screen
+
 from code_python.tello import DRONE
 from code_python.notification import NOTIF_MANAGER
 from code_python.global_function import is_wifi_drones_connected
-
-
-
-
 
 
 class Updatable() :
@@ -68,12 +65,11 @@ class Update_Manager() :
 
 class Better_Screen(Screen) :
     
-    def __init__(self,notifications : dict = None,streem_background:bool=False , **kw):
+    def __init__(self,notifications : dict = None, **kw):
         
         super().__init__(**kw)
-        self.streem_background = streem_background
-        
-        self.background = Image()
+        self.streamable = False
+
 
         if notifications != None and type(notifications) != dict:
             print("notification incorrecte il faut passer un dictonnaire enculer ")
@@ -83,28 +79,16 @@ class Better_Screen(Screen) :
             self.notifications = notifications
 
 
-            
-
+        
     def update_bg(self,element,value):
+        """update les positions des bg de pleins de trucs"""
         element.bg_rect.pos = element.pos
         element.bg_rect.size = element.size
     
-    def on_pre_enter(self) :
-
-        if self.streem_background :
-            if is_wifi_drones_connected() and not DRONE.is_connected :
-                DRONE.connect()
-            a = DRONE.start_streeming()
-            print(f"le streem a commencé : {a}")
-            if not a :
-                self.go_to_menue("ui")
-                NOTIF_MANAGER.Waiting_notifications["D"][0] = True
-            else : NOTIF_MANAGER.Waiting_notifications["D"][1] = True
+    def on_pre_enter(self,*args) :
+        return super().on_pre_enter(*args)
 
     def on_pre_leave(self, *args):
-
-        if self.streem_background and DRONE.is_connected:
-            DRONE.stop_streeming()
         return super().on_pre_leave(*args)
     
     def __str__(self) :
@@ -127,31 +111,63 @@ class RoundedImage(Widget):
         self.image.pos = value
 
 
+class Screen_Stramable(Better_Screen) :
+    
+    def __init__(self, notifications: dict = None, **kw):
+        super().__init__(notifications, **kw)
+        self.streamable = True
+
+        self.size = Window.size
+
+        self.image_streem = Image(size=self.size)
+        self.box_streem = BoxLayout(size_hint=(None,None), size=self.size)
+
+
+        self.box_streem.add_widget(self.image_streem)
+        self.add_widget(self.box_streem)
+
+    
+    def on_pre_enter(self) :
+        """check que le drone est connecté, oui-> le streem commence puis notif l'app que le drone est co
+                                            non -> notif l'app que le drone n'est pas co
+        """        
+        if is_wifi_drones_connected() and not DRONE.is_connected :
+            DRONE.connect()
+        a = DRONE.start_streeming()
+        print(f"le streem a commencé : {a}")
+        if not a :
+            self.go_to_menue("ui")
+            NOTIF_MANAGER.Waiting_notifications["D"][0] = True
+        else : NOTIF_MANAGER.Waiting_notifications["D"][1] = True
+
+    def on_pre_leave(self, *args):
+
+        if DRONE.is_connected:
+            DRONE.stop_streeming()
+        return super().on_pre_leave(*args)
+    
+
+    def go_to_menue(self,value) :
+        self.manager.current = "ui"
+
 class Screen_sous_menu(Better_Screen) :
         
     def __init__(self, text_titre:str="", icone:Image=None ,background:BoxLayout=None,**kwargs):
         
         super().__init__(**kwargs)
-        if background != None :
-            self.box_background = background
-
-        else : 
-            self.box_background = BoxLayout(size=self.size)
-            self.background = Image(size=self.box_background.size)
-        
-        
-        self.box_background.add_widget(self.background)
-
-
         self.size = Window.size
-        self.redu_layout = RelativeLayout(size=self.size)
+
+        if type(background) == BoxLayout :
+            self.add_widget(background)
+
+        self.rendu_layout = RelativeLayout(size=self.size)
         titre = Label(text=text_titre, color=(0, 0, 0), pos_hint={"center_x":0.5,"center_y":0.85})
-        with self.redu_layout.canvas.before:
+        with self.rendu_layout.canvas.before:
             Color(0, 0, 0)
             Rectangle(pos=(0,0),size=self.size)
             Color(1, 1, 1)
             RoundedRectangle(pos=(self.size[0]*(0.01),self.size[1]*(0.01)),size=(self.size[0]*0.43,self.size[1]*0.98),radius=[50,50])
-        menue_button = Button(text="", font_size=11, color=(0 ,0 ,0), size_hint=(None,None), size=(80,80), pos_hint={"center_x":0.1,"center_y":0.9}, background_color=(0, 0, 0, 0))
+        menue_button = Button(text="", font_size=11, color=(0 ,0 ,0), size_hint=(None,None), size=(60,60), pos_hint={"center_x":1-0.87,"center_y":0.9}, background_color=(0, 0, 0, 0))
         with menue_button.canvas.before:
             Color(0, 0, 0)
             menue_button.bg_rect = Image(source="image/bouton-retour bg.png",size=menue_button.size,pos=menue_button.pos)
@@ -161,15 +177,15 @@ class Screen_sous_menu(Better_Screen) :
             icone.pos_hint = {"center_x":0.87,"center_y":0.9}
             icone.size_hint = (None, None)
             icone.size = [50,50]
-            self.redu_layout.add_widget(icone)
+            self.rendu_layout.add_widget(icone)
         else : print(f"{titre.text} n'a pas d'icone")
-        self.redu_layout.add_widget(menue_button)
-        self.redu_layout.add_widget(titre)
+        self.rendu_layout.add_widget(menue_button)
+        self.rendu_layout.add_widget(titre)
+        self.add_widget(self.rendu_layout)
         
 
 
     def go_to_menue(self,value) :
-
         self.manager.current = "ui"
     
 

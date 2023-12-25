@@ -2,7 +2,9 @@ import cv2
 from kivy.graphics.texture import Texture
 from kivy.uix.image import Image
 from djitellopy import Tello
+
 from code_python.global_function import is_wifi_drones_connected
+
 
 class Better_Telo (Tello):
     _is_connected = None
@@ -33,13 +35,14 @@ class Drone_manager :
     def is_connected(self,value:bool) :
         self._is_connected = self.drone.is_connected = value
 
-    
 
 
     def connect(self)-> bool :
+        """ se connecte au drone avec la méthode Tello.conect()"""
         if is_wifi_drones_connected() :
+            self.drone.set_video_fps(Tello.FPS_30)
             self.drone.connect(False)
-            self.is_connected = True
+            self.is_connected = True    
             return True
         else : return False
 
@@ -75,28 +78,22 @@ class Drone_manager :
 
 
     def get_image(self,image:Image) -> Image :
-        
-            frame = self.drone.get_frame_read().frame
-            frame = cv2.flip(frame, 0)  # Retournement vertical
-            frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
-
-            frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            
-            # Convert the frame to a Kivy texture
-            texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='rgb')
-            texture.blit_buffer(frame.tobytes(), colorfmt='rgb', bufferfmt='ubyte')
-            texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt='rgb')
-            texture.blit_buffer(frame_rgb.tobytes(), colorfmt='rgb', bufferfmt='ubyte')
-
-            image.texture = texture
-            image.canvas.ask_update()
-            return image
+        """hpy : get les images a partit de Tello.get_frame_read() puis les transphorme en kivy.texture.Texture puis en kivy.image.Image"""
+        frame_read = self.drone.get_frame_read()
+        myFrame = frame_read.frame
+        img = cv2.resize(myFrame, (image.width, image.height))
+        img = cv2.rotate(img, cv2.ROTATE_180)
+        # ------------- convertie l'image en kivy.image.Image ------------- #
+        texture = Texture.create(size=(img.shape[1], img.shape[0]), colorfmt='rgb')
+        texture.blit_buffer(img.tobytes(), colorfmt='rgb', bufferfmt='ubyte')
+        image.texture = texture
+        image.canvas.ask_update()
+        return image
 
     def stop_streeming(self):
         self.drone.streamoff()
 
     def stop(self):
         self.drone.end()
-
 
 DRONE = Drone_manager()
