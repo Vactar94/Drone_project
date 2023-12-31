@@ -10,15 +10,17 @@ from kivy.config import Config
 from kivy.clock import Clock
 
 from code_python.notification import crea_notif
-from code_python.better_Kivy import Better_Screen, Screen_sous_menu, Screen_Stramable, UPDATE_MANAGER
+from code_python.better_Kivy import Better_Screen, Screen_sous_menu, Screen_Stramable
 from code_python.menue import Menue
 from code_python.accueil import Accueil
-from code_python.global_function import SYSTEM
+from code_python.global_function import SYSTEM, is_wifi_drones_connected
 from code_python.tello import DRONE
 from code_python.notification import NOTIF_MANAGER
 from code_python.screen_parametre import Screen_Parametre
+from code_python.langues.langues import UPDATE_MANAGER
 
 Window.size = [360, 620]
+#Window.size = [1000, 620]
 Window.OS = SYSTEM
 
 
@@ -30,7 +32,6 @@ class The_app(App):
         super().__init__(**kwargs)
         self.sm = ScreenManager(transition=RiseInTransition())
         self.dm = DRONE
-        self.task = None
         self.seconde = 0
 
 
@@ -62,8 +63,8 @@ class The_app(App):
     
     def check_long(self, dt) :
         self.seconde += 1
-        print(self.seconde)
         UPDATE_MANAGER.update_all_1()
+        
     
     def update_30(self,dt) :
         self.update_streem()
@@ -73,7 +74,6 @@ class The_app(App):
         """main_loop avec toutes les updates"""
         self.update_notif()
         UPDATE_MANAGER.update_all_60()
-        #print(DRONE.is_connected)
         
     
     def update_streem(self) :
@@ -94,7 +94,9 @@ class The_app(App):
                     W_N[k][i] = False
             
     def connect_drone(self)->bool :
-        return self.dm.connect()
+        if is_wifi_drones_connected() :
+            return self.dm.connect()
+        return False
 
 class UiScreen(Better_Screen):
     """setup un peu cocase pour avoir un kv.uix.screen et kv.uix.pagelayout"""
@@ -107,10 +109,10 @@ class UiScreen(Better_Screen):
     
         self.add_widget(pages)
         #adding notif
-        for k in self.notifications.keys() :
-            for notif in self.notifications[k] :
+        for list_value in self.notifications.values() :
+            for notif in list_value :
                 self.add_widget(notif)
-    
+    """  """
     def go_to(self,value,name_of_the_target_screen:str):
         self.manager.current = name_of_the_target_screen
 
@@ -150,7 +152,7 @@ class Screen_Controles(Screen_sous_menu) :
         img_tuto_mannette = Image(source="CodePython/application/image/tuto_manette.png",pos_hint={"center_x":0.5,"center_y":0.4})
         box_tuto_manette = BoxLayout(pos_hint={"center_x": 0.5,"center_y": 0.5}, size_hint = (None, None), size = (Window.size[0]*0.7, Window.size[1]*0.7))
         box_tuto_manette.add_widget(img_tuto_mannette)
-        super().__init__(**kwargs, text_titre="Controles", icone=icone, background=None)
+        super().__init__(**kwargs, id_text_titre="app.text_title.controles", icone=icone, background=None)
 
         self.add_widget(box_tuto_manette)
 

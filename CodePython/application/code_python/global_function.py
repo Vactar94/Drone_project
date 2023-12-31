@@ -168,4 +168,3 @@ if __name__ == "__main__" :
         print("Appareils Bluetooth connectés:")
         for device in connected_devices:
             print(f"Adresse: {device['address']}, Nom: {device['name']}")
-

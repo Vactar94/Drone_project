@@ -1,0 +1,40 @@
+{
+    "1":{
+        "app.text_title.controles":"Controls",
+        "app.text_title.parametres":"Settings",
+        
+        "app.accueil.description":"",
+        "app.accueil.credit": "Credit:\nAdrien: control of the drone\nSuhayl: creation of the AI\nÉmile: Flight Automation\nOscar: application",
+        
+        "app.notif.manette_connecte":"Controller connected",
+        "app.notif.manette_non_connecte":"Controller not connected",
+        "app.notif.drone_connecte":"Drone connected",
+        "app.notif.drone_non_connecte":"Drone not connected",
+
+        "app.menue.titre_page" : "Select your mode :",
+        "app.menue.button.classique" : "\nClassic",
+        "app.menue.button.automatique" : "\nAutomatic",
+        "app.menue.button.controles" : "\nControls ",
+        "app.menue.button.parametre" : "\nSettings"
+    },
+    "2":{
+        "app.text_title.controles":"Contrôles",
+        "app.text_title.parametres":"Paramètres",
+        
+        "app.accueil.description":"Notre drone révolutionnaire,\n contrôlé par cet application, \n optimise la gestion des jeux en \nreconnaissant et déplaçant des \néquipements sportifs jusqu'à\n 1,5 kg. Sa navigation \nintelligente et sa stabilité\n exceptionnelle assurent \nun fonctionnement fluide\n et sécurisé. Avec des modes \nmanuels et automatiques, il\n offre une expérience sportive\n dynamique, centralisant \nle travail du personnel.",
+        "app.accueil.credit" : "Crédit :\nAdrien : controle du drone \nSuhayl : création de l'IA\nÉmile : Automatisation du Vol\nOscar : application",
+        
+        "app.notif.manette_connecte":"Mannette connectée",
+        "app.notif.manette_non_connecte":"Mannette non connectée",
+        "app.notif.drone_connecte":"Drône connecté",
+        "app.notif.drone_non_connecte":"Drône non connecté",
+
+        "app.menue.titre_page" : "Selectionnez votre mode :",
+        "app.menue.button.classique" : "\nClassique",
+        "app.menue.button.automatique" : "\nAutomatique",
+        "app.menue.button.controles" : "\nContrôles",
+        "app.menue.button.parametre" : "\nParamètres"
+        
+    }
+    
+}

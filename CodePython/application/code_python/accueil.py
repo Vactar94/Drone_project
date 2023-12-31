@@ -9,6 +9,7 @@ import threading
 from code_python.notification import NOTIF_MANAGER
 from code_python.tello import DRONE
 from code_python.global_function import is_controller_connected
+from code_python.langues.langues import LANGUES, Updatable_Button, Updatable_Label
 
 
 class Accueil(RelativeLayout) :
@@ -26,12 +27,13 @@ class Accueil(RelativeLayout) :
             Color(0,0,0)
             Rectangle(pos=(self.size[0]//13 ,0),size=(self.size[0]//100,self.size[1]))
 
-        desctiption = Button(text="Notre drone révolutionnaire,\n contrôlé par cet application, \n optimise la gestion des jeux en \nreconnaissant et déplaçant des \néquipements sportifs jusqu'à\n 1,5 kg. Sa navigation \nintelligente et sa stabilité\n exceptionnelle assurent \nun fonctionnement fluide\n et sécurisé. Avec des modes \nmanuels et automatiques, il\n offre une expérience sportive\n dynamique, centralisant \nle travail du personnel.",pos_hint={"center_x":0.6,"center_y":0.56},color=(0,0,0),background_color=(0,0,0,0),size_hint=(None,None))
+        desctiption = Updatable_Button(id_text="app.accueil.description" ,pos_hint={"center_x":0.6,"center_y":0.56},color=(0,0,0),background_color=(0,0,0,0),size_hint=(None,None))
         desctiption.bind(on_release=self.go_to_affiche)
-        credit = Label(text="Crédit :\nAdrien : controle du drone \nSuhayl : création de l'IA\nÉmile : Automatisation du Vol\nOscar : application",pos_hint={"center_x":0.6,"center_y":0.2})
+
+        credit = Updatable_Label(id_text="app.accueil.credit" ,pos_hint={"center_x":0.6,"center_y":0.2})
         titre = Label(text='[b]Drone Automatik[/b]',size_hint_y=None,color=(1, 1, 1),height=200,pos_hint={"center_x":0.6,"center_y":0.85},font_size=25,markup=True)
         
-        #------------- bouton pour connecter mannette  -------------#
+        #------------- bouton pour connecter la mannette  -------------#
         conectivity_contoler = Button(text="",size_hint=(None,None),size=(80,40),pos_hint={"center_x":0.11,"center_y":0.9},background_color=(0,0,0,0),background_normal="")
         conectivity_contoler.bind(pos=self.update_bg, size=self.update_bg)
         with conectivity_contoler.canvas.before:
@@ -39,6 +41,7 @@ class Accueil(RelativeLayout) :
             conectivity_contoler.bg_rect = Image(source="image/bg_mannette_menue.png",pos=conectivity_contoler.pos,size=conectivity_contoler.size)
         conectivity_contoler.bind(on_release=self.mannette_conectivity)
         self.conectivity_contoler = conectivity_contoler
+        #------------- bouton pour connecter le drone  -------------#
 
         conectivity_drone = Button(text="",size_hint=(None,None),size=(80,40),pos_hint={"center_x":0.11,"center_y":0.1},background_color=(0,0,0,0),background_normal="")
         conectivity_drone.bind(pos=self.update_bg, size=self.update_bg)
@@ -72,15 +75,11 @@ class Accueil(RelativeLayout) :
     @is_controller_connected.setter
     def is_controller_connected(self,value) :
         self._is_controller_connected = value
-        print("is_controller_connected", value)
         if value :
             NOTIF_MANAGER.Waiting_notifications["M"][1] = True
         elif not value : 
             NOTIF_MANAGER.Waiting_notifications["M"][0] = True
         
-
-
-
 
     def drone_conectivity(self,button):
         if DRONE.connect() : v = 1

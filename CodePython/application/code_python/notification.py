@@ -1,25 +1,12 @@
 from kivy.app import App
-from kivy.uix.widget import Widget
-from kivy.properties import NumericProperty, ReferenceListProperty, ObjectProperty,BooleanProperty
-from kivy.vector import Vector
-from kivy.clock import Clock
 from kivy.uix.button import Button
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.button import ButtonBehavior
-from kivy.uix.scrollview import ScrollView
-from kivy.metrics import dp
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.label import Label
-from kivy.uix.pagelayout import PageLayout
-from kivy.uix.relativelayout import RelativeLayout
-from kivy.uix.floatlayout import FloatLayout
-from kivy.core.window import Window,WindowBase
+from kivy.core.window import Window
 from kivy.graphics import Color, Rectangle, RoundedRectangle
-from kivy.base import runTouchApp
-from kivy.lang import Builder
-from kivy.uix.image import Image,AsyncImage
-from kivy.uix.screenmanager import ScreenManager, Screen, RiseInTransition
-from kivy.animation import Animation,AnimationTransition
+from kivy.uix.screenmanager import Screen
+from kivy.animation import Animation
+
+from code_python.langues.langues import Updatable_Label
 
 
 Window.size = [360, 620]
@@ -46,7 +33,8 @@ class Notification (BoxLayout) :
             self.bg_rect_ombre = RoundedRectangle(size = self.size, pos = [self.pos[0] - self.size[0]//25, self.pos[1] - self.size[1]//15], radius = [10,10])
             Color (1, 1, 1)
             self.bg_rect = RoundedRectangle(size = self.size,pos = self.pos, radius = [10,10])
-        text = Label(text=text,color=(0, 0, 0))
+
+        text = Updatable_Label(id_text=text, color=(0, 0, 0))
 
 
         self.bind(pos=self.update_bg, size=self.update_bg)
@@ -85,8 +73,9 @@ def crea_notif(layout:list[int,int]=[1, 1],duration:int=1) -> dict[str:list[Noti
             layout[layout_max, curent_layout]
         """
         dict_notif = {}
-        dict_notif["M"] =   [Notification("Mannette non connectée", duration=duration, layout=layout), Notification("Mannette connectée",duration=duration,layout=layout)]
-        dict_notif["D"] =   [Notification("Drône non connecté", duration=duration, layout=layout), Notification("Drône connecté",duration=duration,layout=layout)]
+        dict_notif["M"] =   [Notification("app.notif.manette_non_connecte", duration=duration, layout=layout), Notification("app.notif.manette_connecte",duration=duration,layout=layout)]
+        dict_notif["D"] =   [Notification("app.notif.drone_non_connecte", duration=duration, layout=layout), Notification("app.notif.drone_connecte",duration=duration,layout=layout)]
+
         return dict_notif
 
     
@@ -110,7 +99,7 @@ if __name__ == "__main__" :
             super().__init__(**kwargs)
         
         def build(self) :
-            notif_box = Notification("mannette non connecté")
+            notif_box = Notification("app.notif.manette_non_connecte")
             app_box = n_Box_layout(size = Window.size)
             app_box.add_widget(notif_box)
 
