@@ -2,12 +2,11 @@ import json
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 
-ID_ANGLAIS = 1
-ID_FRANCAIS = 2
-POSSIBLES_LANGUAGES = ["english", "français"]
-DEFAULT_LANGUAGE = ID_ANGLAIS
+
 
 class Langues() :
+    POSSIBLES_LANGUAGES = []
+
     def __init__(self) -> None:
         """
         permet de traduire le texte en plein de langues(2)        
@@ -16,9 +15,11 @@ class Langues() :
         with open("CodePython/application/code_python/langues/lang.json",'r',encoding='utf-8') as file :
             json_langues_file = json.load(file)
             for i in json_langues_file.keys() :
-                self.dict_langues[int(i)] = json_langues_file[i]
+                self.POSSIBLES_LANGUAGES.append(i)
 
-        self._current_language = DEFAULT_LANGUAGE
+                self.dict_langues[i] = json_langues_file[i]
+        
+        self._current_language = list(json_langues_file.keys())[0]
     
     @property
     def current_language(self):
@@ -28,13 +29,13 @@ class Langues() :
     def current_language(self, value) :
         """current langage dans l'application"""
         if type(value) == int :
+            self._current_language = list(self.dict_langues.keys())[value]
+        elif value in self.dict_langues.keys() :
             self._current_language = value
-        elif type(value) == str :
-            if value == "english" or  value == "anglais" :
-                self._current_language = ID_ANGLAIS
-            elif value == "frensh" or  value == "français" :
-                self._current_language = ID_FRANCAIS
-                
+        else :
+            print(f"value : {value} qui est entré dans le setter de current_language n'est pas comforme")
+            a = 1 +"a"
+
         UPDATE_MANAGER.update_all_lang()
 
 
