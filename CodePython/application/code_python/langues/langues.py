@@ -106,6 +106,7 @@ class Update_Manager() :
     def register_lang(self, object:Updatable_Button|Updatable_Label) :
         """enregistre un Updatable_Label ou un Updatable_Button dans l'update manager pour update sa traducion a chaque chagement de langues"""
         self._obj_lang_update.append(object)
+    
     def update_all_60(self) :
         """c'est la et ça servira quand ça servira"""
         pass
@@ -124,3 +125,15 @@ class Update_Manager() :
 
 
 UPDATE_MANAGER = Update_Manager()
+
+if __name__ == "__main__" :
+    import sys
+
+    def compare(a, b) :
+        print(f"Taille de l'entier {a} :", sys.getsizeof(a), "octets")
+        print(f"Taille de la chaîne {b} :", sys.getsizeof(b), "octets")
+    
+    entier = 2
+    chaine = "English"
+
+    compare(entier, chaine)
