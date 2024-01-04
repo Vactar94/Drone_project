@@ -40,7 +40,7 @@
         "app.text_title.controles":"Controles",
         "app.text_title.parametres":"Configuraciones",
         
-        "app.accueil.description":"Nuestro revolucionario dron, /ncontrolado por esta aplicación, /noptimiza la gestión del juego /nreconociendo y moviendo material /ndeportivo de hasta 1,5 kg./nSu navegación inteligente y su excepcional estabilidad/n garantizan un funcionamiento /nfluido y seguro./nCon modos manual y automático, /nofrece una experiencia deportiva dinámica,/ncentralizando el trabajo /ndel personal.",
+        "app.accueil.description":"Nuestro revolucionario dron, \ncontrolado por esta aplicación, \noptimiza la gestión del juego \nreconociendo y moviendo material \ndeportivo de hasta 1,5 kg.\nSu navegación inteligente y su excepcional estabilidad\n garantizan un funcionamiento \nfluido y seguro.\nCon modos manual y automático, \nofrece una experiencia deportiva dinámica,\ncentralizando el trabajo \ndel personal.",
         "app.accueil.credit" : "Crédit :\nAdrien : controle du drone \nSuhayl : création de l'IA\nÉmile : Automatisation du Vol\nOscar : application",
         
         "app.notif.manette_connecte":"Controlador conectado",
@@ -56,7 +56,7 @@
     },
     "Japan":{
         "app.text_title.controles":"Contrôles",
-        "app.text_title.parametres":"Paramètres",
+        "app.text_title.parametres":"Param ètres",
         
         "app.accueil.description":"Notre drone révolutionnaire,\n contrôlé par cet application, \n optimise la gestion des jeux en \nreconnaissant et déplaçant des \néquipements sportifs jusqu'à\n 1,5 kg. Sa navigation \nintelligente et sa stabilité\n exceptionnelle assurent \nun fonctionnement fluide\n et sécurisé. Avec des modes \nmanuels et automatiques, il\n offre une expérience sportive\n dynamique, centralisant \nle travail du personnel.",
         "app.accueil.credit" : "Crédit :\nAdrien : controle du drone \nSuhayl : création de l'IA\nÉmile : Automatisation du Vol\nOscar : application",
