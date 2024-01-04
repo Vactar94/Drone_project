@@ -1,6 +1,8 @@
 import json
+from dataclasses import dataclass
 from kivy.uix.label import Label
 from kivy.uix.button import Button
+from kivy.uix.spinner import Spinner
 
 
 
@@ -51,32 +53,82 @@ class Langues() :
     
     def trad(self,id_ecriture) -> str :
         """transphorme un id_ecriture en str"""
-        return self.dict_langues[self.current_language][id_ecriture]
-        
+        try :
+            if self.dict_langues[self.current_language][id_ecriture] == "" :
+                return id_ecriture
+            else  : 
+                return self.dict_langues[self.current_language][id_ecriture] 
+        except :
+            return id_ecriture
+
 
 LANGUES = Langues()
-
-
-
 
 
 # ------------------------------------------------------ Updatable Obj ------------------------------------------------------ #
 
 
+class Updatable_font():
 
-class Updatable() :
-    def __init__(self, id_text:str, **kwargs):
-        self.text = LANGUES.trad(id_text)
-        self.id_text = id_text    
+    def __init__(self, font_size_type:str) -> None:
+        self.font_size_type = font_size_type
+        self.update_font_size()
+
+        
+    def update_font_size(self) :
+        self.font_size = PARAMETRE.get_curent_font_size(self.font_size_type)
+
+
+class Updatable_lang() :
+    def __init__(self, id_text:str) -> None:
+        self.id_text = id_text
+
+        self.update_trad()
+    
+    def update_trad(self) :
+        self.text = LANGUES.trad(self.id_text)
+
+
+class Updatable(Updatable_font,Updatable_lang) :
+    def __init__(self, id_text:str, font_size_type:str="standard", **kwargs):
+        Updatable_font.__init__(self,font_size_type=font_size_type)
+        Updatable_lang.__init__(self, id_text)
+
+    def __str__(self) :
+        return self.text
+
+
+
+
+class Updatable_Spinner(Spinner, Updatable_font) :
+    """version Updatabe de kivy.uix.Spinner
+    id_values : list des id du text des values {str}
+    id text : id du text {str}"""
+
+    def __init__(self, id_values, id_text:str, font_size_type="standard", **kwargs):
+        Spinner.__init__(self, **kwargs)
+        Updatable_font.__init__(self, font_size_type)
+
+        self.id_values = id_values
+        self.id_text = id_text
+        self.values = id_values
+        self.update_trad()
+
+        UPDATE_MANAGER.register_lang(self)
+           
         
     def update_trad(self) :
+        """update les values"""
+        for i in range(len(self.values)-1) :
+            self.values[i] = LANGUES.trad(self.id_values[i])
         self.text = LANGUES.trad(self.id_text)
     
     def __str__(self) :
-        return self.text
+        return f"spinner : {self.values}"
+
     
 class Updatable_Label(Label,Updatable) :
-    """id_text : id du texte traductible dans le fichier json (le text n'est pas obligé d'etre ajouté)
+    """id_text : id du texte traductible dans le fichier json (le text n'est pas obligé d'etre ajouté) {str}
     """
         
     def __init__(self, id_text:str, **kwargs):
@@ -86,7 +138,7 @@ class Updatable_Label(Label,Updatable) :
 
 
 class Updatable_Button(Button,Updatable) :
-    """id_text : id du texte traductible dans le fichier json (le text n'est pas obligé d'etre ajouté)
+    """id_text : id du texte traductible dans le fichier json (le text n'est pas obligé d'etre ajouté) {str}
     """
     def __init__(self, id_text:str, **kwargs):
         Button.__init__(self,id_text=id_text , **kwargs)
@@ -97,17 +149,34 @@ class Updatable_Button(Button,Updatable) :
 
 class Update_Manager() :
     """permet a update des variable contenue dans des object kivy (notament les labels et les buttons)"""
-    obj_update = []
+    _obj_update = []
     _obj_lang_update = []
+    _obj_font_size = []
 
     def register(self, object:Updatable) :
         """enregistre un object dans l'update manager, """
-        self.obj_update.append(object)
+        self._obj_update.append(object)
     
-    def register_lang(self, object:Updatable_Button|Updatable_Label) :
+    def register_lang(self, object:Updatable_Button|Updatable_Label|Updatable_Spinner) :
         """enregistre un Updatable_Label ou un Updatable_Button dans l'update manager pour update sa traducion a chaque chagement de langues"""
         self._obj_lang_update.append(object)
     
+    def register_font_size(self,  object:Updatable_Button|Updatable_Label|Updatable_Spinner) :
+        """enregistre un Updatable dans l'update manager pour update sa font size a chaque chagement de taille de police"""
+
+        self._obj_font_size.append(object)
+
+
+    
+    def update_font_size(self) :
+        """appelle la méthode update_font_size de tout les object préalablement enregistré dans update manager """
+        
+        for obj in self._obj_font_size :
+            obj.update_font_size()
+
+
+
+
     def update_all_60(self) :
         """c'est la et ça servira quand ça servira"""
         pass
@@ -127,12 +196,58 @@ class Update_Manager() :
 
 UPDATE_MANAGER = Update_Manager()
 
+
+
+
+class Parametre :
+    def __init__(self) -> None:
+        # -------------- FONT -------------- #
+        self.possibles_font_size = {'titre':[15, 18.75, 20],
+                                    "standard":[15, 18.75, 20]}
+        self._current_font_size = 1
+    
+    @property
+    def curent_font_size(self) :
+        return self._current_font_size
+
+    @curent_font_size.setter 
+    def curent_font_size(self, value) :
+        """valeurs qui va de 0 a 2 ou 0 est petit, 1 est medium, 2 est large"""
+        self._curent_font_size = value
+        UPDATE_MANAGER.update_font_size()
+ 
+        
+    
+    def switsh_font_size(self, value) :
+        if type(value) == int and value in [0, 1, 2]:
+            self.curent_font_size = value
+        elif value == LANGUES.trad("app.parametre.font_size.petit") :
+            self.curent_font_size = 0
+        elif value == LANGUES.trad("app.parametre.font_size.moyen") :
+            self.curent_font_size = 1
+        elif value == LANGUES.trad("app.parametre.font_size.grand") :
+            self.curent_font_size = 2
+        else :
+            print(f" value : {value} n'est pas sensé etre value dans le curent_font_size, c'est imporsible")
+            a = "a"+1
+
+    def get_curent_font_size(self, font_size_type:str) :
+        """font_size_type peut etre "titre", "standard" ou "petit """
+        return self.possibles_font_size[font_size_type][self.curent_font_size]
+
+            
+        
+        
+
+PARAMETRE = Parametre()
+
+
 if __name__ == "__main__" :
     import sys
 
     def compare(a, b) :
-        print(f"Taille de l'entier {a} :", sys.getsizeof(a), "octets")
-        print(f"Taille de la chaîne {b} :", sys.getsizeof(b), "octets")
+        print(f"Taille de l'entier '{a}' :", sys.getsizeof(PARAMETRE), "octets")
+        print(f"Taille de la chaîne '{b}' :", sys.getsizeof(b), "octets")
     
     entier = 2
     chaine = "English"

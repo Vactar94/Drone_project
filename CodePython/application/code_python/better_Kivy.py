@@ -159,7 +159,7 @@ class Layout_bouton_menue(RelativeLayout):
             RoundedRectangle(pos=(self.size[1]*0.025,self.size[1]*0.025),size=(self.size[0]*0.95,self.size[1]*0.95),radius=[30,30])
 
         titre = Updatable_Label(id_text=f"app.menue.button.{name}",pos_hint={"center_x": 0.5, "center_y": 0.0},color=(0, 0, 0))
-
+        print(titre.font_size)
         button = Button(size=(self.size[0]*0.90,self.size[1]*0.90),size_hint=(None, None),background_color=(0, 0, 0, 0),pos = (self.size[1]*0.05,self.size[1]*0.05))
         
         with button.canvas.before:
