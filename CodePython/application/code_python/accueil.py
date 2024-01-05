@@ -31,7 +31,7 @@ class Accueil(RelativeLayout) :
         desctiption.bind(on_release=self.go_to_affiche)
 
         credit = Updatable_Label(id_text="app.accueil.credit" ,pos_hint={"center_x":0.6,"center_y":0.2})
-        titre = Updatable_Label(id_text='app.accueil.titre',size_hint_y=None,color=(1, 1, 1),height=200,pos_hint={"center_x":0.6,"center_y":0.85},font_size=25,markup=True)
+        titre = Updatable_Label(id_text='app.accueil.titre',size_hint_y=None,color=(1, 1, 1),height=200,pos_hint={"center_x":0.6,"center_y":0.85}, font_size_type="titre",markup=True)
         
         #------------- bouton pour connecter la mannette  -------------#
         conectivity_contoler = Button(text="",size_hint=(None,None),size=(80,40),pos_hint={"center_x":0.11,"center_y":0.9},background_color=(0,0,0,0),background_normal="")

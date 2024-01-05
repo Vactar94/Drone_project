@@ -37,14 +37,18 @@ class Screen_Parametre(Screen_sous_menu) :
     
         select_font_size = Updatable_Spinner(id_text=list_tailles_polices[1], id_values=list_tailles_polices, pos_hint={'center_x': 0.7, 'center_y': 0.5}, size_hint=(None, None), size=(100, 35), background_color=(0, 0, 0, 0),color=(0, 0, 0, 1))
         def switsh_font_size(spinner, text):
+            print(f"enter Parametre.switsh_font_size({text})")
             PARAMETRE.switsh_font_size(text)
+            
+            print(f"sortie Parametre.switsh_font_size({text})")
+
             id_text = LANGUES.contre_trad(text)
             if type(id_text) == str :
                 spinner.id_text = id_text # permet d'assigné la bonne id en fonction de la value séléctionné dans l'app.
             else :
                 print(f"id_text = {id_text} regarder dans screen parametre il y a une erreur")
                 a = "a"+1
-            print(f"select_font_size = {text}")
+
         select_font_size.bind(text=switsh_font_size)
 
         box_polices.add_widget(titre_polices)

@@ -115,14 +115,14 @@ class Screen_sous_menu(Better_Screen) :
 
         self.rendu_layout = RelativeLayout(size=self.size)
         
-        titre = Updatable_Label(id_text=id_text_titre, color=(0, 0, 0), pos_hint={"center_x":0.5,"center_y":0.85})
+        titre = Updatable_Label(id_text=id_text_titre, color=(0, 0, 0), pos_hint={"center_x":0.5,"center_y":0.85},font_size_type="titre")
 
         with self.rendu_layout.canvas.before:
             Color(0, 0, 0)
             Rectangle(pos=(0,0),size=self.size)
             Color(1, 1, 1)
             RoundedRectangle(pos=(self.size[0]*(0.01),self.size[1]*(0.01)),size=(self.size[0]*0.43,self.size[1]*0.98),radius=[50,50])
-        menue_button = Button(text="", font_size=11, color=(0 ,0 ,0), size_hint=(None,None), size=(60,60), pos_hint={"center_x":1-0.87,"center_y":0.9}, background_color=(0, 0, 0, 0))
+        menue_button = Button(text="", color=(0 ,0 ,0), size_hint=(None,None), size=(60,60), pos_hint={"center_x":1-0.87,"center_y":0.9}, background_color=(0, 0, 0, 0))
         with menue_button.canvas.before:
             Color(0, 0, 0)
             menue_button.bg_rect = Image(source="image/bouton-retour bg.png",size=menue_button.size,pos=menue_button.pos)
@@ -159,7 +159,6 @@ class Layout_bouton_menue(RelativeLayout):
             RoundedRectangle(pos=(self.size[1]*0.025,self.size[1]*0.025),size=(self.size[0]*0.95,self.size[1]*0.95),radius=[30,30])
 
         titre = Updatable_Label(id_text=f"app.menue.button.{name}",pos_hint={"center_x": 0.5, "center_y": 0.0},color=(0, 0, 0))
-        print(titre.font_size)
         button = Button(size=(self.size[0]*0.90,self.size[1]*0.90),size_hint=(None, None),background_color=(0, 0, 0, 0),pos = (self.size[1]*0.05,self.size[1]*0.05))
         
         with button.canvas.before:

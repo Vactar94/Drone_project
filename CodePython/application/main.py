@@ -166,7 +166,7 @@ class Screen_Classique(Screen_Stramable) :
 
 class Screen_Automatique(Screen_Stramable) :
     def __init__(self,**kwargs):
-        #icone = Image(source="image/icone_button_automatique_bg.png")
+
         super().__init__(**kwargs)
 
         

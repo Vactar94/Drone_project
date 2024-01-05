@@ -20,7 +20,7 @@ class Menue(RelativeLayout):
             RoundedRectangle(pos=(self.size[1]*0.025,self.size[1]*0.025),size=(self.size[0]*0.95,self.size[1]*0.95),radius=[30,30])
 
 
-        titre_page = Updatable_Label(id_text="app.menue.titre_page",pos_hint={"center_x":0.5,"center_y":0.85},color=(0, 0, 0))
+        titre_page = Updatable_Label(id_text="app.menue.titre_page",pos_hint={"center_x":0.5,"center_y":0.85},color=(0, 0, 0),font_size_type="titre")
 
         button_classique = Layout_bouton_menue(name="classique",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(1/25),self.size[1]*(2/9)))
         button_automatique = Layout_bouton_menue(name="automatique",ui_screen=ui_screen,size=(self.size[0]*0.15,self.size[0]*0.15),size_hint=(None,None),pos=(self.size[0]*(1/25),self.size[1]*(5/9)))

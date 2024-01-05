@@ -88,10 +88,15 @@ class Updatable_font():
     def __init__(self, font_size_type:str) -> None:
         self.font_size_type = font_size_type
         self.update_font_size()
+        UPDATE_MANAGER.register_font_size(self)
 
         
     def update_font_size(self) :
+        print(self)
+        print(self.font_size_type)
         self.font_size = PARAMETRE.get_curent_font_size(self.font_size_type)
+        print(self.font_size)
+        print()
 
 
 class Updatable_lang() :
@@ -99,6 +104,7 @@ class Updatable_lang() :
         self.id_text = id_text
 
         self.update_trad()
+        UPDATE_MANAGER.register_lang(self)
     
     def update_trad(self) :
         self.text = LANGUES.trad(self.id_text)
@@ -137,7 +143,7 @@ class Updatable_Spinner(Updatable_font, Spinner):
         self.values = id_values
         self.update_trad()
 
-        UPDATE_MANAGER.register_lang(self)
+        
            
         
     def update_trad(self) :
@@ -159,7 +165,7 @@ class Updatable_Label(Label,Updatable) :
     def __init__(self, id_text:str, **kwargs):
         Label.__init__(self,id_text=id_text, **kwargs)
         Updatable.__init__(self, id_text, **kwargs)
-        UPDATE_MANAGER.register_lang(self)
+
 
 
 class Updatable_Button(Button,Updatable) :
@@ -168,7 +174,7 @@ class Updatable_Button(Button,Updatable) :
     def __init__(self, id_text:str, **kwargs):
         Button.__init__(self,id_text=id_text , **kwargs)
         Updatable.__init__(self, id_text, **kwargs)
-        UPDATE_MANAGER.register_lang(self)
+
         
 
 
@@ -195,7 +201,7 @@ class Update_Manager() :
     
     def update_font_size(self) :
         """appelle la méthode update_font_size de tout les object préalablement enregistré dans update manager """
-        
+        print("update_font_size")
         for obj in self._obj_font_size :
             obj.update_font_size()
 
@@ -227,38 +233,44 @@ UPDATE_MANAGER = Update_Manager()
 class Parametre :
     def __init__(self) -> None:
         # -------------- FONT -------------- #
-        self.possibles_font_size = {'titre':[15, 18.75, 20],
-                                    "standard":[15, 18.75, 20]}
+        self.possibles_font_size = {'titre':[20, 25, 30],
+                                    "standard":[15, 18.75, 20],
+                                    "petit":[15, 18.75, 20]}
         self._current_font_size = 1
     
     @property
-    def curent_font_size(self) :
+    def current_font_size(self) :
+        print(self._current_font_size)
         return self._current_font_size
 
-    @curent_font_size.setter 
-    def curent_font_size(self, value) :
+    @current_font_size.setter 
+    def current_font_size(self, value) :
         """valeurs qui va de 0 a 2 ou 0 est petit, 1 est medium, 2 est large"""
-        self._curent_font_size = value
+        self._current_font_size = value
+        print("current_font_size.setter")
         UPDATE_MANAGER.update_font_size()
  
         
     
     def switsh_font_size(self, value) :
         if type(value) == int and value in [0, 1, 2]:
-            self.curent_font_size = value
+            self.current_font_size = value
         elif value == LANGUES.trad("app.parametre.font_size.petit") :
-            self.curent_font_size = 0
+            print("Petit")
+            self.current_font_size = 0
         elif value == LANGUES.trad("app.parametre.font_size.moyen") :
-            self.curent_font_size = 1
+            print("moyen")
+            self.current_font_size = 1
         elif value == LANGUES.trad("app.parametre.font_size.grand") :
-            self.curent_font_size = 2
+            print("Grand")
+            self.current_font_size = 2
         else :
-            print(f" value : {value} n'est pas sensé etre value dans le curent_font_size, c'est imporsible")
+            print(f" value : {value} n'est pas sensé etre value dans le current_font_size, c'est imporsible")
             a = "a"+1
 
     def get_curent_font_size(self, font_size_type:str) :
         """font_size_type peut etre "titre", "standard" ou "petit """
-        return self.possibles_font_size[font_size_type][self.curent_font_size]
+        return self.possibles_font_size[font_size_type][self.current_font_size]
 
             
         
