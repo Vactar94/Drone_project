@@ -160,13 +160,13 @@ class Screen_Controles(Screen_sous_menu) :
 
 class Screen_Classique(Screen_Stramable) :
     def __init__(self,**kwargs):
-        icone = Image(source="image/icone_button_classique_bg.png")
+        #icone = Image(source="image/icone_button_classique_bg.png")
         super().__init__(**kwargs)
 
 
 class Screen_Automatique(Screen_Stramable) :
     def __init__(self,**kwargs):
-        icone = Image(source="image/icone_button_automatique_bg.png")
+        #icone = Image(source="image/icone_button_automatique_bg.png")
         super().__init__(**kwargs)
 
         

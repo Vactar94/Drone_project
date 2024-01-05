@@ -61,6 +61,21 @@ class Langues() :
         except :
             return id_ecriture
 
+    def contre_trad(self,text)-> str|list :
+        """transphorme un id_ecriture en str si il exsite, sinon fait une erreur"""
+        id_text = []
+    
+        for key in self.dict_langues[self.current_language].keys() :
+            if self.dict_langues[self.current_language][key] == text :
+                id_text.append(key)
+    
+        if len(id_text) == 0 :
+            return text
+        elif len(id_text) == 1 :
+            return id_text[0] 
+        else :
+            return id_text
+
 
 LANGUES = Langues()
 
@@ -100,14 +115,22 @@ class Updatable(Updatable_font,Updatable_lang) :
 
 
 
-class Updatable_Spinner(Spinner, Updatable_font) :
+class Updatable_Spinner(Updatable_font, Spinner):
     """version Updatabe de kivy.uix.Spinner
     id_values : list des id du text des values {str}
-    id text : id du text {str}"""
+    id text : id du text {str}
+    Uptate_values:bool=True
+    Uptate_text:bool=True
+    """
 
-    def __init__(self, id_values, id_text:str, font_size_type="standard", **kwargs):
-        Spinner.__init__(self, **kwargs)
+    def __init__(self, id_values:list=[],  id_text:str="", Uptate_values:bool=True, Uptate_text:bool=True, font_size_type="standard", **kwargs):
+        # Appeler le constructeur de la classe mère Updatable_font
         Updatable_font.__init__(self, font_size_type)
+        # Appeler le constructeur de la classe mère Spinner
+        Spinner.__init__(self, **kwargs)
+
+        self.Uptate_values = Uptate_values
+        self.Uptate_text = Uptate_text
 
         self.id_values = id_values
         self.id_text = id_text
@@ -119,9 +142,11 @@ class Updatable_Spinner(Spinner, Updatable_font) :
         
     def update_trad(self) :
         """update les values"""
-        for i in range(len(self.values)-1) :
-            self.values[i] = LANGUES.trad(self.id_values[i])
-        self.text = LANGUES.trad(self.id_text)
+        if self.Uptate_values :
+            for i in range(len(self.values)) :
+                self.values[i] = LANGUES.trad(self.id_values[i])
+        if self.Uptate_text :
+            self.text = LANGUES.trad(self.id_text)
     
     def __str__(self) :
         return f"spinner : {self.values}"

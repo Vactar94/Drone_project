@@ -17,10 +17,13 @@
         "app.menue.button.automatique" : "\nAutomatic",
         "app.menue.button.controles" : "\nControls ",
         "app.menue.button.parametre" : "\nSettings",
-        
-        "app.parametre.font_size.petit" : "Large",
+
+        "app.parametre.lang.titre" : "Language :",
+
+        "app.parametre.font_size.titre" : "Font size :",
+        "app.parametre.font_size.petit" : "Litle",
         "app.parametre.font_size.moyen" : "Medium",
-        "app.parametre.font_size.grand" : "Litle"
+        "app.parametre.font_size.grand" : "Large"
     },
     "Français":{
         "app.text_title.controles":"Contrôles",
@@ -41,6 +44,9 @@
         "app.menue.button.controles" : "\nContrôles",
         "app.menue.button.parametre" : "\nParamètres",
 
+        "app.parametre.lang.titre" : "Langue :",
+
+        "app.parametre.font_size.titre" : "Taille de la police",
         "app.parametre.font_size.petit" : "Petit",
         "app.parametre.font_size.moyen" : "Moyen",
         "app.parametre.font_size.grand" : "Grand"
@@ -65,6 +71,9 @@
         "app.menue.button.controles" : "\nControles",
         "app.menue.button.parametre" : "\nConfiguraciones",
 
+        "app.parametre.lang.titre" : "",
+
+        "app.parametre.font_size.titre" : "",
         "app.parametre.font_size.petit" : "",
         "app.parametre.font_size.moyen" : "",
         "app.parametre.font_size.grand" : ""
