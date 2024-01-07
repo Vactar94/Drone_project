@@ -73,7 +73,7 @@
 
         "app.parametre.lang.titre" : "Lengua",
 
-        "app.parametre.font_size.titre" : "",
+        "app.parametre.font_size.titre" : "tamaño de la fuente",
         "app.parametre.font_size.petit" : "Grande",
         "app.parametre.font_size.moyen" : "Medio",
         "app.parametre.font_size.grand" : "Pequeño"
@@ -82,7 +82,7 @@
         "app.text_title.controles":"コントロール",
         "app.text_title.parametres":"設定",
         
-        "app.accueil.description":"このアプリによって制御される革新的なドローンは、最大 1。5 kg/n のスポーツ用品を認識して移動することにより、/nゲーム管理を最適化します。/nそのインテリジェントなナビゲーションと卓越した安定性は、/nスムーズで安全な操作を保証します。手動モードと自動モードでは/n、ダイナミックなスポーツ体験を提供し、スタッフの作業を集中化します",
+        "app.accueil.description":"このアプリによって制御される革新的なドローンは、最大 1。5 kg/n のスポーツ用品を認識して移動することにより、/nゲーム管理を最適化します。/nそのインテリジェントなナビゲーションと卓越した安定性は、/nスムーズで安全な操作を保証します。/n手動モードと自動モードでは/n、ダイナミックなスポーツ体験を提供し、/nスタッフの作業を集中化します",
         "app.accueil.credit" : "Credits :\nAdrien : drone control \nSuhayl :create the AI\nÉmile : Automatic flight\nOscar : app",
         "app.accueil.titre" : "[b]Drone Automatik[/b]",
         
@@ -96,10 +96,11 @@
         "app.menue.button.automatique" : "自動",
         "app.menue.button.controles" : "コントロール",
         "app.menue.button.parametre" : "設定",
-
-        "app.parametre.font_size.petit" : "",
-        "app.parametre.font_size.moyen" : "",
-        "app.parametre.font_size.grand" : ""
+        
+        "app.parametre.font_size.titre" : "フォントサイズ",
+        "app.parametre.font_size.petit" : "偉い",
+        "app.parametre.font_size.moyen" : "手段",
+        "app.parametre.font_size.grand" : "小さい"
         
 
     }
