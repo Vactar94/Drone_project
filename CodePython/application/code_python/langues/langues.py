@@ -135,13 +135,16 @@ class Updatable_Spinner(Updatable_font, Spinner):
         # Appeler le constructeur de la classe mère Spinner
         Spinner.__init__(self, **kwargs)
 
-        self.Uptate_values = Uptate_values
-        self.Uptate_text = Uptate_text
+        self.Uptate_values = True
+        self.Uptate_text = True
 
         self.id_values = id_values
         self.id_text = id_text
         self.values = id_values
         self.update_trad()
+        self.Uptate_values = Uptate_values
+        self.Uptate_text = Uptate_text
+        UPDATE_MANAGER.register_lang(self)
 
         
            
@@ -155,7 +158,7 @@ class Updatable_Spinner(Updatable_font, Spinner):
             self.text = LANGUES.trad(self.id_text)
     
     def __str__(self) :
-        return f"spinner : {self.values}"
+        return f"spinner : {self.values} {self.text}"
 
     
 class Updatable_Label(Label,Updatable) :
