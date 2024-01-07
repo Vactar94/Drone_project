@@ -20,7 +20,7 @@ class Screen_Parametre(Screen_sous_menu) :
 
         titre_lang = Updatable_Label(id_text="app.parametre.lang.titre", pos_hint={"center_x":0.3, "center_y":0.5},color=(0, 0, 0, 1))
         
-        select_lang = Updatable_Spinner(id_text=possibles_languages[0], id_values=possibles_languages, size_hint=(None, None), size=(100, 35),pos_hint={'center_x': 0.7, 'center_y': 0.5}, background_color=(0, 0, 0, 0),color=(0, 0, 0, 1))
+        select_lang = Spinner(text=possibles_languages[0], values=possibles_languages, size_hint=(None, None), size=(100, 35),pos_hint={'center_x': 0.7, 'center_y': 0.5}, background_color=(0, 0, 0, 0),color=(0, 0, 0, 1))
         
         def switsh_language(spinner, text):
             LANGUES.current_language = text
