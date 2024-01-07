@@ -3,7 +3,7 @@
         "app.text_title.controles":"Controls",
         "app.text_title.parametres":"Settings",
         
-        "app.accueil.description":"",
+        "app.accueil.description":"Our revolutionnary drone, /n controlled by this application, /noptimizes game management by/n recognizing and moving sport's equipment /n up to 3.307 lb. /nHis intelligent navigation and/n his outstanding stability, /nensure a fluid and secure functioning./nWith manual and automatic modes,/n he gives you an/n dynamics sport experiences,/ncentralizing th personal work ",
         "app.accueil.credit": "Credit:\nAdrien: control of the drone\nSuhayl: creation of the AI\nÉmile: Flight Automation\nOscar: application",
         "app.accueil.titre" : "[b]Drone Automatik[/b]",
         
@@ -71,12 +71,12 @@
         "app.menue.button.controles" : "\nControles",
         "app.menue.button.parametre" : "\nConfiguraciones",
 
-        "app.parametre.lang.titre" : "",
+        "app.parametre.lang.titre" : "Lengua",
 
         "app.parametre.font_size.titre" : "",
-        "app.parametre.font_size.petit" : "",
-        "app.parametre.font_size.moyen" : "",
-        "app.parametre.font_size.grand" : ""
+        "app.parametre.font_size.petit" : "Grande",
+        "app.parametre.font_size.moyen" : "Medio",
+        "app.parametre.font_size.grand" : "Pequeño"
     },
     "Japan":{
         "app.text_title.controles":"",
