@@ -30,7 +30,7 @@
         "app.text_title.parametres":"Paramètres",
         
         "app.accueil.description":"Notre drone révolutionnaire,\n contrôlé par cet application, \n optimise la gestion des jeux en \nreconnaissant et déplaçant des \néquipements sportifs jusqu'à\n 1,5 kg. Sa navigation \nintelligente et sa stabilité\n exceptionnelle assurent \nun fonctionnement fluide\n et sécurisé. Avec des modes \nmanuels et automatiques, il\n offre une expérience sportive\n dynamique, centralisant \nle travail du personnel.",
-        "app.accueil.credit" : "Crédit :\nAdrien : controle du drone \nSuhayl : création de l'IA\nÉmile : Automatisation du Vol\nOscar : application",
+        "app.accueil.credit" : "Credits :\nAdrien : drone control \nSuhayl :create the AI\nÉmile : Automatic flight\nOscar : app",
         "app.accueil.titre" : "[b]Drone Automatik[/b]",
         
         "app.notif.manette_connecte":"Mannette connectée",
@@ -78,24 +78,24 @@
         "app.parametre.font_size.moyen" : "Medio",
         "app.parametre.font_size.grand" : "Pequeño"
     },
-    "Japan":{
-        "app.text_title.controles":"",
-        "app.text_title.parametres":"",
+    "Japanese":{
+        "app.text_title.controles":"コントロール",
+        "app.text_title.parametres":"設定",
         
-        "app.accueil.description":"",
-        "app.accueil.credit" : "",
-        "app.accueil.titre" : "",
+        "app.accueil.description":"このアプリによって制御される革新的なドローンは、最大 1。5 kg/n のスポーツ用品を認識して移動することにより、/nゲーム管理を最適化します。/nそのインテリジェントなナビゲーションと卓越した安定性は、/nスムーズで安全な操作を保証します。手動モードと自動モードでは/n、ダイナミックなスポーツ体験を提供し、スタッフの作業を集中化します",
+        "app.accueil.credit" : "Credits :\nAdrien : drone control \nSuhayl :create the AI\nÉmile : Automatic flight\nOscar : app",
+        "app.accueil.titre" : "[b]Drone Automatik[/b]",
         
-        "app.notif.manette_connecte":"",
-        "app.notif.manette_non_connecte":"",
-        "app.notif.drone_connecte":"",
-        "app.notif.drone_non_connecte":"",
+        "app.notif.manette_connecte":"接続コントローラ",
+        "app.notif.manette_non_connecte":"オフラインコントローラ",
+        "app.notif.drone_connecte":"面白い接続",
+        "app.notif.drone_non_connecte":"接続されていない面白い",
 
-        "app.menue.titre_page" : "",
-        "app.menue.button.classique" : "",
-        "app.menue.button.automatique" : "",
-        "app.menue.button.controles" : "",
-        "app.menue.button.parametre" : "",
+        "app.menue.titre_page" : "モードを選択します",
+        "app.menue.button.classique" : "従来",
+        "app.menue.button.automatique" : "自動",
+        "app.menue.button.controles" : "コントロール",
+        "app.menue.button.parametre" : "設定",
 
         "app.parametre.font_size.petit" : "",
         "app.parametre.font_size.moyen" : "",
