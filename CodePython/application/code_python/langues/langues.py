@@ -129,21 +129,24 @@ class Updatable_Spinner(Updatable_font, Spinner):
     Uptate_text:bool=True
     """
 
-    def __init__(self, id_values:list=[],  id_text:str="", Uptate_values:bool=True, Uptate_text:bool=True, font_size_type="standard", **kwargs):
+    def __init__(self, id_values:list=[],  id_text:str="", update_values:bool=True, update_text:bool=True, font_size_type="standard", **kwargs):
         # Appeler le constructeur de la classe mère Updatable_font
         Updatable_font.__init__(self, font_size_type)
         # Appeler le constructeur de la classe mère Spinner
         Spinner.__init__(self, **kwargs)
 
-        self.Uptate_values = True
-        self.Uptate_text = True
+        self.update_values = True
+        self.update_text = True
 
         self.id_values = id_values
         self.id_text = id_text
-        self.values = id_values
+        if len(self.values) != len(id_values) and id_values != []:
+
+            self.values = id_values
         self.update_trad()
-        self.Uptate_values = Uptate_values
-        self.Uptate_text = Uptate_text
+        self.update_values = update_values
+        self.update_text = update_text
+
         UPDATE_MANAGER.register_lang(self)
 
         
@@ -151,10 +154,10 @@ class Updatable_Spinner(Updatable_font, Spinner):
         
     def update_trad(self) :
         """update les values"""
-        if self.Uptate_values :
+        if self.update_values :
             for i in range(len(self.values)) :
                 self.values[i] = LANGUES.trad(self.id_values[i])
-        if self.Uptate_text :
+        if self.update_text :
             self.text = LANGUES.trad(self.id_text)
     
     def __str__(self) :
@@ -243,14 +246,12 @@ class Parametre :
     
     @property
     def current_font_size(self) :
-        print(self._current_font_size)
         return self._current_font_size
 
     @current_font_size.setter 
     def current_font_size(self, value) :
         """valeurs qui va de 0 a 2 ou 0 est petit, 1 est medium, 2 est large"""
         self._current_font_size = value
-        print("current_font_size.setter")
         UPDATE_MANAGER.update_font_size()
  
         
@@ -259,13 +260,13 @@ class Parametre :
         if type(value) == int and value in [0, 1, 2]:
             self.current_font_size = value
         elif value == LANGUES.trad("app.parametre.font_size.petit") :
-            print("Petit")
+            #print("Petit")
             self.current_font_size = 0
         elif value == LANGUES.trad("app.parametre.font_size.moyen") :
-            print("moyen")
+            #print("moyen")
             self.current_font_size = 1
         elif value == LANGUES.trad("app.parametre.font_size.grand") :
-            print("Grand")
+            #print("Grand")
             self.current_font_size = 2
         else :
             print(f" value : {value} n'est pas sensé etre value dans le current_font_size, c'est imporsible")
