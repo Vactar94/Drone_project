@@ -97,6 +97,8 @@
         "app.menue.button.controles" : "コントロール",
         "app.menue.button.parametre" : "設定",
         
+        "app.parametre.lang.titre" : "言語 :",
+
         "app.parametre.font_size.titre" : "フォントサイズ",
         "app.parametre.font_size.petit" : "小さい",
         "app.parametre.font_size.moyen" : "手段",
