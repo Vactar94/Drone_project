@@ -92,17 +92,15 @@ class Updatable_font():
 
         
     def update_font_size(self) :
-        print(self)
-        print(self.font_size_type)
+        """met a jour la font_size en fontcion de PARAMETTRE.get_curent_font_size"""
         self.font_size = PARAMETRE.get_curent_font_size(self.font_size_type)
-        print(self.font_size)
-        print()
 
 
 class Updatable_lang() :
+    """Fusionnable avec tout les Buttons, Label de kivy"""
+
     def __init__(self, id_text:str) -> None:
         self.id_text = id_text
-
         self.update_trad()
         UPDATE_MANAGER.register_lang(self)
     
@@ -111,6 +109,7 @@ class Updatable_lang() :
 
 
 class Updatable(Updatable_font,Updatable_lang) :
+    """fusions des classes Updatable_font et Updatabe_lang"""
     def __init__(self, id_text:str, font_size_type:str="standard", **kwargs):
         Updatable_font.__init__(self,font_size_type=font_size_type)
         Updatable_lang.__init__(self, id_text)
@@ -125,8 +124,8 @@ class Updatable_Spinner(Updatable_font, Spinner):
     """version Updatabe de kivy.uix.Spinner
     id_values : list des id du text des values {str}
     id text : id du text {str}
-    Uptate_values:bool=True
-    Uptate_text:bool=True
+    update_lang: savoir il deviendra éligible a l'update de la langue {bool}[True]
+    font_size_type : {str in ["standard","titre","petit"]}["standard"]
     """
 
     def __init__(self, id_values:list=[],  id_text:str="", update_lang:bool=True, font_size_type="standard",**kwargs):
@@ -142,14 +141,11 @@ class Updatable_Spinner(Updatable_font, Spinner):
             self.values = id_values
             self.update_trad()
             UPDATE_MANAGER.register_lang(self)
-            print("update lang[init] : ",self)
-
             
-        
-           
+
         
     def update_trad(self) :
-        """update les values"""
+        """update les values du spinner en les traduisant"""
 
         for i in range(len(self.values)) :
             self.values[i] = LANGUES.trad(self.id_values[i])
@@ -203,12 +199,13 @@ class Update_Manager() :
     
     def update_font_size(self) :
         """appelle la méthode update_font_size de tout les object préalablement enregistré dans update manager """
-        print("update_font_size")
         for obj in self._obj_font_size :
             obj.update_font_size()
 
-
-
+    def update_all_lang(self) :
+        """appelle la méthode update_trad de tout les object de _obj_lang_update """
+        for obj in self._obj_lang_update :
+            obj.update_trad()
 
     def update_all_60(self) :
         """c'est la et ça servira quand ça servira"""
@@ -218,17 +215,7 @@ class Update_Manager() :
         """c'est la et ça servira quand ça servira"""
         pass
 
-
-    def update_all_lang(self) :
-        """appelle la méthode update_trad de tout les object de _obj_lang_update """
-        for obj in self._obj_lang_update :
-            obj.update_trad()
-
-
-
-
 UPDATE_MANAGER = Update_Manager()
-
 
 
 
@@ -256,13 +243,12 @@ class Parametre :
         if type(value) == int and value in [0, 1, 2]:
             self.current_font_size = value
         elif value == LANGUES.trad("app.parametre.font_size.petit") :
-            #print("Petit")
             self.current_font_size = 0
+
         elif value == LANGUES.trad("app.parametre.font_size.moyen") :
-            #print("moyen")
             self.current_font_size = 1
+
         elif value == LANGUES.trad("app.parametre.font_size.grand") :
-            #print("Grand")
             self.current_font_size = 2
         else :
             print(f" value : {value} n'est pas sensé etre value dans le current_font_size, c'est imporsible")
@@ -283,8 +269,8 @@ if __name__ == "__main__" :
     import sys
 
     def compare(a, b) :
-        print(f"Taille de l'entier '{a}' :", sys.getsizeof(PARAMETRE), "octets")
-        print(f"Taille de la chaîne '{b}' :", sys.getsizeof(b), "octets")
+        print(f"Taille de l'objet '{a}' de type {type(a)} :", sys.getsizeof(a), "octets")
+        print(f"Taille de l'objet '{b}'de type {type(b)} :", sys.getsizeof(b), "octets")
     
     entier = 2
     chaine = "English"

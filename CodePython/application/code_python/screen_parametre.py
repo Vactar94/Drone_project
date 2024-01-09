@@ -32,18 +32,17 @@ class Screen_Parametre(Screen_sous_menu) :
         box_lang.add_widget(select_lang)
 
         # ------------------- button selection taille police ------------------- #
-        box_polices = FloatLayout(pos_hint={"center_x":0.5, "center_y":0.5})
+
+        pos_hint_button_switsh_font = {"center_x":0.5, "center_y":0.5}# Position du button_switsh size
+        box_polices = FloatLayout(pos_hint=pos_hint_button_switsh_font)
         titre_polices = Updatable_Label(id_text="app.parametre.font_size.titre", pos_hint={"center_x":0.3, "center_y":0.5},color=(0, 0, 0, 1))
             
         list_tailles_polices = ["app.parametre.font_size.petit", "app.parametre.font_size.moyen", "app.parametre.font_size.grand"]
     
         select_font_size = Updatable_Spinner(id_text=list_tailles_polices[1], id_values=list_tailles_polices, pos_hint={'center_x': 0.7, 'center_y': 0.5}, size_hint=(None, None), size=(100, 35), background_color=(0, 0, 0, 0),color=(0, 0, 0, 1))
+        
         def switsh_font_size(spinner, text):
-            print(f"enter Parametre.switsh_font_size({text})")
             PARAMETRE.switsh_font_size(text)
-            
-            print(f"sortie Parametre.switsh_font_size({text})")
-
             id_text = LANGUES.contre_trad(text)
             if type(id_text) == str :
                 spinner.id_text = id_text # permet d'assigné la bonne id en fonction de la value séléctionné dans l'app.
