@@ -129,36 +129,32 @@ class Updatable_Spinner(Updatable_font, Spinner):
     Uptate_text:bool=True
     """
 
-    def __init__(self, id_values:list=[],  id_text:str="", update_values:bool=True, update_text:bool=True, font_size_type="standard", **kwargs):
+    def __init__(self, id_values:list=[],  id_text:str="", update_lang:bool=True, font_size_type="standard",**kwargs):
         # Appeler le constructeur de la classe mère Updatable_font
         Updatable_font.__init__(self, font_size_type)
         # Appeler le constructeur de la classe mère Spinner
         Spinner.__init__(self, **kwargs)
 
-        self.update_values = True
-        self.update_text = True
-
-        self.id_values = id_values
-        self.id_text = id_text
-        if len(self.values) != len(id_values) and id_values != []:
-
+        if update_lang :
+           
+            self.id_values = id_values
+            self.id_text = id_text
             self.values = id_values
-        self.update_trad()
-        self.update_values = update_values
-        self.update_text = update_text
+            self.update_trad()
+            UPDATE_MANAGER.register_lang(self)
+            print("update lang[init] : ",self)
 
-        UPDATE_MANAGER.register_lang(self)
-
+            
         
            
         
     def update_trad(self) :
         """update les values"""
-        if self.update_values :
-            for i in range(len(self.values)) :
-                self.values[i] = LANGUES.trad(self.id_values[i])
-        if self.update_text :
-            self.text = LANGUES.trad(self.id_text)
+
+        for i in range(len(self.values)) :
+            self.values[i] = LANGUES.trad(self.id_values[i])
+
+        self.text = LANGUES.trad(self.id_text)
     
     def __str__(self) :
         return f"spinner : {self.values} {self.text}"
