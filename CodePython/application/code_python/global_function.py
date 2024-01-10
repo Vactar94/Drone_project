@@ -52,7 +52,7 @@ def is_wifi_drones_connected():
 
 
 def get_connected_wifi_name_windows()->str:
-    """determination du nom du wifi pour pouvoir l'utiliser après."""
+    """determination du nom du wifi qui est acutellement connecté pour pouvoir l'utiliser après."""
     if SYSTEM == "W":
         try:
             result = os.popen('netsh wlan show interfaces | findstr "SSID"').read()

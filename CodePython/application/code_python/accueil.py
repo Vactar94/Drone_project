@@ -56,16 +56,6 @@ class Accueil(RelativeLayout) :
         button_test.bind(on_release=self.go_to_test)
 
 
-
-        #batterie_drone = DRONE.get_battery()
-        #if batterie_drone >= 0 :
-        #    text_batt = "Batterie du drone :"
-        #else :
-        #    text_batt = "Connectez le drone pour avoir la batterie "
-        
-        #batterie_drone_label = Updatable_Label(text=text_batt,frequence=1,updating_variable=DRONE.get_battery) pour une futur MAJ ^^
-        
-
         self.add_widget(button_test)
         self.add_widget(conectivity_drone)
         self.add_widget(conectivity_contoler)
