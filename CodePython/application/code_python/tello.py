@@ -27,6 +27,16 @@ class Drone_manager :
     
 
     @property
+    def temph(self)-> int:
+        """enoie une requet au drone donc molo sur l'appel^^"""
+        return self._get_temph()
+    
+    @property
+    def battery(self)-> int:
+        """enoie une requet au drone donc molo sur l'appel^^"""
+        return self._get_battery()
+    
+    @property
     def is_connected(self) :
         self._is_connected = self.drone.is_connected
         return self._is_connected
@@ -34,19 +44,19 @@ class Drone_manager :
     @is_connected.setter
     def is_connected(self,value:bool) :
         self._is_connected = self.drone.is_connected = value
-
+    
 
 
     def connect(self)-> bool :
         """ se connecte au drone avec la méthode Tello.conect()"""
         if is_wifi_drones_connected() :
-            self.drone.set_video_fps(Tello.FPS_30)
             self.drone.connect(False)
+            self.drone.set_video_fps(Tello.FPS_30)
             self.is_connected = True    
             return True
         else : return False
 
-    def get_battery(self)-> int :
+    def _get_battery(self)-> int :
         """Get current battery percentage Returns:
     int: 0-100 or retrun -1 if the drone are not connected"""
         if self.is_connected :
@@ -54,7 +64,7 @@ class Drone_manager :
         else :
             return -1
     
-    def get_temph(self) :
+    def _get_temph(self) :
         """Get average temperature Returns:
     float: average temperature (°C)
     -1 if the drone are not connected"""

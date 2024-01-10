@@ -1,8 +1,8 @@
 import json
-from dataclasses import dataclass
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.spinner import Spinner
+
 
 
 
@@ -116,7 +116,10 @@ class Updatable(Updatable_font,Updatable_lang) :
 
     def __str__(self) :
         return self.text
+    
 
+
+    
 
 
 
@@ -178,19 +181,55 @@ class Updatable_Button(Button,Updatable) :
 
 class Update_Manager() :
     """permet a update des variable contenue dans des object kivy (notament les labels et les buttons)"""
-    _obj_update = []
+    _obj_update_all_frame = []
+    _obj_update_1 = []
+    _obj_update_5 = []
+    _obj_update_30 = []
+
     _obj_lang_update = []
     _obj_font_size = []
 
-    def register(self, object:Updatable) :
-        """enregistre un object dans l'update manager, """
-        self._obj_update.append(object)
+    @property
+    def UPDATE_ALL_FRAME(self) :
+        """à utilisé en argument d' un objet Update_XX pour que ça s'update 60 fois par seconde"""
+        return 42    
     
-    def register_lang(self, object:Updatable_Button|Updatable_Label|Updatable_Spinner) :
+    @property
+    def UPDATE_1(self) :
+        """à utilisé en argument d' un objet Update_XX pour que ça s'update toute les secondes"""
+        return -42
+    
+    @property
+    def UPDATE_5(self) :
+        """à utilisé en argument d' un objet Update_XX pour que ça s'update toute les 5 secondes"""
+        return 46
+    
+    @property
+    def UPDATE_30(self) :
+        """à utilisé en argument d' un objet Update_XX pour que ça s'update toute les 30 secondes"""
+        return -46
+    
+
+    def register(self, objet) :
+        """enregistre un object dans l'update manager, """
+        if objet.frequence == self.UPDATE_ALL_FRAME :
+            self._obj_update_all_frame.append(objet)
+        elif objet.frequence == self.UPDATE_1 :
+            self._obj_update_1.append(objet)
+        elif objet.frequence == self.UPDATE_5 :
+            self._obj_update_5.append(objet)
+        elif objet.frequence == self.UPDATE_30 :
+            self._obj_update_30.append(objet)
+        else :
+            print("erreur frequence de fait pas partie de UPDATE_MANAGER.UPDATE_XX",objet)
+            a=3+"&"
+
+    
+    def register_lang(self, object) :
         """enregistre un Updatable_Label ou un Updatable_Button dans l'update manager pour update sa traducion a chaque chagement de langues"""
         self._obj_lang_update.append(object)
     
-    def register_font_size(self,  object:Updatable_Button|Updatable_Label|Updatable_Spinner) :
+    def register_font_size(self, object) :
         """enregistre un Updatable dans l'update manager pour update sa font size a chaque chagement de taille de police"""
 
         self._obj_font_size.append(object)
@@ -207,17 +246,70 @@ class Update_Manager() :
         for obj in self._obj_lang_update :
             obj.update_trad()
 
-    def update_all_60(self) :
-        """c'est la et ça servira quand ça servira"""
-        pass
+    def update_all_all_frame(self) :
+        """sensé etre appelé toute les frame (60 fois par secondes)  ^^"""
+        for obj in self._obj_update_all_frame :
+            obj.update()
 
     def update_all_1(self) :
-        """c'est la et ça servira quand ça servira"""
-        pass
+        """sensé etre appelé toute les secondes ^^"""
+        for obj in self._obj_update_1 :
+            obj.update()
+        
+    def update_all_5(self) :
+        """sensé etre appelé toute les 5 seconde ^^"""
+        for obj in self._obj_update_5 :
+            obj.update()
+    
+    def update_all_30(self) :
+        """sensé etre appelé toute les 30 seconde ^^"""
+        for obj in self._obj_update_5 :
+            obj.update()
+
+
 
 UPDATE_MANAGER = Update_Manager()
 
 
+class Update :
+    """
+    frequence : UPDATE_MANAGER.UPDATE_XX
+    fncton : doit etre une fonction sans argument
+    default_register : {bool} [True]
+    """
+    
+    def __init__(self,frequence:int,fncton, default_register:bool=True) -> None:
+        self._function = fncton
+        self.frequence = frequence
+        if default_register :
+            UPDATE_MANAGER.register(self)
+    
+    @property
+    def var_update(self) :
+        try :
+            return self._function()
+        except :
+            print("le drone n'est pas co ?")
+            return ""
+    
+
+class Update_Label(Update, Label) :
+    def __init__(self, frequence: int, fncton, default_register: bool = True, **kw) -> None:
+        print(frequence)
+        Update.__init__(self, frequence, fncton, default_register)
+        print("obj d'app ?")
+        Label.__init__(self, **kw)
+
+    def update(self) :
+        self.text = self.var_update
+
+class Update_Button(Update, Button) :
+    def __init__(self, frequence: int, fncton, default_register: bool = True, **kw) -> None:
+        Update.__init__(self, frequence, fncton, default_register)
+        Button.__init__(self, **kw)
+
+    def update(self) :
+        self.text = self.var_update
 
 class Parametre :
     def __init__(self) -> None:

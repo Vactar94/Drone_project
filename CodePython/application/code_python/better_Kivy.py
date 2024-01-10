@@ -105,9 +105,10 @@ class Screen_Stramable(Better_Screen) :
 
 class Screen_sous_menu(Better_Screen) :
         
-    def __init__(self, id_text_titre:str="", icone:Image=None ,background:BoxLayout=None,**kwargs):
+    def __init__(self, id_text_titre:str="", icone:Image=None ,background:BoxLayout=None, name_screen_target_return_button:str="ui",**kwargs):
         
         super().__init__(**kwargs)
+        self._target_retrun_button = name_screen_target_return_button
         self.size = Window.size
 
         if type(background) == BoxLayout :
@@ -142,7 +143,7 @@ class Screen_sous_menu(Better_Screen) :
 
 
     def go_to_menue(self,value) :
-        self.manager.current = "ui"
+        self.manager.current = self._target_retrun_button
     
 
 

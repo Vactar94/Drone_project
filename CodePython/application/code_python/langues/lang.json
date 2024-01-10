@@ -24,6 +24,8 @@
         "app.parametre.font_size.petit" : "Little",
         "app.parametre.font_size.moyen" : "Medium",
         "app.parametre.font_size.grand" : "Large"
+
+
     },
     "Français":{
         "app.text_title.controles":"Contrôles",
@@ -49,7 +51,12 @@
         "app.parametre.font_size.titre" : "Taille de la police",
         "app.parametre.font_size.petit" : "Petit",
         "app.parametre.font_size.moyen" : "Moyen",
-        "app.parametre.font_size.grand" : "Grand"
+        "app.parametre.font_size.grand" : "Grand",
+        "app.parametre.info_drone.button":"Paramètres du drone",
+
+        "app.info_drone_screen.titre":"Paramètres du drone",
+        "app.info_drone_screen.temph.titre":"température interne :",
+        "app.info_drone_screen.batt.titre":"batterie :"
         
     },
     "Espagniol":{

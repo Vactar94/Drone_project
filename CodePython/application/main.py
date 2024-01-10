@@ -18,6 +18,7 @@ from code_python.tello import DRONE
 from code_python.notification import NOTIF_MANAGER
 from code_python.screen_parametre import Screen_Parametre
 from code_python.langues.langues import UPDATE_MANAGER
+from code_python.screen_info_drone import Screen_Info_Drone
 
 Window.size = [360, 620]
 #Window.size = [1000, 620]
@@ -45,6 +46,7 @@ class The_app(App):
         classique_screen = Screen_Classique(name="classique", notifications=notifs.copy())
         automatique_screen = Screen_Automatique(name="automatique", notifications=notifs.copy())
         screen_affiche = Screen_proj(name="affiche", notifications=notifs.copy())
+        screen_info_drone = Screen_Info_Drone(name="info_drone", notifications=notifs.copy())
 
         # ajout des screens au screen manager
 
@@ -52,28 +54,37 @@ class The_app(App):
         self.sm.add_widget(classique_screen)
         self.sm.add_widget(screen_affiche)
         self.sm.add_widget(controle_screen)
-        self.sm.add_widget(parametre_screen)
         self.sm.add_widget(automatique_screen)
+        self.sm.add_widget(parametre_screen)
+        self.sm.add_widget(screen_info_drone)
 
-        Clock.schedule_interval(self.update_60, 1.0 / 60.0)
-        Clock.schedule_interval(self.update_30, 1.0 / 30.0)
-        Clock.schedule_interval(self.check_long, 1.0 / 1.0)
+        Clock.schedule_interval(self.update_60_fps, 1.0 / 60.0)
+        Clock.schedule_interval(self.update_30_fps, 1.0 / 30.0)
+        Clock.schedule_interval(self.update_1_seconde, 1.0 / 1.0)
+        Clock.schedule_interval(self.update_5_seconde, 5.0)
+        Clock.schedule_interval(self.update_30_seconde, 30.0)
         
         return self.sm
-    
-    def check_long(self, dt) :
+
+    def update_30_seconde(self, dt) :
+        self.seconde += 1
+        UPDATE_MANAGER.update_all_30()
+
+    def update_5_seconde(self, dt) :
+        self.seconde += 1
+        UPDATE_MANAGER.update_all_5()
+
+    def update_1_seconde(self, dt) :
         self.seconde += 1
         UPDATE_MANAGER.update_all_1()
-        
-    
-    def update_30(self,dt) :
+
+    def update_30_fps(self,dt) :
         self.update_streem()
         
-
-    def update_60(self,dt) :
+    def update_60_fps(self,dt) :
         """main_loop avec toutes les updates"""
         self.update_notif()
-        UPDATE_MANAGER.update_all_60()
+        UPDATE_MANAGER.update_all_all_frame()
         
     
     def update_streem(self) :
