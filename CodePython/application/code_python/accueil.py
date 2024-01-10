@@ -51,6 +51,11 @@ class Accueil(RelativeLayout) :
         conectivity_drone.bind(on_release=self.drone_conectivity)
         self.conectivity_drone = conectivity_drone
 
+        #------------- bouton pour accedé au test screen  -------------#
+        button_test = Button(text="go to test", size_hint=(1.0/3.0,1.0/10.0), pos_hint={"center_x":0.8,"center_y":0.8})
+        button_test.bind(on_release=self.go_to_test)
+
+
 
         #batterie_drone = DRONE.get_battery()
         #if batterie_drone >= 0 :
@@ -61,7 +66,7 @@ class Accueil(RelativeLayout) :
         #batterie_drone_label = Updatable_Label(text=text_batt,frequence=1,updating_variable=DRONE.get_battery) pour une futur MAJ ^^
         
 
-
+        self.add_widget(button_test)
         self.add_widget(conectivity_drone)
         self.add_widget(conectivity_contoler)
         self.add_widget(credit)
@@ -89,6 +94,10 @@ class Accueil(RelativeLayout) :
 
     def go_to_affiche(self,value):
         self.ui_screen.go_to(value,"affiche")
+    
+    def go_to_test(self,value) :
+        self.ui_screen.go_to(value,"test")
+
 
     def update_bg(self,element,value):
         element.bg_rect.pos = element.pos

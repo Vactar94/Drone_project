@@ -19,6 +19,10 @@ def activer_microphone():
         micro_enabled = True
 
 def getControllerInput():
+    """ return une liste de 4 valeurs :
+    [lr, fb, ud, yv]
+    lr : axe gauche droite ()
+    """
     if not is_controller_connected():
         return "Aucune manette reconnue"
     else:
@@ -67,8 +71,8 @@ def getControllerInput():
 
         return [lr, fb, ud, yv]
 
-
-while True:
-    values = getControllerInput()
-    me.send_rc_control(values[0], values[1], values[2], values[3])
-    sleep(0.05)
+if __name__ == "__main__" :
+    while True:
+        values = getControllerInput()
+        me.send_rc_control(values[0], values[1], values[2], values[3])
+        sleep(0.05)

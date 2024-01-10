@@ -19,6 +19,7 @@ from code_python.notification import NOTIF_MANAGER
 from code_python.screen_parametre import Screen_Parametre
 from code_python.langues.langues import UPDATE_MANAGER
 from code_python.screen_info_drone import Screen_Info_Drone
+from code_python.show_screen_test import Test_Screen
 
 Window.size = [360, 620]
 #Window.size = [1000, 620]
@@ -47,6 +48,7 @@ class The_app(App):
         automatique_screen = Screen_Automatique(name="automatique", notifications=notifs.copy())
         screen_affiche = Screen_proj(name="affiche", notifications=notifs.copy())
         screen_info_drone = Screen_Info_Drone(name="info_drone", notifications=notifs.copy())
+        test_screen = Test_Screen(name="test")
 
         # ajout des screens au screen manager
 
@@ -57,7 +59,8 @@ class The_app(App):
         self.sm.add_widget(automatique_screen)
         self.sm.add_widget(parametre_screen)
         self.sm.add_widget(screen_info_drone)
-
+        self.sm.add_widget(test_screen)
+        
         Clock.schedule_interval(self.update_60_fps, 1.0 / 60.0)
         Clock.schedule_interval(self.update_30_fps, 1.0 / 30.0)
         Clock.schedule_interval(self.update_1_seconde, 1.0 / 1.0)
