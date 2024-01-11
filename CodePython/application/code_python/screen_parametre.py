@@ -1,11 +1,9 @@
 from kivy.uix.image import Image
-from kivy.uix.spinner import Spinner
 from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.label import Label
 
 
 from code_python.better_Kivy import Screen_sous_menu
-from code_python.langues.langues import LANGUES, Langues, Updatable_Button, Updatable_Label, Updatable_Spinner, PARAMETRE
+from code_python.langues.langues import LANGUES, Updatable_Button, Updatable_Label, Updatable_Spinner, PARAMETRE
 
 
 class Screen_Parametre(Screen_sous_menu) :

@@ -83,10 +83,10 @@ class The_app(App):
         self.seconde += 1
         UPDATE_MANAGER.update_all_1()
 
-    def update_30_fps(self,dt) :
+    def update_30_fps(self, dt) :
         self.update_streem()
         
-    def update_60_fps(self,dt) :
+    def update_60_fps(self, dt) :
         """main_loop avec toutes les updates"""
         self.update_notif()
         UPDATE_MANAGER.update_all_all_frame()
