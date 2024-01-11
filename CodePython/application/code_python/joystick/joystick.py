@@ -237,3 +237,4 @@ class Joystick(Widget):
 
     def _touch_is_active(self, touch):
         return 'joystick' in touch.ud and touch.ud['joystick'] == self
+    
