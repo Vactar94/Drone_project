@@ -5,13 +5,11 @@ from kivy.uix.pagelayout import PageLayout
 from kivy.core.window import Window
 from kivy.graphics import Color
 from kivy.uix.image import Image
-from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import ScreenManager,RiseInTransition
 from kivy.config import Config
 from kivy.clock import Clock
 
 from code_python.notification import crea_notif
-from code_python.joystick.joystick import Joystick
 from code_python.better_Kivy import Better_Screen, Screen_sous_menu, Screen_Stramable
 from code_python.menue import Menue
 from code_python.accueil import Accueil
@@ -22,6 +20,7 @@ from code_python.screen_parametre import Screen_Parametre
 from code_python.langues.langues import UPDATE_MANAGER
 from code_python.screen_info_drone import Screen_Info_Drone
 from code_python.show_screen_test import Test_Screen
+from code_python.screen_classique import Screen_Classique
 
 
 Window.size = [360, 620]
@@ -173,21 +172,6 @@ class Screen_Controles(Screen_sous_menu) :
 
         self.add_widget(box_tuto_manette)
 
-
-
-class Screen_Classique(Screen_Stramable) :
-    def __init__(self,**kwargs):
-        #icone = Image(source="image/icone_button_classique_bg.png")
-        super().__init__(**kwargs)
-        box_contol = FloatLayout()
-        joy_r = Joystick(size_hint=(1.0/3.0, 1.0/3.0), pos_hint={"center_x":0.3,"center_y":0.7})
-        joy_l = Joystick(size_hint=(1.0/3.0, 1.0/3.0), pos_hint={"center_x":0.3,"center_y":0.3})
-        box_contol.add_widget(joy_r)
-        box_contol.add_widget(joy_l)
-        
-        
-
-        self.add_widget(box_contol)
 
 
 class Screen_Automatique(Screen_Stramable) :

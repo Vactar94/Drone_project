@@ -75,9 +75,18 @@ class Screen_Stramable(Better_Screen) :
         self.image_streem = Image(size=self.size)
         self.box_streem = BoxLayout(size_hint=(None,None), size=self.size)
 
+        menue_button = Button(text="", color=(0 ,0 ,0), size_hint=(None,None), size=(60,60), pos_hint={"center_x":1-0.87,"center_y":0.9}, background_color=(0, 0, 0, 0))
+        with menue_button.canvas.before:
+            Color(0, 0, 0)
+            menue_button.bg_rect = Image(source="image/bouton-retour bg.png",size=menue_button.size,pos=menue_button.pos)
+        menue_button.bind(on_release=self.go_to_menue,size=self.update_bg,pos=self.update_bg)
+        
 
         self.box_streem.add_widget(self.image_streem)
         self.add_widget(self.box_streem)
+        self.add_widget(menue_button)
+
+
 
     
     def on_pre_enter(self) :
@@ -123,6 +132,7 @@ class Screen_sous_menu(Better_Screen) :
             Rectangle(pos=(0,0),size=self.size)
             Color(1, 1, 1)
             RoundedRectangle(pos=(self.size[0]*(0.01),self.size[1]*(0.01)),size=(self.size[0]*0.43,self.size[1]*0.98),radius=[50,50])
+        
         menue_button = Button(text="", color=(0 ,0 ,0), size_hint=(None,None), size=(60,60), pos_hint={"center_x":1-0.87,"center_y":0.9}, background_color=(0, 0, 0, 0))
         with menue_button.canvas.before:
             Color(0, 0, 0)

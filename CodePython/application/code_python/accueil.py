@@ -56,7 +56,7 @@ class Accueil(RelativeLayout) :
         button_test.bind(on_release=self.go_to_test)
 
 
-        self.add_widget(button_test)
+        #self.add_widget(button_test)
         self.add_widget(conectivity_drone)
         self.add_widget(conectivity_contoler)
         self.add_widget(credit)
