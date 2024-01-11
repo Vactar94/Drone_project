@@ -29,8 +29,6 @@ class Test_Screen(Better_Screen) :
             menue_button.bg_rect = Image(source="bouton-retour bg_revers_color.png",size=menue_button.size, pos=menue_button.pos)
         menue_button.bind(on_release=self.go_to_menu)
     
-        
-
         self.add_widget(box)
         self.add_widget(menue_button)
 
