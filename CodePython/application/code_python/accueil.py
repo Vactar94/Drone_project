@@ -51,11 +51,11 @@ class Accueil(RelativeLayout) :
         self.conectivity_drone = conectivity_drone
 
         #------------- bouton pour accedé au test screen  -------------#
+        
         button_test = Button(text="go to test", size_hint=(1.0/3.0,1.0/10.0), pos_hint={"center_x":0.8,"center_y":0.8})
         button_test.bind(on_release=self.go_to_test)
-
-
         self.add_widget(button_test)
+        
         self.add_widget(conectivity_drone)
         self.add_widget(conectivity_contoler)
         self.add_widget(credit)

@@ -39,17 +39,26 @@
         "app.notif.drone_non_connecte":"Drône non connecté",
 
         "app.menue.titre_page" : "Selectionnez votre mode :",
-        "app.menue.button.classique" : "\nClassique",
-        "app.menue.button.automatique" : "\nAutomatique",
-        "app.menue.button.controles" : "\nContrôles",
-        "app.menue.button.parametre" : "\nParamètres",
+        "app.menue.button.classique" : "Classique",
+        "app.menue.button.automatique" : "Automatique",
+        "app.menue.button.controles" : "Contrôles",
+        "app.menue.button.parametre" : "Paramètres",
 
         "app.parametre.lang.titre" : "Langue :",
 
         "app.parametre.font_size.titre" : "Taille de la police",
         "app.parametre.font_size.petit" : "Petit",
         "app.parametre.font_size.moyen" : "Moyen",
-        "app.parametre.font_size.grand" : "Grand"
+        "app.parametre.font_size.grand" : "Grand",
+        "app.parametre.info_drone.button" :"Information Drône",
+
+        "app.info_drone_screen.titre" :"Information Drône",
+        "app.info_drone_screen.batt.titre" :"Batterie :",
+        "app.info_drone_screen.temph.titre" :"Température interne :",
+
+        "app.drone.control.land_button.air": "attérire",
+        "app.drone.control.land_button.sol" : "décoller"
+        
         
     },
     "Espagniol":{

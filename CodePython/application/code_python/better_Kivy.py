@@ -6,12 +6,11 @@ from kivy.core.window import Window
 from kivy.graphics import Color, Rectangle, RoundedRectangle
 from kivy.uix.image import Image
 from kivy.uix.screenmanager import Screen
-
+from kivy.uix.floatlayout import FloatLayout
 from code_python.langues.langues import Updatable_Label
 from code_python.tello import DRONE
 from code_python.notification import NOTIF_MANAGER
 from code_python.global_function import is_wifi_drones_connected
-
 
 
 
@@ -29,7 +28,6 @@ class Better_Screen(Screen) :
             a = 1+"g"
         else :
             self.notifications = notifications
-
 
         
     def update_bg(self,element,value):
@@ -155,26 +153,31 @@ class Screen_sous_menu(Better_Screen) :
         self.manager.current = self._target_retrun_button
     
 
-class Layout_bouton_menue(RelativeLayout):
 
-    def __init__(self ,name:str='',ui_screen=None, **kw):
+def creat_layout_button_menu(name, ui_screen, size_hint, pos_hint) :
+    button =  Layout_bouton_menue(name=name, ui_screen=ui_screen, buttton_size_hint=size_hint, button_pos_hint=pos_hint)
+    return button
+
+
+class Layout_bouton_menue(FloatLayout):
+
+    def __init__(self ,name:str='',ui_screen=None, button_pos_hint={}, buttton_size_hint=(), **kw):
         self.ui_screen = ui_screen
         self.name = name
         super().__init__(**kw)
-        with self.canvas.before :
-            Color(0, 0, 0)
-            RoundedRectangle(pos=(0,0),size=self.size,radius=[30,30])
-            Color(0/255, 200/255, 255/255)
-            RoundedRectangle(pos=(self.size[1]*0.025,self.size[1]*0.025),size=(self.size[0]*0.95,self.size[1]*0.95),radius=[30,30])
 
-        titre = Updatable_Label(id_text=f"app.menue.button.{name}",pos_hint={"center_x": 0.5, "center_y": 0.0},color=(0, 0, 0))
-        button = Button(size=(self.size[0]*0.90,self.size[1]*0.90),size_hint=(None, None),background_color=(0, 0, 0, 0),pos = (self.size[1]*0.05,self.size[1]*0.05))
-        
+        button = Button(size_hint=buttton_size_hint,background_color=(0, 0, 0, 0), pos_hint=button_pos_hint)
+        print(f"size button : {button.size}")
         with button.canvas.before:
             Color(0, 0, 0)
-            button.bg_rect = Image(source=f"image/icone_button_{name}_bg.png",pos=button.pos,size=button.size)
+            button.bg_rect = Image(source=f"image/icone_button_{name}_bg.png", pos=button.pos, size=button.size)
         button.bind(on_release=self.go_to,pos=self.update_bg, size=self.update_bg)
-        self.add_widget(titre)
+        print(button.pos_hint)
+        print(button_pos_hint)
+        pos_hint_titre = {"center_x":button_pos_hint["center_x"], "center_y":button_pos_hint["center_y"]-0.1}
+        titre = Updatable_Label(id_text=f"app.menue.button.{name}",pos_hint=pos_hint_titre,color=(0, 0, 0))
+
+        self.add_widget(titre) 
         self.add_widget(button)
     
     def update_bg(self,element,value):

@@ -37,6 +37,11 @@ class Drone_manager :
         return self._get_battery()
     
     @property
+    def is_flying(self)->bool:
+        """return true si il vole, false si non"""
+        return self.drone.is_flying
+    
+    @property
     def is_connected(self) :
         self._is_connected = self.drone.is_connected
         return self._is_connected

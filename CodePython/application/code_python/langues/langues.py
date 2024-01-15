@@ -176,8 +176,7 @@ class Updatable_Button(Button,Updatable) :
         Button.__init__(self,id_text=id_text , **kwargs)
         Updatable.__init__(self, id_text, **kwargs)
 
-        
-
+    
 
 class Update_Manager() :
     """permet a update des variable contenue dans des object kivy (notament les labels et les buttons)"""
@@ -293,23 +292,29 @@ class Update :
             return ""
     
 
-class Update_Label(Update, Label) :
-    def __init__(self, frequence: int, fncton, default_register: bool = True, **kw) -> None:
+class Update_Label(Update, Updatable_Label) :
+    """fncton : doit etre une fonction sans argument (id_text prend la valeur que fcton return a un untervale de frequence)"""
+    def __init__(self ,frequence: int, fncton, default_register: bool = True, id_text:str="", **kw) -> None:
         print(frequence)
         Update.__init__(self, frequence, fncton, default_register)
         print("obj d'app ?")
-        Label.__init__(self, **kw)
+        Updatable_Label.__init__(self, id_text, **kw)
 
     def update(self) :
-        self.text = self.var_update
+        self.id_text = self.var_update
+        self.update_trad()
 
-class Update_Button(Update, Button) :
-    def __init__(self, frequence: int, fncton, default_register: bool = True, **kw) -> None:
+class Update_Button(Update, Updatable_Button) :
+    """fncton : doit etre une fonction sans argument (id_text prend la valeur que fcton return a un untervale de frequence)"""
+
+    def __init__(self, frequence: int, fncton, default_register: bool = True, id_text:str="", **kw) -> None:
         Update.__init__(self, frequence, fncton, default_register)
-        Button.__init__(self, **kw)
+        Updatable_Button.__init__(self,id_text=id_text, **kw)
 
     def update(self) :
-        self.text = self.var_update
+        self.id_text = self.var_update
+        self.update_trad()
+
 
 class Parametre :
     def __init__(self) -> None:
@@ -350,7 +355,12 @@ class Parametre :
         """font_size_type peut etre "titre", "standard" ou "petit """
         return self.possibles_font_size[font_size_type][self.current_font_size]
 
-            
+    
+
+class all_update_button(Updatable_Button,Update):
+    def __init__(self, id_text: str, frequence:int, fncton, default_register:bool=True, **kwargs):
+        Updatable_Button.__init__(self, id_text, **kwargs)
+        Update.__init__(self, frequence=frequence, fncton=fncton, default_register=default_register)
         
         
 
