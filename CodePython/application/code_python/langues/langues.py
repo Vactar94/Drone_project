@@ -3,6 +3,8 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.spinner import Spinner
 
+from code_python.better_Kivy import Better_Button
+
 
 
 
@@ -169,11 +171,11 @@ class Updatable_Label(Label,Updatable) :
 
 
 
-class Updatable_Button(Button,Updatable) :
+class Updatable_Button(Better_Button,Updatable) :
     """id_text : id du texte traductible dans le fichier json (le text n'est pas obligé d'etre ajouté) {str}
     """
-    def __init__(self, id_text:str, **kwargs):
-        Button.__init__(self,id_text=id_text , **kwargs)
+    def __init__(self, id_text:str,angle:int=0, **kwargs):
+        Better_Button.__init__(self,angle=angle, id_text=id_text, **kwargs)
         Updatable.__init__(self, id_text, **kwargs)
 
     
@@ -294,11 +296,11 @@ class Update :
 
 class Update_Label(Update, Updatable_Label) :
     """fncton : doit etre une fonction sans argument (id_text prend la valeur que fcton return a un untervale de frequence)"""
-    def __init__(self ,frequence: int, fncton, default_register: bool = True, id_text:str="", **kw) -> None:
+    def __init__(self ,frequence: int, fncton, default_register: bool = True, id_text:str="", angle:int=0, **kw) -> None:
         print(frequence)
         Update.__init__(self, frequence, fncton, default_register)
         print("obj d'app ?")
-        Updatable_Label.__init__(self, id_text, **kw)
+        Updatable_Label.__init__(self, id_text,angle=angle, **kw)
 
     def update(self) :
         self.id_text = self.var_update
@@ -307,9 +309,9 @@ class Update_Label(Update, Updatable_Label) :
 class Update_Button(Update, Updatable_Button) :
     """fncton : doit etre une fonction sans argument (id_text prend la valeur que fcton return a un untervale de frequence)"""
 
-    def __init__(self, frequence: int, fncton, default_register: bool = True, id_text:str="", **kw) -> None:
+    def __init__(self, frequence: int, fncton, default_register: bool = True, id_text:str="", angle:int=0,  **kw) -> None:
         Update.__init__(self, frequence, fncton, default_register)
-        Updatable_Button.__init__(self,id_text=id_text, **kw)
+        Updatable_Button.__init__(self,id_text=id_text,angle=angle, **kw)
 
     def update(self) :
         self.id_text = self.var_update

@@ -2,7 +2,7 @@ from kivy.uix.image import Image
 from kivy.uix.floatlayout import FloatLayout
 
 
-from code_python.better_Kivy import Screen_sous_menu
+from code_python.screen.screen_sous_menu import Screen_sous_menu
 from code_python.langues.langues import LANGUES, Updatable_Button, Updatable_Label, Updatable_Spinner, PARAMETRE
 
 

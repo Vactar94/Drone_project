@@ -1,4 +1,4 @@
-from code_python.better_Kivy import Screen_Stramable
+from code_python.screen.screen_stremable import Screen_Stramable
 from code_python.joystick import Joystick
 
 from kivy.uix.floatlayout import FloatLayout

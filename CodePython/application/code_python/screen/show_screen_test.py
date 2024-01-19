@@ -2,9 +2,9 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
 from kivy.uix.image import Image
 from kivy.graphics import Color
+
 from code_python.tello import DRONE
 from code_python.langues.langues import UPDATE_MANAGER, Update_Button
-
 from code_python.joystick.joystick import Joystick
 from code_python.better_Kivy import Better_Screen
 
@@ -32,9 +32,11 @@ class Test_Screen(Better_Screen) :
                 return "app.drone.control.land_button.air"
             else :
                 return "app.drone.control.land_button.sol"
+            
         land_button = Update_Button(id_text="app.drone.control.land_button.sol",fncton=land_button_text,frequence=UPDATE_MANAGER.UPDATE_ALL_FRAME,
-                                    pos_hint={"center_x":0.5,"center_y":0.5}, background_color=(1, 0, 1, 0.5), size_hint=(0.2,0.1))
+                                    pos_hint={"center_x":0.5,"center_y":0.5}, background_color=(1, 0, 1, 0.5), size_hint=(0.2,0.1), angle=-90)
 
+        
 
         control_box.add_widget(land_button)
         control_box.add_widget(joy_r)
@@ -54,7 +56,7 @@ class Test_Screen(Better_Screen) :
         self.add_widget(menue_button)
 
     
-
+    
     def go_to_menu(self, button) :
         self.manager.current = "ui"
 

@@ -3,7 +3,7 @@ from kivy.uix.image import Image
 
 from code_python.tello import DRONE
 from code_python.langues.langues import Updatable_Label, Update_Label, UPDATE_MANAGER
-from code_python.better_Kivy import Screen_sous_menu
+from code_python.screen.screen_sous_menu import Screen_sous_menu
 
 class Screen_Info_Drone (Screen_sous_menu):
 
