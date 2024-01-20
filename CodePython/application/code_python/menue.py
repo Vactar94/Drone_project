@@ -1,9 +1,9 @@
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.core.window import Window
-from kivy.graphics import Color, Rectangle, RoundedRectangle
 
 from code_python.layout_button_menu import creat_layout_button_menu
 from code_python.langues.langues import Updatable_Label
+from code_python.better_Kivy import Rectangle_hint, RoundedRectangle_hint
 
 
 
@@ -13,11 +13,13 @@ class Menue(RelativeLayout):
         self.ui_screen = ui_screen
 
         self.size = Window.size
-        with self.canvas.before:
-            Color(0, 0, 0)
-            Rectangle(pos=(0,0),size=self.size)
-            Color(0/255, 200/255, 255/255)
-            RoundedRectangle(pos=(self.size[1]*0.025,self.size[1]*0.025),size=(self.size[0]*0.95,self.size[1]*0.95),radius=[30,30])
+
+        background = Rectangle_hint(color=(0, 0, 0, 1), pos_hint={"x":0, "y":0}, size_hint=(1, 1))
+        background_blue = RoundedRectangle_hint(color=(0/255, 200/255, 255/255, 1), pos_hint={"center_x":0.5, "center_y":0.5}, size_hint=(0.9, 0.93), radius=[30, 30])
+        
+        
+        self.add_widget(background)
+        self.add_widget(background_blue)
 
 
         titre_page = Updatable_Label(id_text="app.menue.titre_page",pos_hint={"center_x":0.5,"center_y":0.85},color=(0, 0, 0),font_size_type="titre")

@@ -1,5 +1,6 @@
 from kivy.uix.button import Button
 from kivy.uix.relativelayout import RelativeLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.core.window import Window
 from kivy.graphics import Color, Rectangle, RoundedRectangle
 from kivy.uix.image import Image
@@ -8,23 +9,23 @@ import threading
 from code_python.notification import NOTIF_MANAGER
 from code_python.tello import DRONE
 from code_python.global_function import is_controller_connected
-from code_python.langues.langues import LANGUES, Updatable_Button, Updatable_Label
+from code_python.langues.langues import Updatable_Button, Updatable_Label
+from code_python.better_Kivy import Rectangle_hint, RoundedRectangle_hint
 
 
-class Accueil(RelativeLayout) :
-    n=0
+class Accueil(FloatLayout) :
+
     def __init__(self,ui_screen,**kwargs):
         self._is_controller_connected = None
         self.ui_screen = ui_screen
         super().__init__(**kwargs)
         self.size = Window.size
-        with self.canvas.before:
-            Color(0, 0, 0)
-            Rectangle(pos=(0,0),size=self.size)
-            Color(0/255, 200/255, 255/255)
-            RoundedRectangle(pos=(self.size[1]*0.025,self.size[1]*0.025),size=(self.size[0]*0.95,self.size[1]*0.95),radius=[30,30])
-            Color(0,0,0)
-            Rectangle(pos=(self.size[0]//13 ,0),size=(self.size[0]//100,self.size[1]))
+
+        background = RoundedRectangle_hint(color=(0/255, 200/255, 255/255), pos_hint={"x": 0.025,"center_y":0.5}, size_hint=(1.08, 0.93), radius=[30,30])
+        side_line = Rectangle_hint(color=(0, 0, 0, 1), pos_hint={"x":0.17,"y":0}, size_hint=(0.03, 1))
+        self.add_widget(background)
+        self.add_widget(side_line)
+
 
         desctiption = Updatable_Button(id_text="app.accueil.description" ,pos_hint={"center_x":0.6,"center_y":0.56},color=(0,0,0),background_color=(0,0,0,0),size_hint=(None,None))
         desctiption.bind(on_release=self.go_to_affiche)
@@ -33,7 +34,7 @@ class Accueil(RelativeLayout) :
         titre = Updatable_Label(id_text='app.accueil.titre',size_hint_y=None,color=(1, 1, 1),height=200,pos_hint={"center_x":0.6,"center_y":0.85}, font_size_type="titre",markup=True)
         
         #------------- bouton pour connecter la mannette  -------------#
-        conectivity_contoler = Button(text="",size_hint=(None,None),size=(80,40),pos_hint={"center_x":0.11,"center_y":0.9},background_color=(0,0,0,0),background_normal="")
+        conectivity_contoler = Button(text="",size_hint=(None,None),size=(80,40),pos_hint={"center_x":0.095,"center_y":0.9},background_color=(0,0,0,0),background_normal="")
         conectivity_contoler.bind(pos=self.update_bg, size=self.update_bg)
         with conectivity_contoler.canvas.before:
             Color(0, 0, 0)
@@ -42,7 +43,7 @@ class Accueil(RelativeLayout) :
         self.conectivity_contoler = conectivity_contoler
         #------------- bouton pour connecter le drone  -------------#
 
-        conectivity_drone = Button(text="",size_hint=(None,None),size=(80,40),pos_hint={"center_x":0.11,"center_y":0.1},background_color=(0,0,0,0),background_normal="")
+        conectivity_drone = Button(text="",size_hint=(None,None),size=(80,40),pos_hint={"center_x":0.095,"center_y":0.1},background_color=(0,0,0,0),background_normal="")
         conectivity_drone.bind(pos=self.update_bg, size=self.update_bg)
         with conectivity_drone.canvas.before:
             Color(0, 0, 0)

@@ -1,5 +1,5 @@
 from kivy.core.window import Window
-Window.size = [360, 620]
+Window.size = [360, 720]
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
@@ -10,20 +10,20 @@ from kivy.uix.screenmanager import ScreenManager,RiseInTransition
 from kivy.config import Config
 from kivy.clock import Clock
 
-from code_python.screen.screen_stremable import Screen_Stramable
 from code_python.notification import crea_notif
 from code_python.better_Kivy import Better_Screen
-from code_python.screen.screen_controles import Screen_Controles
 from code_python.menue import Menue
 from code_python.accueil import Accueil
 from code_python.global_function import SYSTEM, is_wifi_drones_connected
 from code_python.tello import DRONE
 from code_python.notification import NOTIF_MANAGER
-from code_python.screen.screen_parametre import Screen_Parametre
 from code_python.langues.langues import UPDATE_MANAGER
 from code_python.screen.screen_info_drone import Screen_Info_Drone
 from code_python.screen.show_screen_test import Test_Screen
 from code_python.screen.screen_classique import Screen_Classique
+from code_python.screen.screen_controles import Screen_Controles
+from code_python.screen.screen_parametre import Screen_Parametre
+from code_python.screen.screen_stremable import Screen_Stramable
 
 
 
