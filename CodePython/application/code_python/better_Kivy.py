@@ -79,7 +79,7 @@ class Better_Button(Button):
             with self.canvas.after:
                 PopMatrix()
     
-        #self.bind(pos=self.update_rotation_origin, size=self.update_rotation_origin)
+        self.bind(pos=self.update_rotation_origin, size=self.update_rotation_origin)
 
     def update_rotation_origin(self, instance, value):
         # Mettez à jour l'origine de la rotation lorsque la position ou la taille change
