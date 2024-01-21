@@ -33,12 +33,12 @@ class Test_Screen(Better_Screen) :
             else :
                 return "app.drone.control.land_button.sol"
             
-        land_button = Update_Button(id_text="app.drone.control.land_button.sol",fncton=land_button_text,frequence=UPDATE_MANAGER.UPDATE_ALL_FRAME,
+        self.land_button = Update_Button(id_text="app.drone.control.land_button.sol",fncton=land_button_text,frequence=UPDATE_MANAGER.UPDATE_ALL_FRAME,
                                     pos_hint={"center_x":0.5,"center_y":0.5}, background_color=(1, 0, 1, 0.5), size_hint=(0.2,0.1), angle=-90)
 
         
 
-        control_box.add_widget(land_button)
+        control_box.add_widget(self.land_button)
         control_box.add_widget(joy_r)
         control_box.add_widget(joy_l)
         
@@ -56,7 +56,11 @@ class Test_Screen(Better_Screen) :
         self.add_widget(menue_button)
 
     
+    def on_pre_enter(self, *args):
+        self.land_button.update_rotation_origin(0, 0)
+        return super().on_pre_enter(*args)
     
+
     def go_to_menu(self, button) :
         self.manager.current = "ui"
 

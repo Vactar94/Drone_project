@@ -8,20 +8,38 @@ from kivy.uix.screenmanager import Screen
 
 
 class Rectangle_hint(Widget):
-    """Widget coloré en la couleur passé dans color (par défaut blanc)
-    color : Couleur (RGBA)=(0, 0, 0, 0)"""
-
-    def __init__(self, color:tuple=(1, 1, 1, 1),  **kwargs):
+    def __init__(self, color=(1, 1, 1, 1), **kwargs):
         super().__init__(**kwargs)
-        # Création d'un rectangle rouge avec size_hint et pos_hint
+        
         with self.canvas:
-            Color(*color)  # Couleur (RGBA)
-            self.rrect = RoundedRectangle(pos=self.pos, size=self.size)
-            
+            Color(*color)
+            self.rrect = RoundedRectangle(pos=self.calculate_initial_pos(), size=self.size)
+
         self.bind(pos=self.update_rrect_pos_size, size=self.update_rrect_pos_size)
 
+    def calculate_initial_pos(self):
+        # Calculer la position initiale du RoundedRectangle en utilisant pos_hint
+        if self.parent:
+            center_x = self.pos_hint.get('center_x', 0.5)
+            center_y = self.pos_hint.get('center_y', 0.5)
+            x = self.pos_hint.get('x', 0.0)
+            y = self.pos_hint.get('y', 0.0)
+
+            return (
+                self.parent.x + self.parent.width * (center_x - 0.5) + self.parent.width * x,
+                self.parent.y + self.parent.height * (center_y - 0.5) + self.parent.height * y
+            )
+        return self.pos
+
+    def on_size(self, instance, value):
+        # La méthode on_size est appelée lors du premier affichage
+        self.rrect.pos = self.calculate_initial_pos()
+        self.rrect.size = (
+            self.parent.width * self.size_hint[0],
+            self.parent.height * self.size_hint[1]
+        )
+
     def update_rrect_pos_size(self, instance, value):
-        # Mettez à jour la position et la taille du RoundedRectangle en fonction du widget parent
         self.rrect.pos = self.pos
         self.rrect.size = self.size
 
@@ -48,36 +66,36 @@ class RoundedRectangle_hint(Widget):
 
 class Better_Button(Button):
     _get_added_widget = []
-    def __init__(self, angle:int=0, **kwargs):
+
+    def __init__(self, angle=0, **kwargs):
         super().__init__(**kwargs)
 
-        # Ajoutez une transformation pour inverser le texte verticalement
-        with self.canvas.before:
-            PushMatrix()
-            self.rot = Rotate(angle=angle, origin=self.center)
+        # Ajoutez une transformation pour changer la direction du txt
+        if angle != 0 :
+            with self.canvas.before:
+                PushMatrix()
+                self.rot = Rotate(angle=angle, center=(self.size[0]*0.5, self.size[1]*0.5))
 
-        with self.canvas.after:
-            PopMatrix()
+            with self.canvas.after:
+                PopMatrix()
+    
+        #self.bind(pos=self.update_rotation_origin, size=self.update_rotation_origin)
 
-        self.rot.origin = self.center
-
-    def on_size(self, instance, value):
-        # Mettez à jour l'origine de la rotation lorsque la taille change
-        self.rot.origin = self.center
-        
-
-
+    def update_rotation_origin(self, instance, value):
+        # Mettez à jour l'origine de la rotation lorsque la position ou la taille change
+        try :
+            self.rot.origin = self.center
+        except :
+            pass
 
     @property
-    def get_added_widget(self)-> list :
+    def get_added_widget(self) -> list:
         return self._get_added_widget
 
-    #def update_size_pos_button(self ,button) :
-        
-    
     def add_widget(self, widget, index=0, canvas=None):
         self.get_added_widget.append(widget)
         return super().add_widget(widget, index, canvas)
+
 
 class Better_Label(Label):
     def __init__(self, angle:int=0, **kwargs):

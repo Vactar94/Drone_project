@@ -42,7 +42,6 @@ class The_app(App):
         self.seconde = 0
 
 
-
     def build(self):
         #création des screens  
         notifs = crea_notif()
