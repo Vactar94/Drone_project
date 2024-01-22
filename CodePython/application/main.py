@@ -148,7 +148,7 @@ class UI(PageLayout):
         self.add_widget(self.page2)
 
 class Screen_proj(Better_Screen):
-
+                                            
     def __init__(self, **kw):
         super().__init__(**kw)
         img_bg= Image(source="image/affiche_project_drone.jpg")

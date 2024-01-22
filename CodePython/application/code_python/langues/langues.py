@@ -3,7 +3,7 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.spinner import Spinner
 
-from code_python.better_Kivy import Better_Button
+from code_python.better_Kivy import Better_Button, Better_Label
 
 
 
@@ -187,6 +187,8 @@ class Update_Manager() :
     _obj_update_5 = []
     _obj_update_30 = []
 
+    _better_button = []
+
     _obj_lang_update = []
     _obj_font_size = []
 
@@ -232,11 +234,16 @@ class Update_Manager() :
     
     def register_font_size(self, object) :
         """enregistre un Updatable dans l'update manager pour update sa font size a chaque chagement de taille de police"""
-
         self._obj_font_size.append(object)
 
+    def register_bter_labbut (self, obj:Better_Button|Better_Label) :
+        self._better_button.append(obj)
 
-    
+
+    def update_bter_button(self) :
+        for obj in self._better_button :
+            obj.update_rotation_origin(obj, 0)
+        
     def update_font_size(self) :
         """appelle la méthode update_font_size de tout les object préalablement enregistré dans update manager """
         for obj in self._obj_font_size :

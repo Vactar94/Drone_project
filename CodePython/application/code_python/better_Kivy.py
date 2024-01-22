@@ -7,6 +7,7 @@ from kivy.uix.screenmanager import Screen
 
 
 
+
 class Rectangle_hint(Widget):
     def __init__(self, color=(1, 1, 1, 1), **kwargs):
         super().__init__(**kwargs)
@@ -98,20 +99,36 @@ class Better_Button(Button):
 
 
 class Better_Label(Label):
-    def __init__(self, angle:int=0, **kwargs):
+    _get_added_widget = []
+
+    def __init__(self, angle=0, **kwargs):
         super().__init__(**kwargs)
 
-        # Ajoutez une transformation pour inverser le texte verticalement
-        with self.canvas.before:
-            PushMatrix()
-            self.rot = Rotate(angle=angle, origin=self.center)
+        # Ajoutez une transformation pour changer la direction du txt
+        if angle != 0 :
+            with self.canvas.before:
+                PushMatrix()
+                self.rot = Rotate(angle=angle, center=(self.size[0]*0.5, self.size[1]*0.5))
 
-        with self.canvas.after:
-            PopMatrix()
+            with self.canvas.after:
+                PopMatrix()
+    
+        self.bind(pos=self.update_rotation_origin, size=self.update_rotation_origin)
 
-    def on_size(self, instance, value):
-        # Mettez à jour l'origine de la rotation lorsque la taille change
-        self.rot.origin = self.center
+    def update_rotation_origin(self, instance, value):
+        # Mettez à jour l'origine de la rotation lorsque la position ou la taille change
+        try :
+            self.rot.origin = self.center
+        except :
+            pass
+
+    @property
+    def get_added_widget(self) -> list:
+        return self._get_added_widget
+
+    def add_widget(self, widget, index=0, canvas=None):
+        self.get_added_widget.append(widget)
+        return super().add_widget(widget, index, canvas)
 
 
 class Better_Screen(Screen) :
@@ -137,8 +154,6 @@ class Better_Screen(Screen) :
     def add_widget(self, widget, index=0, canvas=None):
         self.get_added_widget.append(widget)
         return super().add_widget(widget, index, canvas)
-    
-
 
 
     def update_bg(self,element,value):
@@ -146,8 +161,6 @@ class Better_Screen(Screen) :
         element.bg_rect.pos = element.pos
         element.bg_rect.size = element.size
     
-    def on_pre_enter(self,*args) :
-        return super().on_pre_enter(*args)
 
     def on_pre_leave(self, *args):
         return super().on_pre_leave(*args)
