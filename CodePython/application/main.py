@@ -1,8 +1,7 @@
 from kivy.core.window import Window
-Window.size = [360, 720]
+
 from kivy.app import App
 from kivy.uix.button import Button
-from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.pagelayout import PageLayout
 from kivy.graphics import Color
 from kivy.uix.image import Image
@@ -18,13 +17,15 @@ from code_python.global_function import SYSTEM, is_wifi_drones_connected
 from code_python.tello import DRONE
 from code_python.notification import NOTIF_MANAGER
 from code_python.langues.langues import UPDATE_MANAGER
+# -- les screens -- #
+from code_python.screen.screen_automatique import Screen_Automatique
 from code_python.screen.screen_info_drone import Screen_Info_Drone
 from code_python.screen.show_screen_test import Test_Screen
 from code_python.screen.screen_classique import Screen_Classique
 from code_python.screen.screen_controles import Screen_Controles
 from code_python.screen.screen_parametre import Screen_Parametre
 from code_python.screen.screen_stremable import Screen_Stramable
-
+Window.size = [360, 720]
 
 
 #Window.size = [1000, 620]
@@ -162,17 +163,6 @@ class Screen_proj(Better_Screen):
 
     def go_to_menue(self,value) :
         self.manager.current = "ui"
-
-
-# ------ Screen_sous_menue  ------ #
-
-
-
-
-class Screen_Automatique(Screen_Stramable) :
-    def __init__(self,**kwargs):
-
-        super().__init__(**kwargs)
 
         
 

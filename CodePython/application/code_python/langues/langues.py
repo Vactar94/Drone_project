@@ -16,7 +16,7 @@ class Langues() :
         permet de traduire le texte en plein de langues(2)        
         """
         self._dict_langues = {}
-        with open("CodePython/application/code_python/langues/lang.json",'r',encoding='utf-8') as file :
+        with open("code_python/langues/lang.json",'r',encoding='utf-8') as file :
             json_langues_file = json.load(file)
             for i in json_langues_file.keys() :
                 self.POSSIBLES_LANGUAGES.append(i)

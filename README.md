@@ -37,3 +37,8 @@ se connecter au drône avec un mot de passe
 Sécuriser la communication entre l’appareil et le drone : Yassine 
 Encryption AES-256 bits minimum, SSH, connexion SSH et connexion via vpn via OpenVPN, et création d'un réseau wifi local en wpa3  pour éviter les problèmes d'instabilité 
 
+
+bibliothèque :
+kivy-2.3.0
+opencv-python-4.9.0.80
+djitellopy-2.5.0

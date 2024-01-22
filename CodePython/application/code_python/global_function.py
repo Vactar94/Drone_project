@@ -1,12 +1,12 @@
 import os
 import platform
-import bluetooth
+"""import bluetooth"""
 import psutil
 import subprocess
-from jnius import autoclass
+"""from jnius import autoclass"""
 
 
-def main():
+'''def main():
     try:
         devices = bluetooth.discover_devices(lookup_names=True)
         print("Appareils Bluetooth connectés :")
@@ -34,7 +34,9 @@ def is_controller_connected(value=None)->bool:
     if value !=None :
         value.is_controller_connected = False
     return False
-
+'''
+def is_controller_connected(value=None)->bool:
+    return False
 
 
 # fonctions pour savoir si wifi est propre a envoyer des paquet au drone #
@@ -128,7 +130,7 @@ def get_linux_batt()->int:
 
 
 def get_battery_info()-> int:
-    Context = autoclass('android.content.Context')
+    """Context = autoclass('android.content.Context')
     BatteryManager = autoclass('android.os.BatteryManager')
     activity = autoclass('org.kivy.android.PythonActivity').mActivity
     battery_manager = activity.getSystemService(Context.BATTERY_SERVICE)
@@ -140,7 +142,8 @@ def get_battery_info()-> int:
     is_plugged = plugged != 0
 
     if is_plugged : return level + 100
-    else :          return level
+    else :          return level"""
+    return 100
 
 SYSTEM = det_sys()
 
