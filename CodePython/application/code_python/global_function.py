@@ -1,10 +1,11 @@
 import os
 import platform
+
 """import bluetooth"""
 import psutil
 import subprocess
-"""from jnius import autoclass"""
 
+"""from jnius import autoclass"""
 
 '''def main():
     try:
@@ -35,7 +36,9 @@ def is_controller_connected(value=None)->bool:
         value.is_controller_connected = False
     return False
 '''
-def is_controller_connected(value=None)->bool:
+
+
+def is_controller_connected(value=None) -> bool:
     return False
 
 
@@ -45,15 +48,15 @@ def is_wifi_drones_connected():
     # Exécutez une commande pour obtenir la liste des réseaux Wi-Fi disponibles
     result = get_connected_wifi_name_windows()
     # Recherchez le nom du réseau "TELLO-dronensi" dans le résultat
-    
+
     list_name_drone = ["TELLO", "Drone", "DRONE", "Tello"]
-    for name_wifi_possible in list_name_drone :  
-        if name_wifi_possible in result :
+    for name_wifi_possible in list_name_drone:
+        if name_wifi_possible in result:
             return True
     return False
 
 
-def get_connected_wifi_name_windows()->str:
+def get_connected_wifi_name_windows() -> str:
     """determination du nom du wifi qui est acutellement connecté pour pouvoir l'utiliser après."""
     if SYSTEM == "W":
         try:
@@ -65,11 +68,12 @@ def get_connected_wifi_name_windows()->str:
                 return ssid
         except Exception as e:
             print(f"Une erreur s'est produite : {e}")
-    elif SYSTEM == "L" :
+    elif SYSTEM == "L":
         pass
-    elif SYSTEM == "A" :
+    elif SYSTEM == "A":
         pass
     return ""
+
 
 def det_sys():
     """determine dans quelle OS on est return la première lettre de l'os :
@@ -80,35 +84,39 @@ def det_sys():
         Z : OS non reconue
     """
     system = platform.system()  # Récupère le nom du système d'exploitation
-    if system == "Windows":                                                         return "W"
-    elif system == "Linux":                                                         return "L"
-    elif system == "Darwin":                                                        return "M"
-    elif platform.system() == "Linux" and "android" in platform.platform().lower(): return "A"
-    else :                                                                          return "Z"
+    if system == "Windows":
+        return "W"
+    elif system == "Linux":
+        return "L"
+    elif system == "Darwin":
+        return "M"
+    elif platform.system() == "Linux" and "android" in platform.platform().lower():
+        return "A"
+    else:
+        return "Z"
 
 
-def get_battery_ordinateur()-> int :
+def get_battery_ordinateur() -> int:
     """getter pour la batterie du telephone/ordinateur
     la batterie est en poursent mais si elle dépasse 100 c'est que elle est branché"""
     if SYSTEM == 'W':
         battery = psutil.sensors_battery()
-        if battery.power_plugged :
+        if battery.power_plugged:
             b = battery.percent + 100
-        else :
+        else:
             b = battery.percent
         return b
-    elif SYSTEM == "L" :
+    elif SYSTEM == "L":
         return get_linux_batt()
-    elif SYSTEM == "A" :
+    elif SYSTEM == "A":
         return get_battery_info()
 
 
-
-def get_linux_batt()->int:
-
+def get_linux_batt() -> int:
     try:
         # Utilise la commande upower pour obtenir des informations sur la batterie
-        result = subprocess.run(['upower', '-i', '/org/freedesktop/UPower/devices/battery_BAT0'], capture_output=True, text=True)
+        result = subprocess.run(['upower', '-i', '/org/freedesktop/UPower/devices/battery_BAT0'], capture_output=True,
+                                text=True)
 
         # Analyse la sortie pour obtenir les informations nécessaires
         lines = result.stdout.split('\n')
@@ -119,17 +127,14 @@ def get_linux_batt()->int:
             elif 'state' in line:
                 state = line.split(':')[1].strip()
                 print(f"État de la batterie : {state}")
-        
-        
+
+
 
     except Exception as e:
         print(f"Erreur : {e}")
 
 
-
-
-
-def get_battery_info()-> int:
+def get_battery_info() -> int:
     """Context = autoclass('android.content.Context')
     BatteryManager = autoclass('android.os.BatteryManager')
     activity = autoclass('org.kivy.android.PythonActivity').mActivity
@@ -144,6 +149,7 @@ def get_battery_info()-> int:
     if is_plugged : return level + 100
     else :          return level"""
     return 100
+
 
 SYSTEM = det_sys()
 
@@ -161,7 +167,8 @@ def get_connected_devices():
 
     return connected_devices
 
-if __name__ == "__main__" :
+
+if __name__ == "__main__":
 
     connected_devices = get_connected_devices()
 

@@ -8,7 +8,7 @@ from code_python.screen.screen_sous_menu import Screen_sous_menu
 class Screen_Info_Drone (Screen_sous_menu):
 
     def __init__(self, **kw):
-        icone = Image(source="CodePython/application/image/icone_button_automatique_bg.png")
+        icone = Image(source="image/icone_button_automatique_bg.png")
         super().__init__(id_text_titre="app.info_drone_screen.titre", icone=icone, name_screen_target_return_button="parametre", **kw)
 
         #  ----------------------- info for temph ----------------------- #
