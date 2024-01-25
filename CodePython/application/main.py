@@ -11,8 +11,8 @@ from kivy.clock import Clock
 
 from code_python.notification import crea_notif
 from code_python.better_Kivy import Better_Screen
-from CodePython.application.code_python.screen.menue import Menue
-from CodePython.application.code_python.screen.accueil import Accueil
+from code_python.screen.menue import Menue
+from code_python.screen.accueil import Accueil
 from code_python.global_function import SYSTEM, is_wifi_drones_connected
 from code_python.tello import DRONE
 from code_python.notification import NOTIF_MANAGER
