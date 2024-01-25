@@ -42,10 +42,13 @@ class The_app(App):
         self.sm = ScreenManager(transition=RiseInTransition())
         self.dm = DRONE
         self.seconde = 0
+        self.screens = []
 
     def build(self):
         # création des screens
+
         notifs = crea_notif()
+
         ui_screen = UiScreen(name='ui', notifications=notifs.copy())
         controle_screen = Screen_Controles(name='controles', notifications=notifs.copy())
         parametre_screen = Screen_Parametre(name="parametre", notifications=notifs.copy())
@@ -53,7 +56,17 @@ class The_app(App):
         automatique_screen = Screen_Automatique(name="automatique", notifications=notifs.copy())
         screen_affiche = Screen_proj(name="affiche", notifications=notifs.copy())
         screen_info_drone = Screen_Info_Drone(name="info_drone", notifications=notifs.copy())
-        test_screen = Test_Screen(name="test")
+        test_screen = Test_Screen(name="test", notifications=notifs.copy())
+
+        self.screens.append(ui_screen)
+        self.screens.append(controle_screen)
+        self.screens.append(parametre_screen)
+        self.screens.append(classique_screen)
+        self.screens.append(automatique_screen)
+        self.screens.append(screen_affiche)
+        self.screens.append(screen_info_drone)
+
+        self.screens.append(test_screen)
 
         # ajout des screens au screen manager
 
@@ -72,6 +85,17 @@ class The_app(App):
         Clock.schedule_interval(self.update_1_seconde, 1.0 / 1.0)
         Clock.schedule_interval(self.update_5_seconde, 5.0)
         Clock.schedule_interval(self.update_30_seconde, 30.0)
+
+        for screen in self.screens:
+            print(screen.name)
+            if not screen.streamable:
+                print(screen.notifications)
+                print("notifications : ")
+                for notifs in screen.notifications.values():
+                    print("notifs : ", notifs)
+                    for notif in notifs:
+                        print("notif", notif)
+                        notif.init_after()
 
         return self.sm
 

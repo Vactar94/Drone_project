@@ -6,10 +6,6 @@ from kivy.uix.image import Image
 from kivy.uix.screenmanager import Screen
 
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 class Rectangle_hint(Widget):
     def __init__(self, color=(1, 1, 1, 1), **kwargs):
         super().__init__(**kwargs)

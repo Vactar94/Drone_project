@@ -16,6 +16,7 @@ from code_python.better_Kivy import RoundedRectangle_hint, Rectangle_hint
 class AnimationHint:
     def __init__(self, widget, duration):
         self.widget = widget
+
         self.duration = duration
         print(type(self.widget.parent))
         print(type(self.widget))
@@ -23,7 +24,7 @@ class AnimationHint:
     def start(self):
         print(type(self.widget.parent), self.widget.parent.width, self.widget.parent.height)
         print(type(self.widget), self.widget.width, self.widget.height, self.widget.pos)
-        self.animation = Animation(x=int(self.widget.parent.width // 2), duration=self.duration, transition="out_quint")
+        self.animation = Animation(x=int(self.widget.parent.width // 2 - self.widget.width//2), duration=self.duration, transition="out_quint")
         self.animation.bind(on_complete=self.anim1_completed)
 
         self.animation2 = Animation(x=self.widget.parent.width, duration=self.duration, transition="in_quint")
@@ -53,7 +54,7 @@ class Notification(FloatLayout):
 
     def __init__(self, text, duration: int = 2, **kwargs) -> None:
         self.name = text
-        super().__init__(size_hint=(0.7, 0.1), pos=(0, 0), **kwargs)
+        super().__init__(size_hint=(0.7, 0.1), pos=(0, 0), pos_hint={"center_y": 0.85},  **kwargs)
         print(self.pos, "Notif")
 
         self.neutral_x_hint = -1
@@ -89,6 +90,15 @@ class Notification(FloatLayout):
         print(self)
         self.anim.start()
 
+    def init_after(self):
+
+        self.pos[0] = - self.parent.width
+        print("pos = ", self.pos)
+        print("parent = ", self.parent)
+        print("parent width = ", self.parent.width)
+
+    def on_size(self, widget, value):
+        self.pos[0] = - self.parent.width
 
 def crea_notif(duration: int = 1) -> dict[str:list[Notification]]:
     """
