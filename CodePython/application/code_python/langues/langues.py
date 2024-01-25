@@ -1,4 +1,7 @@
 import json
+
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.image import Image
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.spinner import Spinner
@@ -53,7 +56,7 @@ class Langues() :
         """{id_Langue:{id_écriture:str}}"""
         self._dict_langues = value
     
-    def trad(self,id_ecriture) -> str :
+    def trad(self, id_ecriture) -> str :
         """transphorme un id_ecriture en str"""
         try :
             if self.dict_langues[self.current_language][id_ecriture] == "" :
@@ -61,7 +64,10 @@ class Langues() :
             else  : 
                 return self.dict_langues[self.current_language][id_ecriture] 
         except :
-            return id_ecriture
+            try :
+                return self.dict_langues["DEFAULT"][id_ecriture]
+            except :
+                return id_ecriture
 
     def contre_trad(self,text)-> str|list :
         """transphorme un id_ecriture en str si il exsite, sinon fait une erreur"""
@@ -82,7 +88,21 @@ class Langues() :
 LANGUES = Langues()
 
 
-# ------------------------------------------------------ Updatable Obj ------------------------------------------------------ #
+# -------------------------------------------------- Updatable Obj -------------------------------------------------- #
+class Update_Image(FloatLayout):
+    """ Update image class for Update the image in terms of App current language"""
+    def __init__(self, id_source: str, **kwargs):
+        super().__init__(**kwargs)
+        self.id_source = id_source
+        trad_source = LANGUES.trad(self.id_source)
+        self.main_image = Image(source=trad_source, pos_hint={"center_x": 0.5, "center_y": 0.5})
+
+        self.add_widget(self.main_image)
+
+        UPDATE_MANAGER.register_lang(self)
+
+    def update_trad(self):
+        self.main_image.source = LANGUES.trad(self.id_source)
 
 
 class Updatable_font():
@@ -118,11 +138,6 @@ class Updatable(Updatable_font,Updatable_lang) :
 
     def __str__(self) :
         return self.text
-    
-
-
-    
-
 
 
 class Updatable_Spinner(Updatable_font, Spinner):
@@ -279,7 +294,7 @@ class Update_Manager() :
 UPDATE_MANAGER = Update_Manager()
 
 
-class Update :
+class Update:
     """
     frequence : UPDATE_MANAGER.UPDATE_XX
     fncton : doit etre une fonction sans argument

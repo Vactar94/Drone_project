@@ -60,6 +60,10 @@
         "app.drone.control.land_button.sol" : "décoller",
 
         "app.control.image.source" : "image/tuto_drone/tuto_manette.png"
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         
         
     },
