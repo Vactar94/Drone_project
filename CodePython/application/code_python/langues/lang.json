@@ -57,7 +57,9 @@
         "app.info_drone_screen.temph.titre" :"Température interne :",
 
         "app.drone.control.land_button.air": "attérire",
-        "app.drone.control.land_button.sol" : "décoller"
+        "app.drone.control.land_button.sol" : "décoller",
+
+        "app.control.image.source" : "image/tuto_drone/tuto_manette.png"
         
         
     },
@@ -141,5 +143,8 @@
         "app.parametre.font_size.moyen" : "Mittelmäßig ",
         "app.parametre.font_size.grand" : "Groß"
 
+    },
+    "DEFAULT" : {
+        "app.control.image.source" : "image/tuto_drone/tuto_manette.png"
     }
 }
