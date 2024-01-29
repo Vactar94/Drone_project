@@ -65,7 +65,7 @@ class Notification(FloatLayout):
                                              radius=[10, 10])
         self.bg_rect_ombre = RoundedRectangle_hint(color=(0, 0, 0, 0.3),
                                                    size_hint=(1, 1),
-                                                   pos_hint={"x": -0.14, "y": -0.2},
+                                                   pos_hint={"x": -0.1, "y": -0.15},
                                                    radius=[10, 10])
 
         text = Updatable_Label(id_text=text, color=(0, 0, 0), pos_hint={"center_x": 0.5, "center_y": 0.5})

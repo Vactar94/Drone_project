@@ -54,8 +54,9 @@ class The_app(App):
         parametre_screen = Screen_Parametre(name="parametre", notifications=notifs.copy())
         classique_screen = Screen_Classique(name="classique", notifications=notifs.copy())
         automatique_screen = Screen_Automatique(name="automatique", notifications=notifs.copy())
-        screen_affiche = Screen_proj(name="affiche", notifications=notifs.copy())
         screen_info_drone = Screen_Info_Drone(name="info_drone", notifications=notifs.copy())
+
+        screen_affiche = Screen_proj(name="affiche", notifications=notifs.copy())
         test_screen = Test_Screen(name="test", notifications=notifs.copy())
 
         self.screens.append(ui_screen)
@@ -87,14 +88,9 @@ class The_app(App):
         Clock.schedule_interval(self.update_30_seconde, 30.0)
 
         for screen in self.screens:
-            print(screen.name)
             if not screen.streamable:
-                print(screen.notifications)
-                print("notifications : ")
                 for notifs in screen.notifications.values():
-                    print("notifs : ", notifs)
                     for notif in notifs:
-                        print("notif", notif)
                         notif.init_after()
 
         return self.sm

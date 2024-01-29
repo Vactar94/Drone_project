@@ -1,13 +1,13 @@
 import os
 import platform
 
-"""import bluetooth"""
+import bluetooth
 import psutil
 import subprocess
 
-"""from jnius import autoclass"""
+from jnius import autoclass
 
-'''def main():
+def main():
     try:
         devices = bluetooth.discover_devices(lookup_names=True)
         print("Appareils Bluetooth connectés :")
@@ -34,11 +34,6 @@ def is_controller_connected(value=None)->bool:
                 return True
     if value !=None :
         value.is_controller_connected = False
-    return False
-'''
-
-
-def is_controller_connected(value=None) -> bool:
     return False
 
 
