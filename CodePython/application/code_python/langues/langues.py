@@ -342,6 +342,7 @@ class Parametre:
                                     "standard": [15, 18.75, 20],
                                     "petit": [15, 18.75, 20]}
         self._current_font_size = 1
+        self.manette_is_connected = False
 
     @property
     def current_font_size(self):
