@@ -30,10 +30,10 @@ def is_controller_connected(value=None)->bool:
         for name_possible in device_name :
             if name in name_possible:
                 if value !=None :
-                    value.is_controller_connected = True
+                    value.is_connected = True
                 return True
     if value !=None :
-        value.is_controller_connected = False
+        value.is_connected = False
     return False
 
 

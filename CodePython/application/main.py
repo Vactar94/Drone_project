@@ -1,5 +1,4 @@
 from kivy.core.window import Window
-
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.pagelayout import PageLayout
@@ -24,7 +23,6 @@ from code_python.screen.show_screen_test import Test_Screen
 from code_python.screen.screen_classique import Screen_Classique
 from code_python.screen.screen_controles import Screen_Controles
 from code_python.screen.screen_parametre import Screen_Parametre
-from code_python.screen.screen_stremable import Screen_Stramable
 
 Window.size = [360, 720]
 

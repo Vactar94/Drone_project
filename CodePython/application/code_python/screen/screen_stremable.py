@@ -13,6 +13,7 @@ from code_python.langues.langues import Update_Button, UPDATE_MANAGER
 from code_python.joystick import Joystick
 
 
+
 class Screen_Stramable(Better_Screen):
 
     def __init__(self, notifications: dict = None, **kw):
@@ -122,8 +123,8 @@ class ControlBox(FloatLayout):
         else:
             self._opacity = 0
         for widget in self.children:
-            print(widget.opacity)
             widget.opacity = self._opacity
 
     def switsh_opacity(self, button):
         self.opacity_layout = not self.opacity_layout
+

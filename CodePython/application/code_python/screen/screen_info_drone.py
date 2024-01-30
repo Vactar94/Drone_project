@@ -4,7 +4,7 @@ from kivy.uix.image import Image
 from code_python.tello import DRONE
 from code_python.langues.langues import Updatable_Label, Update_Label, UPDATE_MANAGER
 from code_python.screen.screen_sous_menu import Screen_sous_menu
-from code_python.langues.langues import PARAMETRE
+from code_python.Manette import CONTOLLER
 
 
 class Screen_Info_Drone(Screen_sous_menu):
@@ -84,7 +84,7 @@ class Screen_Info_Drone(Screen_sous_menu):
                                       pos_hint={"center_x": 0.3, "center_y": 0.5}, color=(0, 0, 0, 1))
 
         def update_var_state_manette() -> str:
-            if PARAMETRE.manette_is_connected:
+            if CONTOLLER.is_connected:
                 return "app.info_drone_screen.state_manette.text.true"
             else:
                 return "app.info_drone_screen.state_manette.text.false"

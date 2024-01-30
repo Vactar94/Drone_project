@@ -3,7 +3,7 @@ import json
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.image import Image
 from kivy.uix.label import Label
-from kivy.uix.button import Button
+
 from kivy.uix.spinner import Spinner
 
 from code_python.better_Kivy import Better_Button, Better_Label
@@ -282,6 +282,7 @@ class Update_Manager():
             obj.update()
 
 
+
 UPDATE_MANAGER = Update_Manager()
 
 
@@ -381,6 +382,10 @@ class all_update_button(Updatable_Button, Update):
 
 
 PARAMETRE = Parametre()
+
+
+
+
 
 if __name__ == "__main__":
     import sys

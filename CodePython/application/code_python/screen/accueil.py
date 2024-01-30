@@ -8,7 +8,8 @@ import threading
 
 from code_python.notification import NOTIF_MANAGER
 from code_python.tello import DRONE
-from code_python.global_function import is_controller_connected
+from code_python.Manette import CONTOLLER
+
 from code_python.langues.langues import Updatable_Button, Updatable_Label
 from code_python.better_Kivy import Rectangle_hint, RoundedRectangle_hint
 
@@ -73,17 +74,7 @@ class Accueil(FloatLayout):
         self.add_widget(titre)
         self.add_widget(desctiption)
 
-    @property
-    def is_controller_connected(self):
-        return self._is_controller_connected
 
-    @is_controller_connected.setter
-    def is_controller_connected(self, value):
-        self._is_controller_connected = value
-        if value:
-            NOTIF_MANAGER.Waiting_notifications["M"][1] = True
-        elif not value:
-            NOTIF_MANAGER.Waiting_notifications["M"][0] = True
 
     def drone_conectivity(self, button):
         if DRONE.connect():
@@ -102,16 +93,8 @@ class Accueil(FloatLayout):
         element.bg_rect.pos = element.pos
         element.bg_rect.size = element.size
 
-    def mannette_conectivity_statue(self, dt):
-        self.conectivity_contoler.disabled = False
-        v = int()
-        NOTIF_MANAGER.Waiting_notifications["D"][v] = True
-
     def mannette_conectivity(self, button: Button):
-        """
-        pas sur de le garder ptet que c'est pas a moi de le faire en tt ca le bouton existe
-        """
-        print('manette_connectivy')
 
-        t = threading.Thread(target=is_controller_connected, args=(self,))
-        t.start()
+        print('manette_connectivy')
+        CONTOLLER.try_connectivity()
+
