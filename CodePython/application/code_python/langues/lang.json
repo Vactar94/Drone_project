@@ -1,38 +1,13 @@
 {
-    "English":{
-        "app.text_title.controles":"Controls",
-        "app.text_title.parametres":"Settings",
-        
-        "app.accueil.description":"Our revolutionnary drone, \n controlled by this \napplication, \noptimizes game management by\n recognizing and moving \nsport's equipment \nup to 3.307 lb. \nHis intelligent navigation \nand his outstanding \nstability, ensure a fluid \nand secure functioning.\nWith manual and automatic modes,\n he gives you an\n dynamics sport experiences,\ncentralizing th personal work\n ",
-        "app.accueil.credit": "Credits :\nAdrien : drone control \nSuhayl :create the AI\nÉmile : Automatic flight\nOscar : app",
-        "app.accueil.titre" : "[b]Drone Automatik[/b]",
-        
-        "app.notif.manette_connecte":"Controller connected",
-        "app.notif.manette_non_connecte":"Controller not connected",
-        "app.notif.drone_connecte":"Drone connected",
-        "app.notif.drone_non_connecte":"Drone not connected",
 
-        "app.menue.titre_page" : "Select your mode :",
-        "app.menue.button.classique" : "\nClassic",
-        "app.menue.button.automatique" : "\nAutomatic",
-        "app.menue.button.controles" : "\nControls ",
-        "app.menue.button.parametre" : "\nSettings",
-
-        "app.parametre.lang.titre" : "Language :",
-
-        "app.parametre.font_size.titre" : "Font size :",
-        "app.parametre.font_size.petit" : "Little",
-        "app.parametre.font_size.moyen" : "Medium",
-        "app.parametre.font_size.grand" : "Large"
-    },
     "Français":{
         "app.text_title.controles":"Contrôles",
         "app.text_title.parametres":"Paramètres",
-        
+
         "app.accueil.description":"Notre drone révolutionnaire,\ncontrôlé par cet application, \n optimise la gestion des jeux en \nreconnaissant et déplaçant des \néquipements sportifs jusqu'à\n 1,5 kg. Sa navigation \nintelligente et sa stabilité\n exceptionnelle assurent \nun fonctionnement fluide\n et sécurisé. Avec des modes \nmanuels et automatiques, il\n offre une expérience sportive\n dynamique, centralisant \nle travail du personnel.",
         "app.accueil.credit" : "Crédits :\nAdrien : contôle du drône \nSuhayl :création de l'IA \nÉmile : Création du vol automatique \nOscar : application",
         "app.accueil.titre" : "[b]Drone Automatik[/b]",
-        
+
         "app.notif.manette_connecte":"Mannette connectée",
         "app.notif.manette_non_connecte":"Mannette non connectée",
         "app.notif.drone_connecte":"Drône connecté",
@@ -75,9 +50,36 @@
 
 
 
-        
-        
+
+
     },
+    "English":{
+        "app.text_title.controles":"Controls",
+        "app.text_title.parametres":"Settings",
+        
+        "app.accueil.description":"Our revolutionnary drone, \n controlled by this \napplication, \noptimizes game management by\n recognizing and moving \nsport's equipment \nup to 3.307 lb. \nHis intelligent navigation \nand his outstanding \nstability, ensure a fluid \nand secure functioning.\nWith manual and automatic modes,\n he gives you an\n dynamics sport experiences,\ncentralizing th personal work\n ",
+        "app.accueil.credit": "Credits :\nAdrien : drone control \nSuhayl :create the AI\nÉmile : Automatic flight\nOscar : app",
+        "app.accueil.titre" : "[b]Drone Automatik[/b]",
+        
+        "app.notif.manette_connecte":"Controller connected",
+        "app.notif.manette_non_connecte":"Controller not connected",
+        "app.notif.drone_connecte":"Drone connected",
+        "app.notif.drone_non_connecte":"Drone not connected",
+
+        "app.menue.titre_page" : "Select your mode :",
+        "app.menue.button.classique" : "\nClassic",
+        "app.menue.button.automatique" : "\nAutomatic",
+        "app.menue.button.controles" : "\nControls ",
+        "app.menue.button.parametre" : "\nSettings",
+
+        "app.parametre.lang.titre" : "Language :",
+
+        "app.parametre.font_size.titre" : "Font size :",
+        "app.parametre.font_size.petit" : "Little",
+        "app.parametre.font_size.moyen" : "Medium",
+        "app.parametre.font_size.grand" : "Large"
+    },
+
     "Espagniol":{
         "app.text_title.controles":"Controles",
         "app.text_title.parametres":"Configuraciones",
