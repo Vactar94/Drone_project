@@ -52,9 +52,11 @@
         "app.parametre.font_size.grand" : "Grand",
         "app.parametre.info_drone.button" :"Information Drône",
 
-        "app.info_drone_screen.titre" :"Information Drône",
-        "app.info_drone_screen.batt.titre" :"Batterie :",
-        "app.info_drone_screen.temph.titre" :"Température interne :",
+        "app.info_drone_screen.titre" :"Information :",
+        "app.info_drone_screen.drone.titre" : "Drône :",
+
+        "app.info_drone_screen.drone.batt.titre" :"Batterie :",
+        "app.info_drone_screen.drone.temph.titre" :"Température interne :",
 
         "app.info_drone_screen.state_drone.text.true" : "Connecté",
         "app.info_drone_screen.state_drone.text.false" : "Non Connecté",
@@ -64,8 +66,9 @@
         "app.info_drone_screen.state_manette.text.false" : "Non Connecté",
         "app.info_drone_screen.state_manette.titre" : "État de la mannette :",
 
-        "app.drone.control.land_button.air": "attérire",
+        "app.drone.control.land_button.air": "attérir",
         "app.drone.control.land_button.sol" : "décoller",
+        "app.drone.not_connected": "Drône non connecté",
 
         "app.control.image.source" : "image/tuto_drone/tuto_manette.png"
 

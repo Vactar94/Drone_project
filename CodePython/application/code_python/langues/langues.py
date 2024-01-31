@@ -103,7 +103,7 @@ class Update_Image(FloatLayout):
         self.main_image.source = LANGUES.trad(self.id_source)
 
 
-class Updatable_font():
+class Updatable_font:
 
     def __init__(self, font_size_type: str) -> None:
         self.font_size_type = font_size_type
