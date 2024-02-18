@@ -1,0 +1,24 @@
+{
+  "encodage" : "utf-8",
+
+
+  "app.accueil.credit": "Crédit :\nAdrien : controle du drone \nSuhayl : création de l'IA\nÉmile : Automatisation du Vol\nOscar : application",
+  "app.accueil.description": "Nuestro revolucionario dron, \ncontrolado por esta aplicación, \noptimiza la gestión del juego \nreconociendo y moviendo material \ndeportivo de hasta 1,5 kg.\nSu navegación inteligente y su \nexcepcional estabilidad\n garantizan un funcionamiento \nfluido y seguro.\nCon modos manual y automático, \nofrece una experiencia \ndeportiva dinámica,\ncentralizando el trabajo \ndel personal.",
+  "app.accueil.titre": "[b]Drone Automatik[/b]",
+  "app.menue.button.automatique": "\nAutomatico",
+  "app.menue.button.classique": "\nClassico",
+  "app.menue.button.controles": "\nControles",
+  "app.menue.button.parametre": "\nConfiguraciones",
+  "app.menue.titre_page": "Selecciona tu modo :",
+  "app.notif.drone_connecte": "Dron connectado",
+  "app.notif.drone_non_connecte": "Dron no connectado",
+  "app.notif.manette_connecte": "Controlador conectado",
+  "app.notif.manette_non_connecte": "Controlador no conectado",
+  "app.parametre.font_size.grand": "Grande",
+  "app.parametre.font_size.moyen": "Medio",
+  "app.parametre.font_size.petit": "Pequeño",
+  "app.parametre.font_size.titre": "tamaño de la fuente",
+  "app.parametre.lang.titre": "Lengua",
+  "app.text_title.controles": "Controles",
+  "app.text_title.parametres": "Configuraciones"
+}

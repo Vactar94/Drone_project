@@ -54,7 +54,6 @@ class The_app(App):
         automatique_screen = Screen_Automatique(name="automatique", notifications=notifs.copy())
         screen_info_drone = Screen_Info_Drone(name="info_drone", notifications=notifs.copy())
 
-        screen_affiche = Screen_proj(name="affiche", notifications=notifs.copy())
         test_screen = Test_Screen(name="test", notifications=notifs.copy())
 
         self.screens.append(ui_screen)
@@ -62,7 +61,6 @@ class The_app(App):
         self.screens.append(parametre_screen)
         self.screens.append(classique_screen)
         self.screens.append(automatique_screen)
-        self.screens.append(screen_affiche)
         self.screens.append(screen_info_drone)
 
         self.screens.append(test_screen)
@@ -71,7 +69,6 @@ class The_app(App):
 
         self.sm.add_widget(ui_screen)
         self.sm.add_widget(classique_screen)
-        self.sm.add_widget(screen_affiche)
         self.sm.add_widget(controle_screen)
         self.sm.add_widget(automatique_screen)
         self.sm.add_widget(parametre_screen)
@@ -108,6 +105,7 @@ class The_app(App):
     def update_30_fps(self, dt):
         self.update_streem()
 
+
     def update_60_fps(self, dt):
         """main_loop avec toutes les updates"""
         self.update_notif()
@@ -115,11 +113,17 @@ class The_app(App):
 
     def update_streem(self):
         """update les images 30 fois par seconde et l'affiche sur le self.curent_screen.background qui est une image stocké dans box_background"""
-        if self.sm.current_screen.streamable:
+        screen = self.sm.current_screen
+        if screen.streamable:
             if self.dm.is_connected:
-                self.sm.current_screen.image_streem = self.dm.get_image(self.sm.current_screen.image_streem)
+                screen.image_streem = self.dm.get_image(screen.image_streem)
+                moove = screen.get_events()
+                self.dm.main_loop(moove)
             else:
                 self.connect_drone()
+
+        elif screen.streamable or screen.name == "test":
+            print(screen.get_events())
 
     def update_notif(self):
         """prend tout NOTIF_MANAGER.Waiting_notifications et les affiches sur le sm.curent_screen"""
@@ -169,21 +173,6 @@ class UI(PageLayout):
         self.add_widget(self.page1)
         self.add_widget(self.page2)
 
-
-class Screen_proj(Better_Screen):
-
-    def __init__(self, **kw):
-        super().__init__(**kw)
-        img_bg = Image(source="image/affiche_project_drone.jpg")
-        menue_button = Button(text="", font_size=11, color=(0, 0, 0), size_hint=(None, None), size=(80, 80),
-                              pos_hint={"center_x": 0.1, "center_y": 0.9}, background_color=(0, 0, 0, 0))
-        with menue_button.canvas.before:
-            Color(0, 0, 0)
-            menue_button.bg_rect = Image(source="image/bouton-retour bg.png", size=menue_button.size,
-                                         pos=menue_button.pos)
-        menue_button.bind(on_release=self.go_to_menue, size=self.update_bg, pos=self.update_bg)
-        self.add_widget(img_bg)
-        self.add_widget(menue_button)
 
     def go_to_menue(self, value):
         self.manager.current = "ui"

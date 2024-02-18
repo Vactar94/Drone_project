@@ -1,0 +1,24 @@
+{
+  "encodage" : "utf-8",
+
+
+  "app.accueil.credit": "Credits : \nAdrien : drone control \nSuhayl :create the AI \nÉmile : Automatischer Flug \nOscar : app",
+  "app.accueil.description": "Unsere revolutionäre Drohne,\ndie von dieser App gesteuert wird,\noptimiert das Spielmanagement,\nindem sie Sportgeräte \nbis zu 1,5 kg erkennt\nund bewegt.\nIhre intelligente Navigation\nund außergewöhnliche \nStabilität gewährleisten einen\nreibungslosen und sicheren Betrieb.\nMit manuellen und automatischen\nModi bietet es ein \ndynamisches Sporterlebnis,\ndas die Arbeit des\nPersonals zentralisiert.",
+  "app.accueil.titre": "[b]Drone Automatik[/b]",
+  "app.menue.button.automatique": "\nAutomatisch",
+  "app.menue.button.classique": "\nKlassisch",
+  "app.menue.button.controles": "\nKontrolle",
+  "app.menue.button.parametre": "\nEinstellungen",
+  "app.menue.titre_page": "Wählen Sie Ihren Modus aus :",
+  "app.notif.drone_connecte": "Drohne verbundene",
+  "app.notif.drone_non_connecte": "Drohne nicht verbundene",
+  "app.notif.manette_connecte": "Verbundene Mannette",
+  "app.notif.manette_non_connecte": "Nicht verbundene Puppe",
+  "app.parametre.font_size.grand": "Groß",
+  "app.parametre.font_size.moyen": "Mittelmäßig ",
+  "app.parametre.font_size.petit": "Klein",
+  "app.parametre.font_size.titre": "Schriftgrösse",
+  "app.parametre.lang.titre": "Sprache :",
+  "app.text_title.controles": "Kontrolle",
+  "app.text_title.parametres": "Einstellungen"
+}

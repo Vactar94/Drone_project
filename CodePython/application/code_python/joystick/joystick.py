@@ -73,7 +73,7 @@ class Joystick(Widget):
 
     @property
     def radians(self):
-        return self._radians
+        return self._radians*180/math.pi
     '''degrees of the pad, between 0.0 & 360.0, in relation to the x-axis.'''
 
     @property

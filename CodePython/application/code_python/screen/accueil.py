@@ -29,9 +29,9 @@ class Accueil(FloatLayout):
         self.add_widget(background)
         self.add_widget(side_line)
 
-        desctiption = Updatable_Button(id_text="app.accueil.description", pos_hint={"center_x": 0.6, "center_y": 0.56},
-                                       color=(0, 0, 0), background_color=(0, 0, 0, 0), size_hint=(None, None))
-        desctiption.bind(on_release=self.go_to_affiche)
+        desctiption = Updatable_Label(id_text="app.accueil.description", pos_hint={"center_x": 0.6, "center_y": 0.56},
+                                       color=(0, 0, 0), size_hint=(None, None))
+
 
         credit = Updatable_Label(id_text="app.accueil.credit", pos_hint={"center_x": 0.6, "center_y": 0.2})
         titre = Updatable_Label(id_text='app.accueil.titre', size_hint_y=None, color=(1, 1, 1), height=200,
@@ -83,8 +83,6 @@ class Accueil(FloatLayout):
             v = 0
         NOTIF_MANAGER.Waiting_notifications["D"][v] = True
 
-    def go_to_affiche(self, value):
-        self.ui_screen.go_to(value, "affiche")
 
     def go_to_test(self, value):
         self.ui_screen.go_to(value, "test")
@@ -97,4 +95,3 @@ class Accueil(FloatLayout):
 
         print('manette_connectivy')
         CONTOLLER.try_connectivity()
-

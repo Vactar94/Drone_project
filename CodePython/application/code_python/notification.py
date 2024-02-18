@@ -18,37 +18,39 @@ class AnimationHint:
         self.widget = widget
 
         self.duration = duration
-        print(type(self.widget.parent))
-        print(type(self.widget))
 
-    def start(self):
-        print(type(self.widget.parent), self.widget.parent.width, self.widget.parent.height)
-        print(type(self.widget), self.widget.width, self.widget.height, self.widget.pos)
-        self.animation = Animation(x=int(self.widget.parent.width // 2 - self.widget.width//2), duration=self.duration, transition="out_quint")
+
+    def init_anim(self):
+        self.animation = Animation(x=int(self.widget.parent.width // 2 - self.widget.width // 2),
+                                   duration=self.duration, transition="out_quint")
         self.animation.bind(on_complete=self.anim1_completed)
 
         self.animation2 = Animation(x=self.widget.parent.width, duration=self.duration, transition="in_quint")
         self.animation2.bind(on_complete=self.anim2_completed)
+
+    def start(self):
+        self.init_anim()
         self.animation.start(self.widget)
 
     def anim1_completed(self, layout, value):
-        print("anim1_completed")
-        print(type(self.widget.parent), self.widget.parent.width, self.widget.parent.height)
-        print(type(self.widget), self.widget.width, self.widget.height, self.widget.pos)
         self.animation2.start(self.widget)
 
     def anim2_completed(self, layout, value):
-        print("anim2_completed")
-        print(type(self.widget.parent), self.widget.parent.width, self.widget.parent.height)
-        print(type(self.widget), self.widget.width, self.widget.height, self.widget.pos)
+        self.reset_pos()
+
+    def reset_pos(self):
         self.widget.pos[0] = - self.widget.parent.width
 
     def stop(self):
-        if self.animation:
-            self.animation.stop(self.widget)
-        elif self.animation2:
-            self.animation2.stop(self.widget)
-
+        try:
+            if self.animation:
+                self.reset_pos()
+                self.animation.stop(self.widget)
+            elif self.animation2:
+                self.reset_pos()
+                self.animation2.stop(self.widget)
+        except:
+            pass
 
 class Notification(FloatLayout):
 
@@ -76,6 +78,7 @@ class Notification(FloatLayout):
         self.add_widget(self.bg_rect)
         self.add_widget(text)
 
+
     def __str__(self) -> str:
         return "Notification : " + self.name
 
@@ -87,6 +90,7 @@ class Notification(FloatLayout):
         element.bg_rect_ombre.size = element.size
 
     def start_anim(self):
+        self.anim.stop()
         print(self)
         self.anim.start()
 

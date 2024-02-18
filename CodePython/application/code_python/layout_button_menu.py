@@ -12,7 +12,7 @@ class Layout_bouton_menue(FloatLayout):
         self.name = name
         super().__init__(**kw)
 
-        button = Button(size_hint=buttton_size_hint,background_color=(0, 0, 0, 0), pos_hint=button_pos_hint)
+        button = Button(size_hint=buttton_size_hint,background_color=(0, 0, 0, 0), pos_hint=button_pos_hint, font_name="Georgia.ttf")
         print(f"size button : {button.size}")
         with button.canvas.before:
             Color(0, 0, 0)

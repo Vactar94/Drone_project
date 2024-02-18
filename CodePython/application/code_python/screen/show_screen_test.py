@@ -13,21 +13,11 @@ class Test_Screen(Better_Screen):
         super().__init__(**kw)
 
         # --------------------- control_box --------------------- #
-
         self.control_box = ControlBox(pos_hint={"center_x": 0.5, "center_y": 0.5})
-
-        # --------------------- return button --------------------- #
-        menue_button = Button(text="", color=(0, 0, 0, 0), size_hint=(None, None), size=(60, 60),
-                              pos_hint={"center_x": 0.88, "center_y": 0.915}, background_color=(0, 0, 0, 0))
-        menue_button.bind(size=self.update_bg, pos=self.update_bg)
-        with menue_button.canvas.before:
-            Color(0, 0, 0, 0)
-            menue_button.bg_rect = Image(source="image/bouton-retour bg_blanc.png", size=menue_button.size,
-                                         pos=menue_button.pos)
-        menue_button.bind(on_release=self.go_to_menu)
-
         self.add_widget(self.control_box)
-        self.add_widget(menue_button)
+
+    def get_events(self):
+        return self.control_box.get_events()
 
     def on_pre_enter(self, *args):
         self.control_box.land_button.update_rotation_origin(0, 0)
@@ -39,3 +29,5 @@ class Test_Screen(Better_Screen):
 
     def go_to_menu(self, button):
         self.manager.current = "ui"
+
+

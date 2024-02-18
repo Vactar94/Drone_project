@@ -1,4 +1,5 @@
 import json
+import os
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.image import Image
@@ -17,7 +18,31 @@ class Langues():
         permet de traduire le texte en plein de langues(2)        
         """
         self._dict_langues = {}
-        with open("code_python/langues/lang.json", 'r', encoding='utf-8') as file:
+        dossier = "code_python/langues/lang"
+        # Parcours de tous les fichiers du dossier
+        for fichier in os.listdir(dossier):
+            chemin_fichier = os.path.join(dossier, fichier)
+            # Vérification si le fichier est un fichier JSON
+            if fichier.endswith('.json'):
+                if fichier != "DEFAULT.json" and fichier != "all_lang.json":
+                    langue = fichier.split('.')[0]
+                    self.POSSIBLES_LANGUAGES.append(langue)
+                    with open(chemin_fichier, 'r', encoding='utf-8') as f:
+                        json_langues_file = json.load(f)
+                        encodage = json_langues_file["encodage"]
+                        print(fichier, encodage)
+                    with open(chemin_fichier, 'r', encoding=encodage) as f:
+                        json_langues_file = json.load(f)
+                        self.dict_langues[langue] = json_langues_file
+
+        self._current_language = self.POSSIBLES_LANGUAGES[0]
+
+
+
+
+
+        """
+        with open("code_python/langues/lang/all_lang.json", 'r', encoding='utf-8') as file:
             json_langues_file = json.load(file)
             for Langue in json_langues_file.keys():
                 if Langue != "DEFAULT":
@@ -25,7 +50,7 @@ class Langues():
 
                 self.dict_langues[Langue] = json_langues_file[Langue]
 
-        self._current_language = list(json_langues_file.keys())[0]
+        self._current_language = self.POSSIBLES_LANGUAGES[0]"""
 
     @property
     def current_language(self):
@@ -151,7 +176,7 @@ class Updatable_Spinner(Updatable_font, Spinner):
         # Appeler le constructeur de la classe mère Updatable_font
         Updatable_font.__init__(self, font_size_type)
         # Appeler le constructeur de la classe mère Spinner
-        Spinner.__init__(self, **kwargs)
+        Spinner.__init__(self, **kwargs, font_name="Georgia.ttf")
 
         if update_lang:
             self.id_values = id_values
@@ -177,7 +202,7 @@ class Updatable_Label(Label, Updatable):
     """
 
     def __init__(self, id_text: str, **kwargs):
-        Label.__init__(self, id_text=id_text, **kwargs)
+        Label.__init__(self, id_text=id_text, **kwargs, font_name="Georgia.ttf")
         Updatable.__init__(self, id_text, **kwargs)
 
 
@@ -196,6 +221,8 @@ class Update_Manager():
     _obj_update_1 = []
     _obj_update_5 = []
     _obj_update_30 = []
+
+    _obj_update_controller = []
 
     _better_button = []
 
@@ -222,6 +249,7 @@ class Update_Manager():
         """à utilisé en argument d' un objet Update_XX pour que ça s'update toute les 30 secondes"""
         return -46
 
+
     def register(self, objet):
         """enregistre un object dans l'update manager, """
         if objet.frequence == self.UPDATE_ALL_FRAME:
@@ -246,6 +274,13 @@ class Update_Manager():
 
     def register_bter_labbut(self, obj: Better_Button | Better_Label):
         self._better_button.append(obj)
+
+    def register_controller(self, obj):
+        self._obj_update_controller.append(obj)
+
+    def update_all_controller(self, value):
+        for obj in self._obj_update_controller:
+            obj.update_controller(value)
 
     def update_bter_button(self):
         for obj in self._better_button:

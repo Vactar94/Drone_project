@@ -65,7 +65,7 @@ class Better_Button(Button):
     _get_added_widget = []
 
     def __init__(self, angle=0, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(**kwargs, font_name="Georgia.ttf")
 
         # Ajoutez une transformation pour changer la direction du txt
         if angle != 0:
@@ -98,7 +98,7 @@ class Better_Label(Label):
     _get_added_widget = []
 
     def __init__(self, angle=0, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(**kwargs, font_name="Georgia.ttf")
 
         # Ajoutez une transformation pour changer la direction du txt
         if angle != 0:
