@@ -121,9 +121,7 @@ class ControlBox(FloatLayout):
         if 1 >= self._joy_l.magnitude >= 0 and 1 >= self._joy_r.magnitude >= 0:
             # AXE X
             if 225 > self._joy_l.radians > 135:
-
                 lr = int(self._joy_l.magnitude * speed)
-
             elif self._joy_l.radians > 315 or self._joy_l.radians < 45:
                 lr = -int(self._joy_l.magnitude * speed)
             # AXE Y
@@ -149,7 +147,7 @@ class ControlBox(FloatLayout):
     def decolage_atterrissage(self, button):
         print("land !")
         if DRONE.is_connected:
-            if not DRONE.is_flying:
+            if DRONE.is_flying:
                 DRONE.drone.land()
             else:
                 DRONE.drone.takeoff()

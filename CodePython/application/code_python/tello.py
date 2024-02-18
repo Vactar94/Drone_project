@@ -28,6 +28,14 @@ class Drone_manager:
         self.drone_tello = Better_Telo()
         self.drone_tello.is_connected = False
         self._is_connected = False
+        self.current_drone = "Tello"
+
+        self._drones = {"Tello": self.drone_tello, "Drone_Kit": None}
+
+
+    @property
+    def drone(self):
+        return self._drones[self.current_drone]
 
     @property
     def temph(self) -> int:
