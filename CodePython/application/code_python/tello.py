@@ -109,8 +109,9 @@ class Drone_manager:
         """hpy : get les images a partit de Tello.get_frame_read() puis les transphorme en kivy.texture.Texture puis en kivy.image.Image"""
         frame_read = self.drone_tello.get_frame_read()
         myFrame = frame_read.frame
-        img = cv2.resize(myFrame, (image.width, image.height))
-        img = cv2.rotate(img, cv2.ROTATE_180)
+        img = cv2.resize(myFrame, (image.parent.width, image.parent.height))
+
+        img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
         # ------------- convertie l'image en kivy.image.Image ------------- #
         texture = Texture.create(size=(img.shape[1], img.shape[0]), colorfmt='rgb')
         texture.blit_buffer(img.tobytes(), colorfmt='rgb', bufferfmt='ubyte')

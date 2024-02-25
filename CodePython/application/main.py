@@ -1,9 +1,8 @@
+from threading import Thread
+
 from kivy.core.window import Window
 from kivy.app import App
-from kivy.uix.button import Button
 from kivy.uix.pagelayout import PageLayout
-from kivy.graphics import Color
-from kivy.uix.image import Image
 from kivy.uix.screenmanager import ScreenManager, RiseInTransition
 from kivy.config import Config
 from kivy.clock import Clock
@@ -28,6 +27,10 @@ Window.size = [360, 720]
 
 # Window.size = [1000, 620]
 Window.OS = SYSTEM
+
+
+def update_drone_connection(application):
+    application.dm.is_connected = is_wifi_drones_connected()
 
 
 class The_app(App):
@@ -91,12 +94,13 @@ class The_app(App):
         return self.sm
 
     def update_30_seconde(self, dt):
-        self.seconde += 1
         UPDATE_MANAGER.update_all_30()
 
     def update_5_seconde(self, dt):
-        self.seconde += 1
         UPDATE_MANAGER.update_all_5()
+        Thread(target=update_drone_connection, args=[self]).start()
+
+
 
     def update_1_seconde(self, dt):
         self.seconde += 1
@@ -104,7 +108,6 @@ class The_app(App):
 
     def update_30_fps(self, dt):
         self.update_streem()
-
 
     def update_60_fps(self, dt):
         """main_loop avec toutes les updates"""
@@ -115,6 +118,8 @@ class The_app(App):
         """update les images 30 fois par seconde et l'affiche sur le self.curent_screen.background qui est une image stocké dans box_background"""
         screen = self.sm.current_screen
         if screen.streamable:
+            print(screen.image_streem.x, "screen.image_streem.x")
+            print(screen.image_streem.y, "screen.image_streem.y ")
             if self.dm.is_connected:
                 screen.image_streem = self.dm.get_image(screen.image_streem)
                 moove = screen.get_events()
@@ -122,8 +127,6 @@ class The_app(App):
             else:
                 self.connect_drone()
 
-        elif screen.streamable or screen.name == "test":
-            print(screen.get_events())
 
     def update_notif(self):
         """prend tout NOTIF_MANAGER.Waiting_notifications et les affiches sur le sm.curent_screen"""
@@ -172,7 +175,6 @@ class UI(PageLayout):
 
         self.add_widget(self.page1)
         self.add_widget(self.page2)
-
 
     def go_to_menue(self, value):
         self.manager.current = "ui"

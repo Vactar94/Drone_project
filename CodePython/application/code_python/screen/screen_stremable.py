@@ -1,3 +1,6 @@
+import time
+from threading import Thread
+
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
@@ -21,12 +24,29 @@ class Screen_Stramable(Better_Screen):
 
         self.size = Window.size
 
-        self.image_streem = Image(size=self.size)
+        self.image_streem = Image(size=self.size, pos_hint={"y":0.1})
+        self.image_streem.x = -Window.width / 2
+        print(self.image_streem.width, "image_streem.width")
+        print(self.image_streem.height, "image_streem.height")
+
         self.box_streem = BoxLayout(size_hint=(None, None), size=self.size)
 
         self.control_box = ControlBox(pos_hint={"center_x": 0.5, "center_y": 0.5})
 
         self.box_streem.add_widget(self.image_streem)
+
+        # --- menu button --- #
+
+        menu_button = Button(text="", color=(0, 0, 0, 0), size_hint=(None, None), size=(60, 60),
+                             pos_hint={"center_x": 0.88, "center_y": 0.915}, background_color=(0, 0, 0, 0))
+        menu_button.bind(size=self.update_bg, pos=self.update_bg)
+        with menu_button.canvas.before:
+            Color(0, 0, 0, 0)
+            menu_button.bg_rect = Image(source="image/bouton-retour bg_blanc.png", size=menu_button.size,
+                                        pos=menu_button.pos)
+        menu_button.bind(on_release=self.go_to_menu)
+
+        self.add_widget(menu_button)
         self.add_widget(self.box_streem)
         self.add_widget(self.control_box)
 
@@ -66,21 +86,10 @@ class Screen_Stramable(Better_Screen):
 
 
 class ControlBox(FloatLayout):
+    _drone_is_flying = False
     def __init__(self, **kw):
         super().__init__(**kw)
         self._opacity = 1
-
-        # --- menu button --- #
-
-        menu_button = Button(text="", color=(0, 0, 0, 0), size_hint=(None, None), size=(60, 60),
-                             pos_hint={"center_x": 0.88, "center_y": 0.915}, background_color=(0, 0, 0, 0))
-        menu_button.bind(size=self.update_bg, pos=self.update_bg)
-        with menu_button.canvas.before:
-            Color(0, 0, 0, 0)
-            menu_button.bg_rect = Image(source="image/bouton-retour bg_blanc.png", size=menu_button.size,
-                                        pos=menu_button.pos)
-        menu_button.bind(on_release=self.go_to_menu)
-        self.add_widget(menu_button)
 
         # --- joystick --- #
         self._joy_r = Joystick(size_hint=(1.0 / 2.5, 1.0 / 2.5), pos_hint={"center_x": 0.25, "center_y": 0.8},
@@ -144,13 +153,26 @@ class ControlBox(FloatLayout):
         else:
             return [0, 0, 0, 0]
 
-    def decolage_atterrissage(self, button):
-        print("land !")
+    def decolage_atterrissage(self, button:Button):
+        Thread(target=self.button_update,args=[button]).start()
+
         if DRONE.is_connected:
-            if DRONE.is_flying:
+
+            if self._drone_is_flying:
+                print("land")
                 DRONE.drone.land()
             else:
+                print("takeoff")
                 DRONE.drone.takeoff()
+
+        time.sleep(1)
+        button.disabled = False
+
+    def button_update(self, button):
+
+        button.disabled = True
+        time.sleep(2)
+        button.disabled = False
 
     def update_bg(self, element, value):
         """update les positions des bg de pleins de trucs"""
