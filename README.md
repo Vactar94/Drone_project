@@ -8,7 +8,6 @@ LE BERRE Adrien
 CORNUT Oscar
 EL MOUSSAHOUI Suhayl
 AZIZAJ Emile
-KADDAR Yassine
 Lycée Charlemagne 
 rue Charlemagne
 Vue d'ensemble
