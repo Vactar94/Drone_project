@@ -16,6 +16,17 @@ class Test_Screen(Better_Screen):
         self.control_box = ControlBox(pos_hint={"center_x": 0.5, "center_y": 0.5})
         self.add_widget(self.control_box)
 
+        menu_button = Button(text="", color=(0, 0, 0, 0), size_hint=(None, None), size=(60, 60),
+                             pos_hint={"center_x": 0.88, "center_y": 0.915}, background_color=(0, 0, 0, 0))
+        menu_button.bind(size=self.update_bg, pos=self.update_bg)
+        with menu_button.canvas.before:
+            Color(0, 0, 0, 0)
+            menu_button.bg_rect = Image(source="image/bouton-retour bg_blanc.png", size=menu_button.size,
+                                        pos=menu_button.pos)
+        menu_button.bind(on_release=self.go_to_menu)
+        self.add_widget(menu_button)
+
+
     def get_events(self):
         return self.control_box.get_events()
 

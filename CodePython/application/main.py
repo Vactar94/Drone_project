@@ -121,7 +121,7 @@ class The_app(App):
             print(screen.image_streem.x, "screen.image_streem.x")
             print(screen.image_streem.y, "screen.image_streem.y ")
             if self.dm.is_connected:
-                screen.image_streem = self.dm.get_image(screen.image_streem)
+                #screen.image_streem = self.dm.get_image(screen.image_streem)
                 moove = screen.get_events()
                 self.dm.main_loop(moove)
             else:

@@ -12,7 +12,7 @@ KADDAR Yassine
 Lycée Charlemagne 
 rue Charlemagne
 Vue d'ensemble
-Notre projet est un drône industriel qui va pouvoir reconnaître des objets à l’aide d’une IA afin de pouvoir les récupérer pour les ranger. 
+Notre projet est un drône industriel qui peut reconnaître des objets à l’aide d’une IA afin de pouvoir les récupérer pour les ranger. 
 Tâches :
 machine learning et path finding: Suhayl
 trouver des objet à l’aide de la détection d’images
@@ -31,7 +31,7 @@ des touches de fonctions : faire un backflip, un 360 degré, atterrir,,rester en
 
 
 création d’application: Oscar
-différents modes du drône : automatique, suivis et pointing, manuel
+différents modes du drône : automatique, manuel
 avoir un mode manuel sur l’application afin de contrôler le drône via l’application
 se connecter au drône avec un mot de passe
 Sécuriser la communication entre l’appareil et le drone : Yassine 

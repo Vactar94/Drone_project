@@ -24,16 +24,15 @@ class Screen_Stramable(Better_Screen):
 
         self.size = Window.size
 
-        self.image_streem = Image(size=self.size, pos_hint={"y":0.1})
-        self.image_streem.x = -Window.width / 2
-        print(self.image_streem.width, "image_streem.width")
-        print(self.image_streem.height, "image_streem.height")
+        self.image_streem = Image(size_hint=[1,1], pos_hint={"y":0.1})
+
+
 
         self.box_streem = BoxLayout(size_hint=(None, None), size=self.size)
 
         self.control_box = ControlBox(pos_hint={"center_x": 0.5, "center_y": 0.5})
 
-        self.box_streem.add_widget(self.image_streem)
+        #self.box_streem.add_widget(self.image_streem)
 
         # --- menu button --- #
 
@@ -104,7 +103,7 @@ class ControlBox(FloatLayout):
         # --- land button --- #
 
         def land_button_text() -> str:
-            if DRONE.is_flying:
+            if self._drone_is_flying:
                 return "app.drone.control.land_button.air"
             else:
                 return "app.drone.control.land_button.sol"
@@ -129,28 +128,31 @@ class ControlBox(FloatLayout):
         speed = 50
         if 1 >= self._joy_l.magnitude >= 0 and 1 >= self._joy_r.magnitude >= 0:
             # AXE X
-            if 225 > self._joy_l.radians > 135:
-                lr = int(self._joy_l.magnitude * speed)
-            elif self._joy_l.radians > 315 or self._joy_l.radians < 45:
+            if 225 > self._joy_l.radians > 135:# c'est sensé aller : back ça va : droite
                 lr = -int(self._joy_l.magnitude * speed)
+            elif self._joy_l.radians > 315 or self._joy_l.radians < 45:# c'est sensé aller : front  ça va : gauche
+                lr = int(self._joy_l.magnitude * speed)
             # AXE Y
-            elif 45 < self._joy_l.radians < 135:
-                fb = int(self._joy_l.magnitude * speed)
-            elif 225 < self._joy_l.radians < 315:
+            elif 45 < self._joy_l.radians < 135:# c'est sensé aller : gauche ça va : front
                 fb = -int(self._joy_l.magnitude * speed)
+            elif 225 < self._joy_l.radians < 315:# c'est sensé aller : droite ça va : back
+                fb = int(self._joy_l.magnitude * speed)
+
+
             # UP Down
             if 225 > self._joy_r.radians > 135:
-                ud = int(self._joy_r.magnitude * speed)
-            elif self._joy_r.radians > 315 or self._joy_r.radians < 45:
                 ud = -int(self._joy_r.magnitude * speed)
+            elif self._joy_r.radians > 315 or self._joy_r.radians < 45:
+                ud = int(self._joy_r.magnitude * speed)
             # rotation vertical axe
             elif 45 < self._joy_r.radians < 135:
-                yv = int(self._joy_r.magnitude * speed)
-            elif 225 < self._joy_r.radians < 315:
                 yv = -int(self._joy_r.magnitude * speed)
-
-            return [lr, fb, ud, yv]
+            elif 225 < self._joy_r.radians < 315:
+                yv = int(self._joy_r.magnitude * speed)
+            print([fb, lr, ud, yv])
+            return [fb, lr, ud, yv]
         else:
+            print([0, 0, 0, 0])
             return [0, 0, 0, 0]
 
     def decolage_atterrissage(self, button:Button):
@@ -161,9 +163,13 @@ class ControlBox(FloatLayout):
             if self._drone_is_flying:
                 print("land")
                 DRONE.drone.land()
+
+                self.a = False
             else:
                 print("takeoff")
+                print(DRONE.drone.is_flying)
                 DRONE.drone.takeoff()
+                self._drone_is_flying = True
 
         time.sleep(1)
         button.disabled = False
