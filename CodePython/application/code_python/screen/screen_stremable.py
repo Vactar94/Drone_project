@@ -24,15 +24,13 @@ class Screen_Stramable(Better_Screen):
 
         self.size = Window.size
 
-        self.image_streem = Image(size_hint=[1,1], pos_hint={"y":0.1})
-
-
+        self.image_streem = Image(size_hint=[1, 1], pos_hint={"y": 0.1})
 
         self.box_streem = BoxLayout(size_hint=(None, None), size=self.size)
 
         self.control_box = ControlBox(pos_hint={"center_x": 0.5, "center_y": 0.5})
 
-        #self.box_streem.add_widget(self.image_streem)
+        # self.box_streem.add_widget(self.image_streem)
 
         # --- menu button --- #
 
@@ -86,6 +84,7 @@ class Screen_Stramable(Better_Screen):
 
 class ControlBox(FloatLayout):
     _drone_is_flying = False
+
     def __init__(self, **kw):
         super().__init__(**kw)
         self._opacity = 1
@@ -128,16 +127,15 @@ class ControlBox(FloatLayout):
         speed = 50
         if 1 >= self._joy_l.magnitude >= 0 and 1 >= self._joy_r.magnitude >= 0:
             # AXE X
-            if 225 > self._joy_l.radians > 135:# c'est sensé aller : back ça va : droite
+            if 225 > self._joy_l.radians > 135:  # droite
                 lr = -int(self._joy_l.magnitude * speed)
-            elif self._joy_l.radians > 315 or self._joy_l.radians < 45:# c'est sensé aller : front  ça va : gauche
+            elif self._joy_l.radians > 315 or self._joy_l.radians < 45:  # gauche
                 lr = int(self._joy_l.magnitude * speed)
             # AXE Y
-            elif 45 < self._joy_l.radians < 135:# c'est sensé aller : gauche ça va : front
+            elif 45 < self._joy_l.radians < 135:  # front
                 fb = -int(self._joy_l.magnitude * speed)
-            elif 225 < self._joy_l.radians < 315:# c'est sensé aller : droite ça va : back
+            elif 225 < self._joy_l.radians < 315:  # back
                 fb = int(self._joy_l.magnitude * speed)
-
 
             # UP Down
             if 225 > self._joy_r.radians > 135:
@@ -155,8 +153,8 @@ class ControlBox(FloatLayout):
             print([0, 0, 0, 0])
             return [0, 0, 0, 0]
 
-    def decolage_atterrissage(self, button:Button):
-        Thread(target=self.button_update,args=[button]).start()
+    def decolage_atterrissage(self, button: Button):
+        Thread(target=self.button_update, args=[button]).start()
 
         if DRONE.is_connected:
 

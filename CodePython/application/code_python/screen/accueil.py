@@ -1,11 +1,8 @@
 from kivy.uix.button import Button
-from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.core.window import Window
-from kivy.graphics import Color, Rectangle, RoundedRectangle
+from kivy.graphics import Color
 from kivy.uix.image import Image
-import threading
-
 from code_python.notification import NOTIF_MANAGER
 from code_python.tello import DRONE
 from code_python.Manette import CONTOLLER
